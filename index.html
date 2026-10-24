@@ -77,7 +77,7 @@
         <div class="section-header"><div><span class="eyebrow">ENGINE 02</span><h2 id="nutrition-title">Nutrition & food intelligence</h2><p>Every food is transparent. Compare portions, transform favorite meals, and log what you actually eat.</p></div><span class="counter">2 / 5</span></div>
         <div class="panel"><h3>Daily macro budget</h3><div id="nutrition-budget"></div></div>
         <div class="panel stack" id="live-food-panel">
-          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>New live scanner:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
+          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>Scanner fix v0.3.1:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
           <p class="fine">Enter a barcode, use the photo scanner, or search by product name. An internet connection is required. Searches go to Open Food Facts; no personal fitness profile is sent. This database is crowd-sourced—always check the actual product label and ingredients.</p>
           <form id="live-lookup-form" class="stack">
             <div class="form-grid">
@@ -527,19 +527,17 @@ async function startCamera(deviceId=null){
  try{
   const scanner=new Html5Qrcode('barcode-live-reader',{formatsToSupport:supportedGroceryFormats(),useBarCodeDetectorIfSupported:false,verbose:false});
   liveScanner=scanner;
-  const camera=deviceId?{deviceId:{exact:deviceId}}:{facingMode:'environment'};
-  const scanConfig={fps:12,aspectRatio:1.7778};
+  // Html5Qrcode.start() accepts a device ID string OR a one-key camera object.
+  // Width/height MUST NOT be spread into cameraIdOrConfig; the library rejects that.
+  const camera=deviceId?deviceId:{facingMode:'environment'};
   const onFound=(raw)=>{if(scanFound||!liveScanner)return;const code=sanitizeDetectedBarcode(raw);if(!code)return;scanFound=true;setBarcodeAndLookUp(code);};
   const onMiss=()=>{};
-  try{await scanner.start({...camera,width:{ideal:1920},height:{ideal:1080}},scanConfig,onFound,onMiss);}
-  catch(e){
-   // Some phones reject resolution and aspect-ratio constraints. Retry with standard rear-camera defaults.
-   try{await scanner.start(camera,{fps:10},onFound,onMiss);}catch{throw e;}
-  }
+  // Request conservative scan settings; query focus/zoom/torch capabilities only after start.
+  await scanner.start(camera,{fps:10},onFound,onMiss);
   if(!liveScanner){try{await scanner.stop();}catch{}return;}
   cameraStarting=false;activeCameraId=deviceId;
   $('#scan-start').hidden=true;$('#scan-start').disabled=false;
-  liveStatus('Scanner ready. Show a complete barcode. Detection runs automatically, roughly 10–12 times per second.');
+  liveStatus('Scanner ready. Show a complete barcode. Detection runs automatically, roughly 10 times per second.');
   await updateCameraOptions();await updateCameraAdjustments();
  }catch(err){await closeCamera();$('#scan-start').disabled=false;liveStatus(cameraError(err));}
 }
