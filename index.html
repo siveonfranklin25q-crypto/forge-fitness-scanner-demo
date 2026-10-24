@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#101a17"/>
-<title>FORGE — Fitness Foundation v0.2</title>
+<title>FORGE — Fitness Foundation v0.3</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4ef;background:#0e1512;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.app-shell{min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.topbar{height:77px;border-bottom:1px solid #293830;display:flex;justify-content:space-between;align-items:center;padding:0 34px;background:#101915}.brand{display:flex;align-items:center;gap:12px}.brandmark{background:#c4fa72;color:#172011;width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-size:24px;font-weight:950;transform:rotate(-5deg)}.brand strong{font-size:21px;letter-spacing:2px;display:block}.brand small{font-size:9px;letter-spacing:2.2px;color:#a6b4a8}.top-actions{display:flex;gap:22px;align-items:center}.offline-tag,.counter{font-size:11px;letter-spacing:1px;color:#c4fa72;border:1px solid #42633b;background:#1a2b20;padding:8px 10px;border-radius:100px;font-weight:700}.link-btn{background:none;border:none;color:#bddb99;text-decoration:underline;text-underline-offset:3px;padding:5px}.layout{display:grid;grid-template-columns:245px minmax(0,1fr);max-width:1570px;margin:auto}.sidebar{padding:34px 18px;min-height:calc(100vh - 77px);border-right:1px solid #293830;background:#111b16}.overline,.eyebrow{font-size:11px;letter-spacing:2px;color:#b5e575;font-weight:800}.overline{padding-left:14px;margin:0 0 20px}.tabs{display:flex;flex-direction:column;gap:5px}.tab{background:transparent;border:1px solid transparent;border-radius:11px;padding:14px 10px;color:#b2c1b7;display:flex;align-items:center;text-align:left;gap:11px;font-size:13px;font-weight:600;line-height:1.25}.tab:hover,.tab:focus-visible{background:#213128}.tab.active{background:#26392b;color:#f3ffef;border:1px solid #466b3a}.tab-number{font-size:10px;color:#a3ba91}.sidebar-note{border:1px solid #334a36;border-radius:12px;background:#1a281e;margin:38px 5px 0;padding:18px 14px;font-size:13px;line-height:1.65}.sidebar-note p{color:#abbeb0;margin:8px 0 0}.main-content{padding:36px clamp(22px,4.5vw,72px);max-width:1250px;width:100%}h1{font-weight:830;font-size:clamp(27px,3.9vw,48px);letter-spacing:-2.2px;margin:8px 0 12px;line-height:1.12}h1 em{font-style:normal;color:#c4fa72}h2{font-size:clamp(24px,2.6vw,31px);letter-spacing:-.8px;margin:6px 0}h3{font-size:18px;margin:0 0 12px}.lede{font-size:15px;color:#b3c2b9;line-height:1.6;max-width:810px;margin:0 0 24px}.summary-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 38px}.summary-card{background:#18241c;border:1px solid #334437;border-radius:13px;padding:15px}.summary-card small{display:block;font-size:11px;color:#abbdad;margin-bottom:10px}.summary-card strong{font-size:22px;color:#e4f0df;letter-spacing:-.5px}.page{display:none}.page.active{display:block}.section-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:23px}.section-header p{margin:7px 0 0;color:#abbab0;font-size:14px;line-height:1.5}.panel{background:#19251d;border:1px solid #34493a;border-radius:16px;padding:23px;min-width:0}.panel.tinted{background:#213322}.two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:17px;margin-bottom:18px}.stack{display:flex;flex-direction:column;gap:15px}.stack h3{margin-bottom:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{color:#cad8cd;font-size:13px;font-weight:650;display:flex;flex-direction:column;gap:7px}label small,.fine{color:#a1b1a5;font-weight:400;font-size:11px;line-height:1.6}input,select{border:1px solid #475c4a;border-radius:9px;background:#101a14;color:#f5faf5;padding:11px;width:100%;min-height:44px}input:focus,select:focus{outline:2px solid #b9ee74;outline-offset:2px}input[type=checkbox]{min-height:18px;width:18px;accent-color:#c4fa72}.checkbox-row{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.5}.primary{color:#182716;background:#c4fa72;border:1px solid #c4fa72;font-weight:800;padding:13px;border-radius:10px;min-height:45px}.primary:hover{background:#d9ffa8}.primary:focus-visible,button:focus-visible{outline:2px solid #faf4c5;outline-offset:3px}.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}.stat{background:#111b15;border:1px solid #324437;border-radius:11px;padding:14px}.stat .num{font-weight:830;font-size:24px;color:#d0ff90}.stat .name{font-size:11px;margin-top:5px;color:#a9b9ac}.detail,.notice{font-size:12px;line-height:1.65;color:#b6c8b9}.notice{padding:17px 20px;border:1px solid #52603b;background:#202d1c;border-radius:12px;margin-top:20px}.warning{border:1px solid #8a693d;background:#3b2b1b;padding:12px;border-radius:9px;color:#ffd9a2;margin:12px 0;font-size:13px}.danger{border:1px solid #b05d62;background:#3a2325;color:#ffd5d5;padding:12px;border-radius:9px;margin:12px 0;font-size:13px}.success{border:1px solid #416c45;background:#243b29;padding:12px;border-radius:9px;color:#d3f3d0;margin:12px 0;font-size:13px}.nutrient-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #334137;padding:9px 0;color:#b8cabd;font-size:13px}.nutrient-row strong{color:#f2faf3}.muted{color:#adbaaf;font-size:13px;line-height:1.6}.macro-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}.macro-bars>div{border:1px solid #354c39;background:#122017;border-radius:10px;padding:12px}.macro-bars strong{display:block;font-size:20px;color:#d6faa9}.macro-bars small{color:#a8baa8}.segmented{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#111b15;border-radius:10px;padding:5px}.segmented button{background:none;border:1px solid transparent;color:#aebdb1;font-size:12px;border-radius:8px;padding:10px}.segmented button.selected{background:#334a35;border-color:#5d7c56;color:white}.ingredient{font-size:12px;border-bottom:1px solid #334137;display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:#b8cbbd}.ingredient:last-child{border:none}.ingredient span:last-child{text-align:right;white-space:nowrap}.panel-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.entry{padding:12px 0;border-bottom:1px solid #344438;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.entry:last-child{border:0}.entry small{display:block;color:#9fb19f;margin-top:3px}.entry button{border:1px solid #526956;background:transparent;color:#daebd7;padding:6px 10px;border-radius:7px}.pill{font-size:11px;background:#334a31;border:1px solid #50734b;color:#d7fab5;padding:6px 9px;border-radius:100px;font-weight:700;display:inline-block}.pill.reduce,.pill.hold{background:#473d21;border-color:#776c38;color:#ffe6a1}.pill.stop{background:#482628;border-color:#895459;color:#ffd3d0}.exercise{padding:13px 0;border-bottom:1px solid #364739;display:flex;justify-content:space-between;gap:12px;font-size:13px}.exercise:last-child{border:0}.exercise strong{color:#f5fff4}.exercise span{white-space:nowrap;color:#c8fa9b}.progressline{height:9px;overflow:hidden;border-radius:20px;background:#334334;margin:7px 0 12px}.progressline div{height:100%;background:#c4fa72;max-width:100%}#alerts:empty{display:none}#alerts{margin-bottom:12px}footer{border-top:1px solid #2c3e30;display:flex;justify-content:space-between;gap:10px;padding:25px 0 0;color:#8fa296;font-size:11px;margin-top:40px}@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto;border-right:none;border-bottom:1px solid #293830;padding:15px 20px}.overline,.sidebar-note{display:none}.tabs{flex-direction:row;overflow:auto}.tab{min-width:max-content;padding:12px}.topbar{padding:0 20px}.main-content{padding:28px 20px}}@media(max-width:660px){.two-col,.form-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:1fr 1fr}.offline-tag{display:none}.topbar{height:67px}.panel{padding:17px}.section-header{align-items:flex-start}.counter{flex-shrink:0}.macro-bars{grid-template-columns:1fr 1fr}footer{flex-direction:column}h1{letter-spacing:-1px}}
 
@@ -18,7 +18,15 @@
 #live-results[hidden],#scanner-preview[hidden],#scan-stop[hidden]{display:none}
 @media(max-width:650px){.action-row>*{flex:1 1 100%}}
 
+
+/* Continuous barcode scanner UI. The live video is owned by html5-qrcode. */
+#barcode-live-reader video{width:100%!important;max-height:460px;object-fit:contain}
+#barcode-live-reader{min-height:160px}
+.scan-guides{font-size:13px;line-height:1.6;padding:12px 0;color:#cadccc}
+#scan-zoom{width:100%;min-height:30px}
+#scanner-preview{border:1px solid #354f3a;border-radius:12px;padding:14px;margin-top:15px}
 </style>
+<script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head><body>
 <div class="app-shell">
   <header class="topbar">
@@ -38,7 +46,7 @@
       <div class="sidebar-note"><strong>Proof of concept</strong><p>One profile drives calorie targets, recipes, training, recovery guidance, and progress reviews.</p></div>
     </aside>
     <main class="main-content">
-      <div class="eyebrow">FOUNDATION BUILD / v0.2.3.3</div>
+      <div class="eyebrow">FOUNDATION BUILD / v0.3.3.3</div>
       <h1>Make the next good choice <em>obvious.</em></h1>
       <p class="lede">A connected fitness planning system. Start with the 300-pound beginner test case, change any input, and watch the plan adapt.</p>
       <div id="alerts" aria-live="polite"></div>
@@ -69,16 +77,26 @@
         <div class="section-header"><div><span class="eyebrow">ENGINE 02</span><h2 id="nutrition-title">Nutrition & food intelligence</h2><p>Every food is transparent. Compare portions, transform favorite meals, and log what you actually eat.</p></div><span class="counter">2 / 5</span></div>
         <div class="panel"><h3>Daily macro budget</h3><div id="nutrition-budget"></div></div>
         <div class="panel stack" id="live-food-panel">
-          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>Camera blocked?</strong> Take a barcode picture in your regular Camera app, return to FORGE, and tap <strong>Choose barcode photo from gallery</strong>. This does not require FORGE camera permission.</p>
+          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>New live scanner:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
           <p class="fine">Enter a barcode, use the photo scanner, or search by product name. An internet connection is required. Searches go to Open Food Facts; no personal fitness profile is sent. This database is crowd-sourced—always check the actual product label and ingredients.</p>
           <form id="live-lookup-form" class="stack">
             <div class="form-grid">
               <label>Search method<select id="lookup-mode"><option value="barcode">Barcode digits (8–14 digits)</option><option value="name">Food or brand name</option></select></label>
               <label id="live-query-label">Barcode<input id="live-query" type="text" inputmode="numeric" maxlength="60" placeholder="Enter the digits under the barcode" required/></label>
             </div>
-            <div class="action-row"><button type="submit" id="live-search" class="primary">Look up food</button><button type="button" id="scan-start" class="secondary-btn">Live camera scanner (HTTPS only)</button><button type="button" id="scan-photo" class="secondary-btn">Choose barcode photo from gallery</button><input type="file" id="barcode-image" accept="image/*" aria-label="Choose a saved barcode photo" style="display:block;width:100%;max-width:320px;margin:8px 0"><label for="barcode-camera-image" class="fine">Or take a new photo using your phone camera:</label><input type="file" id="barcode-camera-image" accept="image/*" capture="environment" aria-label="Take a barcode photo" style="display:block;width:100%;max-width:320px;margin:8px 0"><button type="button" id="scan-stop" class="secondary-btn" hidden>Stop camera</button></div>
+            <div class="action-row"><button type="submit" id="live-search" class="primary">Look up food</button><button type="button" id="scan-start" class="secondary-btn">Scan barcode live</button><button type="button" id="scan-photo" class="secondary-btn">Choose barcode photo from gallery</button><input type="file" id="barcode-image" accept="image/*" aria-label="Choose a saved barcode photo" style="display:block;width:100%;max-width:320px;margin:8px 0"><label for="barcode-camera-image" class="fine">Or take a new photo using your phone camera:</label><input type="file" id="barcode-camera-image" accept="image/*" capture="environment" aria-label="Take a barcode photo" style="display:block;width:100%;max-width:320px;margin:8px 0"><button type="button" id="scan-stop" class="secondary-btn" hidden>Stop camera</button></div>
           </form>
-          <div id="scanner-preview" hidden><video id="barcode-video" autoplay playsinline muted></video><p class="fine">Camera video stays on your device. FORGE does not upload photos or video.</p></div>
+          <div id="scanner-preview" hidden>
+            <div id="barcode-live-reader" style="width:100%;max-width:600px;overflow:hidden;border-radius:12px;background:#080e0b"></div>
+            <div class="scan-guides"><strong>Scan tips:</strong> Hold the entire barcode horizontally in view, 6–12 inches away; pause for 2–3 seconds. Move farther back if blurry. Try another rear camera or adjust zoom if available.</div>
+            <div class="form-grid" id="camera-controls">
+              <label id="camera-device-wrap" hidden>Camera lens <select id="camera-device" aria-label="Choose a camera"></select></label>
+              <label id="scan-zoom-wrap" hidden>Zoom: <output id="scan-zoom-value">1×</output><input id="scan-zoom" type="range" min="1" max="3" step="0.1" value="1" aria-label="Camera zoom"></label>
+            </div>
+            <div class="action-row"><button type="button" id="scan-torch" class="secondary-btn" hidden>Turn flashlight on</button><button type="button" id="scan-refocus" class="secondary-btn" hidden>Request autofocus</button></div>
+            <p id="scan-focus-info" class="fine">Autofocus availability depends on the phone and browser.</p>
+            <p class="fine">Camera frames stay on your device. The third-party decoder runs locally in the browser. FORGE sends only the decoded barcode to the food database.</p>
+          </div>
           <div id="live-status" role="status" aria-live="polite" class="fine">No search performed yet.</div>
           <div id="live-results" hidden>
             <label>Matched product<select id="live-product-select"></select></label>
@@ -105,7 +123,7 @@
           </div>
         </div>
         <div class="panel"><div class="panel-heading"><h3>Today's food log</h3><button id="clear-food-log" class="link-btn">Clear food log</button></div><div id="food-log"></div></div>
-        <div class="notice">Offline sample foods and recipes still use <strong>illustrative generic estimates</strong>. Live packaged-food values come from Open Food Facts and must be verified against the package. Live scanning depends on an HTTPS context and Android/Chrome camera access. The saved-photo picker does not require camera permission. The photo reader uses its own offline UPC-A / EAN-13 / EAN-8 decoder, and works without the experimental BarcodeDetector API. For best results keep the bars vertical, centered, sharp and well-lit. If a photo cannot be decoded, enter the printed digits. There is no image recognition, retailer inventory, price comparison, or clinical validation.</div>
+        <div class="notice">Offline sample foods and recipes still use <strong>illustrative generic estimates</strong>. Live packaged-food values come from Open Food Facts and must be verified against the package. Live scanning uses a third-party, version-pinned browser decoder over HTTPS and needs an internet connection to load it. Continuous focus, zoom, and flashlight controls depend on browser and camera support. The saved-photo picker does not require camera permission. The photo reader uses its own offline UPC-A / EAN-13 / EAN-8 decoder, and works without the experimental BarcodeDetector API. For best results keep the bars vertical, centered, sharp and well-lit. If a photo cannot be decoded, enter the printed digits. There is no image recognition, retailer inventory, price comparison, or clinical validation.</div>
       </section>
       <section id="training" class="page" aria-labelledby="training-title"><div class="section-header"><div><span class="eyebrow">ENGINE 03</span><h2 id="training-title">Training plan</h2><p>A foundation strength plan that reads your goals, equipment access, and recovery status.</p></div><span class="counter">3 / 5</span></div><div class="two-col"><div id="training-output" class="panel"></div><div class="stack"><div class="panel tinted"><h3>Progressive loading</h3><p>Use controlled repetitions with good technique. Increase one variable at a time only after several well-tolerated sessions—not because a calendar says to.</p></div><div class="panel"><h3>Log a session</h3><p>Completed workouts feed the progress engine.</p><button id="complete-workout" class="primary">Mark one workout complete</button></div></div></div></section>
       <section id="recovery" class="page" aria-labelledby="recovery-title"><div class="section-header"><div><span class="eyebrow">ENGINE 04</span><h2 id="recovery-title">Recovery guardrails</h2><p>Update your current condition. The training plan automatically changes.</p></div><span class="counter">4 / 5</span></div>
@@ -121,7 +139,7 @@
       <section id="progress" class="page" aria-labelledby="progress-title"><div class="section-header"><div><span class="eyebrow">ENGINE 05</span><h2 id="progress-title">Progress & adaptation</h2><p>Track trends, not isolated numbers. The app explains when there isn't enough evidence to change the plan.</p></div><span class="counter">5 / 5</span></div>
         <div class="two-col"><div class="panel stack"><h3>Record a weigh-in</h3><form id="weighin-form" class="stack"><label>Date<input id="weighin-date" type="date" required/></label><label>Weight (lb)<input id="weighin-weight" type="number" min="80" max="700" step="0.1" required/></label><button class="primary" type="submit">Save weigh-in</button></form><div id="weighin-list"></div></div><div id="progress-output" class="panel"></div></div>
       </section>
-      <footer><span>FORGE · Fitness foundation · v0.2.1</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
+      <footer><span>FORGE · Fitness foundation · v0.3.1</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
     </main>
   </div>
 </div><script type="module">
@@ -403,7 +421,8 @@ function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventLis
 
 // Live food data is not merged with the illustrative sample catalog. User-initiated queries only.
 let liveMatches=[], selectedLive=null, lastRequests={barcode:0,name:0};
-let cameraStream=null, cameraTimer=null, scannerBusy=false;
+let liveScanner=null, cameraStarting=false, scanFound=false, activeCameraId=null;
+const supportedGroceryFormats=()=>[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,Html5QrcodeSupportedFormats.ITF];
 function liveStatus(s){$('#live-status').textContent=s;}
 function updateLiveControls(){const mode=$('#lookup-mode').value;$('#live-query-label').firstChild.textContent=mode==='barcode'?'Barcode ':'Product name ';$('#live-query').placeholder=mode==='barcode'?'Enter barcode digits':'e.g. unsweetened oat milk';$('#live-query').inputMode=mode==='barcode'?'numeric':'text';$('#scan-start').disabled=mode!=='barcode';liveMatches=[];selectedLive=null;$('#live-results').hidden=true;liveStatus('Enter a product and press Look up food.');}
 function showLiveProduct(){const i=Number($('#live-product-select').value);selectedLive=liveMatches[i];
@@ -431,48 +450,99 @@ async function runLiveLookup(){const mode=$('#lookup-mode').value,query=$('#live
  }catch(e){liveStatus(e.name==='AbortError'?'Lookup timed out. Check your connection and try again.':`Lookup unavailable: ${e.message}. You can still use the offline foods.`)}
  finally{$('#live-search').disabled=false;}
 }
-function closeCamera(){if(cameraTimer)clearInterval(cameraTimer);cameraTimer=null;if(cameraStream)for(const track of cameraStream.getTracks())track.stop();cameraStream=null;$('#barcode-video').srcObject=null;$('#scanner-preview').hidden=true;$('#scan-stop').hidden=true;$('#scan-start').hidden=false;scannerBusy=false;}
-// v0.2.1: distinguish permissions, unavailable camera, browser support and file contexts.
+async function closeCamera(){
+ cameraStarting=false;
+ const instance=liveScanner;liveScanner=null;
+ $('#scan-start').hidden=false;$('#scan-stop').hidden=true;$('#scanner-preview').hidden=true;
+ $('#scan-zoom-wrap').hidden=true;$('#scan-torch').hidden=true;$('#scan-refocus').hidden=true;
+ if(instance){try{await instance.stop();}catch{}try{instance.clear();}catch{}}
+ $('#barcode-live-reader').replaceChildren();
+}
 function cameraError(err){
- const kind=err?.name||'UnknownError';
- const fileContext=['file:','content:'].includes(location.protocol);
- const localHint=fileContext?' This downloaded-file context may have limited camera permissions; an HTTPS-hosted copy is more reliable.':'';
- if(kind==='NotAllowedError'||kind==='PermissionDeniedError'||kind==='SecurityError')return 'Camera permission was denied or blocked. On Android: Settings → Apps → Chrome → Permissions → Camera → Allow while using; also check Chrome → Settings → Site settings → Camera.'+localHint;
- if(kind==='NotFoundError'||kind==='DevicesNotFoundError')return 'No available camera was found. Check your device camera and retry.';
- if(kind==='NotReadableError'||kind==='TrackStartError'||kind==='AbortError')return 'The camera could not start; another app may be using it. Close other camera apps, then retry.';
- if(!window.isSecureContext||kind==='TypeError')return 'This browser context cannot open the camera. Use the app from an HTTPS website rather than a file or preview.';
- return `Camera could not start (${kind}). Try Take barcode photo or enter the printed digits.`+localHint;
+ const kind=err?.name||'Unknown';const msg=String(err?.message||err||'');
+ if(kind==='NotAllowedError'||kind==='PermissionDeniedError')return 'Camera permission was denied. Allow camera access for this HTTPS website in Chrome.';
+ if(kind==='NotFoundError'||kind==='DevicesNotFoundError')return 'No camera was found. Close another camera app if one is running.';
+ if(kind==='NotReadableError'||kind==='TrackStartError')return 'Your camera is in use by another app or browser tab. Close it and try again.';
+ if(!window.isSecureContext)return 'Camera access requires the secure HTTPS website.';
+ return `Cannot start live scanner (${kind}: ${msg.slice(0,150)}). Use manual entry or a photo as backup.`;
 }
-async function makeBarcodeDetector(){
- if(!('BarcodeDetector' in window))throw Object.assign(new Error('Browser lacks barcode detection'),{name:'BarcodeDetectionUnavailable'});
- const allowed=['ean_13','ean_8','upc_a','upc_e'];
- const formats=await BarcodeDetector.getSupportedFormats();
- const active=allowed.filter(f=>formats.includes(f));
- if(!active.length)throw Object.assign(new Error('Grocery barcode formats unsupported'),{name:'BarcodeFormatsUnavailable'});
- return new BarcodeDetector({formats:active});
+function sanitizeDetectedBarcode(raw){
+ const code=String(raw||'').trim().replace(/[^0-9]/g,'');
+ if(!/^\d{8,14}$/.test(code))return null;
+ if([8,12,13,14].includes(code.length)&&!eanCheck(code))return null;
+ return code;
 }
-function firstBarcode(detections){return detections.map(x=>String(x.rawValue||'').replace(/\D/g,'')).find(x=>/^\d{8,14}$/.test(x));}
-function setBarcodeAndLookUp(code){closeCamera();$('#lookup-mode').value='barcode';updateLiveControls();$('#live-query').value=code;runLiveLookup();}
-async function startCamera(){
- if(!window.isSecureContext){liveStatus('Live camera requires a secure context. Open the HTTPS version of FORGE. You can still choose a saved photo or enter the barcode.');return;}
- if(!navigator.mediaDevices?.getUserMedia){liveStatus('This browser does not provide a live camera feed here. Try taking a photo with your phone camera and selecting it from the gallery.');return;}
+async function setBarcodeAndLookUp(code){
+ await closeCamera();$('#lookup-mode').value='barcode';updateLiveControls();$('#live-query').value=code;
+ liveStatus('Found barcode '+code+'. Looking up nutritional details…');
+ await runLiveLookup();
+}
+async function applyCameraFocus(){
+ const scanner=liveScanner;if(!scanner)return;
+ let caps={};try{caps=scanner.getRunningTrackCapabilities()||{};}catch{}
+ const modes=Array.isArray(caps.focusMode)?caps.focusMode:[];
+ if(modes.includes('continuous')){
+  try{await scanner.applyVideoConstraints({advanced:[{focusMode:'continuous'}]});$('#scan-focus-info').textContent='Continuous autofocus requested. Hold the package steady until the bars appear sharp.';$('#scan-refocus').hidden=false;return;}catch{}
+ }
+ if(modes.includes('single-shot')){
+  $('#scan-refocus').hidden=false;
+  try{await scanner.applyVideoConstraints({advanced:[{focusMode:'single-shot'}]});$('#scan-focus-info').textContent='Single-shot autofocus requested.';return;}catch{}
+ }
+ $('#scan-focus-info').textContent='This camera/browser does not expose focus control. Move the barcode farther away until sharp, or choose a different rear lens.';
+ $('#scan-refocus').hidden=true;
+}
+async function updateCameraOptions(){
+ if(!liveScanner)return;
  try{
-  cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
-  const video=$('#barcode-video');video.srcObject=cameraStream;await video.play();
-  $('#scanner-preview').hidden=false;$('#scan-stop').hidden=false;$('#scan-start').hidden=true;
-  liveStatus('Point the rear camera steadily at a UPC/EAN barcode. You can stop at any time.');
-  cameraTimer=setInterval(()=>{
-   if(scannerBusy||!cameraStream||video.readyState<2)return;scannerBusy=true;
-   try{
-    const factor=Math.min(1,1400/video.videoWidth);
-    const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(video.videoWidth*factor));canvas.height=Math.max(1,Math.round(video.videoHeight*factor));
-    canvas.getContext('2d',{willReadFrequently:true}).drawImage(video,0,0,canvas.width,canvas.height);
-    const code=decodeBarcodeCanvas(canvas);if(code)setBarcodeAndLookUp(code);
-   }catch(e){}finally{scannerBusy=false;}
-  },950);
- }catch(e){closeCamera();liveStatus(cameraError(e)+' Alternatively take a normal photo in your phone Camera app and choose it from the gallery.');}
+  const cams=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='videoinput').map(d=>({id:d.deviceId,label:d.label})),select=$('#camera-device'),track=liveScanner.getRunningTrackSettings?.()||{};
+  if(cams.length>1){
+   select.replaceChildren();
+   for(const cam of cams){const opt=document.createElement('option');opt.value=cam.id;opt.textContent=cam.label||'Camera '+(select.options.length+1);select.appendChild(opt);}
+   if(track.deviceId&&cams.some(c=>c.id===track.deviceId))select.value=track.deviceId;
+   $('#camera-device-wrap').hidden=false;
+  }else $('#camera-device-wrap').hidden=true;
+ }catch{$('#camera-device-wrap').hidden=true;}
 }
-
+async function updateCameraAdjustments(){
+ if(!liveScanner)return;
+ let caps={},settings={};try{caps=liveScanner.getRunningTrackCapabilities()||{};settings=liveScanner.getRunningTrackSettings()||{};}catch{}
+ if(caps.zoom&&Number.isFinite(caps.zoom.min)&&Number.isFinite(caps.zoom.max)&&caps.zoom.max>caps.zoom.min){
+  const input=$('#scan-zoom');input.min=caps.zoom.min;input.max=caps.zoom.max;input.step=caps.zoom.step||.1;
+  input.value=Number.isFinite(settings.zoom)?settings.zoom:caps.zoom.min;
+  $('#scan-zoom-value').textContent=Number(input.value).toFixed(1)+'×';$('#scan-zoom-wrap').hidden=false;
+ }else $('#scan-zoom-wrap').hidden=true;
+ $('#scan-torch').hidden=!caps.torch;
+ $('#scan-torch').textContent='Turn flashlight on';$('#scan-torch').dataset.on='false';
+ await applyCameraFocus();
+}
+async function startCamera(deviceId=null){
+ if(cameraStarting||liveScanner)return;
+ if(!window.isSecureContext){liveStatus('Live scanning requires the HTTPS website, not a downloaded HTML file.');return;}
+ if(typeof Html5Qrcode==='undefined'||typeof Html5QrcodeSupportedFormats==='undefined'){
+  liveStatus('Barcode scanner library did not load. Check internet access and refresh the page, or enter the printed barcode numbers.');return;
+ }
+ cameraStarting=true;scanFound=false;
+ $('#scan-start').disabled=true;$('#scanner-preview').hidden=false;$('#scan-stop').hidden=false;
+ liveStatus('Starting rear camera and barcode recognition…');
+ try{
+  const scanner=new Html5Qrcode('barcode-live-reader',{formatsToSupport:supportedGroceryFormats(),useBarCodeDetectorIfSupported:false,verbose:false});
+  liveScanner=scanner;
+  const camera=deviceId?{deviceId:{exact:deviceId}}:{facingMode:'environment'};
+  const scanConfig={fps:12,aspectRatio:1.7778};
+  const onFound=(raw)=>{if(scanFound||!liveScanner)return;const code=sanitizeDetectedBarcode(raw);if(!code)return;scanFound=true;setBarcodeAndLookUp(code);};
+  const onMiss=()=>{};
+  try{await scanner.start({...camera,width:{ideal:1920},height:{ideal:1080}},scanConfig,onFound,onMiss);}
+  catch(e){
+   // Some phones reject resolution and aspect-ratio constraints. Retry with standard rear-camera defaults.
+   try{await scanner.start(camera,{fps:10},onFound,onMiss);}catch{throw e;}
+  }
+  if(!liveScanner){try{await scanner.stop();}catch{}return;}
+  cameraStarting=false;activeCameraId=deviceId;
+  $('#scan-start').hidden=true;$('#scan-start').disabled=false;
+  liveStatus('Scanner ready. Show a complete barcode. Detection runs automatically, roughly 10–12 times per second.');
+  await updateCameraOptions();await updateCameraAdjustments();
+ }catch(err){await closeCamera();$('#scan-start').disabled=false;liveStatus(cameraError(err));}
+}
 // Offline, self-contained retail barcode photo decoder (EAN-13, UPC-A, EAN-8).
 // Uses only pixels from the user's local image. No photo uploads and no third-party JS.
 const EAN_L=['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
@@ -573,7 +643,12 @@ function bindLive(){
   state.foodLog.push({label:`${selectedLive.name} (${quantity} g / mL, Open Food Facts; check label)`,macros:m});save();renderAll();message('Community-sourced packaged food logged. Verify the package label.');
  });
  if(location.protocol==='file:'||location.protocol==='content:'){$('#scan-start').disabled=true;$('#scan-start').title='Live camera scanning needs a hosted HTTPS version. Choose a saved photo instead.';}
- $('#scan-start').addEventListener('click',startCamera);$('#scan-stop').addEventListener('click',closeCamera);
+ $('#scan-start').addEventListener('click',()=>startCamera());$('#scan-stop').addEventListener('click',closeCamera);
+ $('#camera-device').addEventListener('change',async e=>{const id=e.target.value;await closeCamera();startCamera(id);});
+ $('#scan-refocus').addEventListener('click',applyCameraFocus);
+ $('#scan-zoom').addEventListener('input',e=>{$('#scan-zoom-value').textContent=Number(e.target.value).toFixed(1)+'×';});
+ $('#scan-zoom').addEventListener('change',async e=>{try{await liveScanner?.applyVideoConstraints({advanced:[{zoom:Number(e.target.value)}]});}catch{liveStatus('Zoom adjustment is not supported on this lens; try another camera.');}});
+ $('#scan-torch').addEventListener('click',async()=>{const b=$('#scan-torch'),on=b.dataset.on!=='true';try{await liveScanner?.applyVideoConstraints({advanced:[{torch:on}]});b.dataset.on=String(on);b.textContent=on?'Turn flashlight off':'Turn flashlight on';}catch{liveStatus('Flashlight control is not available for this lens.');}});
  $('#scan-photo').addEventListener('click',()=>$('#barcode-image').click());
  $('#barcode-image').addEventListener('change',e=>scanPhoto(e.target.files?.[0]));
  $('#barcode-camera-image').addEventListener('change',e=>scanPhoto(e.target.files?.[0]));
