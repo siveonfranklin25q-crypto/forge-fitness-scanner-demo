@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#101a17"/>
-<title>FORGE — Fitness Foundation v0.3</title>
+<title>FORGE — Fitness Foundation v0.5</title>
 <style>
 [hidden]{display:none!important}
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4ef;background:#0e1512;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.app-shell{min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.topbar{height:77px;border-bottom:1px solid #293830;display:flex;justify-content:space-between;align-items:center;padding:0 34px;background:#101915}.brand{display:flex;align-items:center;gap:12px}.brandmark{background:#c4fa72;color:#172011;width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-size:24px;font-weight:950;transform:rotate(-5deg)}.brand strong{font-size:21px;letter-spacing:2px;display:block}.brand small{font-size:9px;letter-spacing:2.2px;color:#a6b4a8}.top-actions{display:flex;gap:22px;align-items:center}.offline-tag,.counter{font-size:11px;letter-spacing:1px;color:#c4fa72;border:1px solid #42633b;background:#1a2b20;padding:8px 10px;border-radius:100px;font-weight:700}.link-btn{background:none;border:none;color:#bddb99;text-decoration:underline;text-underline-offset:3px;padding:5px}.layout{display:grid;grid-template-columns:245px minmax(0,1fr);max-width:1570px;margin:auto}.sidebar{padding:34px 18px;min-height:calc(100vh - 77px);border-right:1px solid #293830;background:#111b16}.overline,.eyebrow{font-size:11px;letter-spacing:2px;color:#b5e575;font-weight:800}.overline{padding-left:14px;margin:0 0 20px}.tabs{display:flex;flex-direction:column;gap:5px}.tab{background:transparent;border:1px solid transparent;border-radius:11px;padding:14px 10px;color:#b2c1b7;display:flex;align-items:center;text-align:left;gap:11px;font-size:13px;font-weight:600;line-height:1.25}.tab:hover,.tab:focus-visible{background:#213128}.tab.active{background:#26392b;color:#f3ffef;border:1px solid #466b3a}.tab-number{font-size:10px;color:#a3ba91}.sidebar-note{border:1px solid #334a36;border-radius:12px;background:#1a281e;margin:38px 5px 0;padding:18px 14px;font-size:13px;line-height:1.65}.sidebar-note p{color:#abbeb0;margin:8px 0 0}.main-content{padding:36px clamp(22px,4.5vw,72px);max-width:1250px;width:100%}h1{font-weight:830;font-size:clamp(27px,3.9vw,48px);letter-spacing:-2.2px;margin:8px 0 12px;line-height:1.12}h1 em{font-style:normal;color:#c4fa72}h2{font-size:clamp(24px,2.6vw,31px);letter-spacing:-.8px;margin:6px 0}h3{font-size:18px;margin:0 0 12px}.lede{font-size:15px;color:#b3c2b9;line-height:1.6;max-width:810px;margin:0 0 24px}.summary-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 38px}.summary-card{background:#18241c;border:1px solid #334437;border-radius:13px;padding:15px}.summary-card small{display:block;font-size:11px;color:#abbdad;margin-bottom:10px}.summary-card strong{font-size:22px;color:#e4f0df;letter-spacing:-.5px}.page{display:none}.page.active{display:block}.section-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:23px}.section-header p{margin:7px 0 0;color:#abbab0;font-size:14px;line-height:1.5}.panel{background:#19251d;border:1px solid #34493a;border-radius:16px;padding:23px;min-width:0}.panel.tinted{background:#213322}.two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:17px;margin-bottom:18px}.stack{display:flex;flex-direction:column;gap:15px}.stack h3{margin-bottom:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{color:#cad8cd;font-size:13px;font-weight:650;display:flex;flex-direction:column;gap:7px}label small,.fine{color:#a1b1a5;font-weight:400;font-size:11px;line-height:1.6}input,select{border:1px solid #475c4a;border-radius:9px;background:#101a14;color:#f5faf5;padding:11px;width:100%;min-height:44px}input:focus,select:focus{outline:2px solid #b9ee74;outline-offset:2px}input[type=checkbox]{min-height:18px;width:18px;accent-color:#c4fa72}.checkbox-row{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.5}.primary{color:#182716;background:#c4fa72;border:1px solid #c4fa72;font-weight:800;padding:13px;border-radius:10px;min-height:45px}.primary:hover{background:#d9ffa8}.primary:focus-visible,button:focus-visible{outline:2px solid #faf4c5;outline-offset:3px}.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}.stat{background:#111b15;border:1px solid #324437;border-radius:11px;padding:14px}.stat .num{font-weight:830;font-size:24px;color:#d0ff90}.stat .name{font-size:11px;margin-top:5px;color:#a9b9ac}.detail,.notice{font-size:12px;line-height:1.65;color:#b6c8b9}.notice{padding:17px 20px;border:1px solid #52603b;background:#202d1c;border-radius:12px;margin-top:20px}.warning{border:1px solid #8a693d;background:#3b2b1b;padding:12px;border-radius:9px;color:#ffd9a2;margin:12px 0;font-size:13px}.danger{border:1px solid #b05d62;background:#3a2325;color:#ffd5d5;padding:12px;border-radius:9px;margin:12px 0;font-size:13px}.success{border:1px solid #416c45;background:#243b29;padding:12px;border-radius:9px;color:#d3f3d0;margin:12px 0;font-size:13px}.nutrient-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #334137;padding:9px 0;color:#b8cabd;font-size:13px}.nutrient-row strong{color:#f2faf3}.muted{color:#adbaaf;font-size:13px;line-height:1.6}.macro-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}.macro-bars>div{border:1px solid #354c39;background:#122017;border-radius:10px;padding:12px}.macro-bars strong{display:block;font-size:20px;color:#d6faa9}.macro-bars small{color:#a8baa8}.segmented{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#111b15;border-radius:10px;padding:5px}.segmented button{background:none;border:1px solid transparent;color:#aebdb1;font-size:12px;border-radius:8px;padding:10px}.segmented button.selected{background:#334a35;border-color:#5d7c56;color:white}.ingredient{font-size:12px;border-bottom:1px solid #334137;display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:#b8cbbd}.ingredient:last-child{border:none}.ingredient span:last-child{text-align:right;white-space:nowrap}.panel-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.entry{padding:12px 0;border-bottom:1px solid #344438;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.entry:last-child{border:0}.entry small{display:block;color:#9fb19f;margin-top:3px}.entry button{border:1px solid #526956;background:transparent;color:#daebd7;padding:6px 10px;border-radius:7px}.pill{font-size:11px;background:#334a31;border:1px solid #50734b;color:#d7fab5;padding:6px 9px;border-radius:100px;font-weight:700;display:inline-block}.pill.reduce,.pill.hold{background:#473d21;border-color:#776c38;color:#ffe6a1}.pill.stop{background:#482628;border-color:#895459;color:#ffd3d0}.exercise{padding:13px 0;border-bottom:1px solid #364739;display:flex;justify-content:space-between;gap:12px;font-size:13px}.exercise:last-child{border:0}.exercise strong{color:#f5fff4}.exercise span{white-space:nowrap;color:#c8fa9b}.progressline{height:9px;overflow:hidden;border-radius:20px;background:#334334;margin:7px 0 12px}.progressline div{height:100%;background:#c4fa72;max-width:100%}#alerts:empty{display:none}#alerts{margin-bottom:12px}footer{border-top:1px solid #2c3e30;display:flex;justify-content:space-between;gap:10px;padding:25px 0 0;color:#8fa296;font-size:11px;margin-top:40px}@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto;border-right:none;border-bottom:1px solid #293830;padding:15px 20px}.overline,.sidebar-note{display:none}.tabs{flex-direction:row;overflow:auto}.tab{min-width:max-content;padding:12px}.topbar{padding:0 20px}.main-content{padding:28px 20px}}@media(max-width:660px){.two-col,.form-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:1fr 1fr}.offline-tag{display:none}.topbar{height:67px}.panel{padding:17px}.section-header{align-items:flex-start}.counter{flex-shrink:0}.macro-bars{grid-template-columns:1fr 1fr}footer{flex-direction:column}h1{letter-spacing:-1px}}
@@ -38,6 +38,22 @@
 .advisor-ideas{display:flex;gap:8px;flex-wrap:wrap}
 .advisor-ideas button{font-size:13px}
 @media(max-width:660px){.advisor-grid{grid-template-columns:1fr}}
+
+/* Meal Builder: one live barcode can be used in multiple customized meals. */
+#meal-builder{margin-top:20px}
+.meal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.meal-ingredient{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:center;gap:10px;border-bottom:1px solid #3c5443;padding:12px 0}
+.meal-ingredient strong{display:block;font-size:13px;overflow-wrap:anywhere}
+.meal-ingredient small{display:block;margin-top:5px;color:#b4c7b5;font-size:11px}
+.meal-ingredient label{font-size:11px;color:#d6e4d5}
+.meal-ingredient input{max-width:96px;padding:9px 6px;width:100%}
+.meal-ingredient button{padding:8px 12px}
+.meal-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.meal-stat{background:#17251d;border:1px solid #466047;border-radius:9px;padding:12px}
+.meal-stat strong{display:block;font-size:19px;color:#ccff94;margin-bottom:4px}
+.meal-stat small{color:#b5c5b3;font-size:11px}
+#meal-shopping-list .ingredient{border-bottom:1px solid #354d3b;padding:10px 0}
+@media(max-width:650px){.meal-grid{grid-template-columns:1fr}.meal-stat-row{grid-template-columns:repeat(2,1fr)}.meal-ingredient{grid-template-columns:minmax(0,1fr) 83px;}.meal-ingredient button{grid-column:2;width:100%;padding:7px}.meal-ingredient input{max-width:82px}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head><body>
@@ -59,7 +75,7 @@
       <div class="sidebar-note"><strong>Proof of concept</strong><p>One profile drives calorie targets, recipes, training, recovery guidance, and progress reviews.</p></div>
     </aside>
     <main class="main-content">
-      <div class="eyebrow">FOUNDATION BUILD / v0.3.3.3</div>
+      <div class="eyebrow">FOUNDATION BUILD / v0.5</div>
       <h1>Make the next good choice <em>obvious.</em></h1>
       <p class="lede">A connected fitness planning system. Start with the 300-pound beginner test case, change any input, and watch the plan adapt.</p>
       <div id="alerts" aria-live="polite"></div>
@@ -90,7 +106,7 @@
         <div class="section-header"><div><span class="eyebrow">ENGINE 02</span><h2 id="nutrition-title">Nutrition & food intelligence</h2><p>Every food is transparent. Compare portions, transform favorite meals, and log what you actually eat.</p></div><span class="counter">2 / 5</span></div>
         <div class="panel"><h3>Daily macro budget</h3><div id="nutrition-budget"></div></div>
         <div class="panel stack" id="live-food-panel">
-          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>FORGE v0.4 — Smart Food Comparison:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
+          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>FORGE v0.5 — Ingredient-to-Recipe Builder:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
           <p class="fine">Enter a barcode, use the photo scanner, or search by product name. An internet connection is required. Searches go to Open Food Facts; no personal fitness profile is sent. This database is crowd-sourced—always check the actual product label and ingredients.</p>
           <form id="live-lookup-form" class="stack">
             <div class="form-grid">
@@ -149,13 +165,40 @@
               <div id="comparison-status" class="fine" role="status"></div>
               <div id="comparison-results"></div>
               <h3 style="font-size:15px">Cook something at home</h3>
-              <p class="fine" id="recipe-link-note">Recipe examples have generic estimated macros. They do not yet recalculate automatically from the scanned product.</p>
+              <p class="fine" id="recipe-link-note">Select a recipe below and add your scanned ingredients to calculate the batch and servings. Generic ingredients remain estimates.</p>
               <div class="advisor-ideas" id="recipe-ideas"></div>
             </div>
-            <button type="button" id="log-live" class="primary">Log this food</button>
+            <div class="action-row"><button type="button" id="log-live" class="primary">Log this food</button><button type="button" id="add-live-to-meal" class="secondary-btn">Use scanned food in a recipe</button></div>
           </div>
           <p class="fine">Source: <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener noreferrer">Open Food Facts</a> (Open Database License). Source entries are not independently verified; barcode identity does not confirm a product is stocked at a particular retailer.</p>
         </div>
+
+        <section class="panel stack" id="meal-builder" aria-labelledby="meal-builder-heading">
+          <h3 id="meal-builder-heading">Build a homemade meal from scanned ingredients</h3>
+          <p class="fine">Load a recipe, replace its generic ingredients with products you scan, then adjust quantities. Food weights are RAW/AS PACKAGED unless specified. Ingredient nutrition is counted from its own label or marked as a generic estimate; unknown nutrients are never silently treated as zero.</p>
+          <div class="meal-grid">
+            <label>Starting home recipe<select id="meal-template"></select></label>
+            <label>Style<select id="meal-style"><option value="smart">Higher-protein home version</option><option value="classic">Classic homemade version</option></select></label>
+          </div>
+          <button type="button" id="meal-load-template" class="secondary-btn">Load starting ingredients (replaces draft)</button>
+          <div class="meal-grid">
+            <label>Meal name<input id="meal-name" type="text" maxlength="80" aria-label="Meal name"></label>
+            <label>Number of portions<input id="meal-servings" type="number" min="1" max="24" step="1" value="2"></label>
+          </div>
+          <div class="action-row"><button type="button" id="meal-add-scanned" class="secondary-btn">Add last scanned ingredient</button><button type="button" id="meal-replace-meat" class="secondary-btn">Replace first generic meat with scanned food</button></div>
+          <div class="form-grid"><label>Add another generic ingredient<select id="meal-available-food"></select></label><label>Amount (listed servings)<input id="meal-new-qty" type="number" min="0.1" max="40" step="0.25" value="1"></label></div>
+          <button type="button" id="meal-add-reference" class="secondary-btn">Add generic reference ingredient</button>
+          <p id="meal-status" role="status" aria-live="polite" class="fine"></p>
+          <h3 style="font-size:15px">Ingredients in this batch</h3>
+          <div id="meal-ingredients"></div>
+          <h3 style="font-size:15px">Nutrition calculated from ingredients</h3>
+          <div id="meal-results" aria-live="polite"></div>
+          <h3 style="font-size:15px">Grocery and meal-prep list</h3>
+          <div id="meal-shopping-list"></div>
+          <p class="fine" id="meal-prep-notes"></p>
+          <div class="action-row"><button type="button" id="meal-log-serving" class="primary">Log one meal portion</button><button type="button" id="meal-copy-list" class="secondary-btn">Copy grocery list</button><button type="button" id="meal-clear" class="secondary-btn">Clear meal ingredients</button></div>
+          <p class="fine">This is a local editable draft, not a retailer inventory or pricing service. Calculations from community food records or generic examples remain estimates. Confirm allergens and labels. Recipe cooking instructions are general examples, not a personalized food-safety plan.</p>
+        </section>
         <div class="two-col">
           <div class="panel stack"><h3>Browse offline sample foods</h3><label>Search foods and ingredients<input id="food-search" type="search" placeholder="Try beef, chips, chicken, soda..."/></label>
             <label>Choose an item<select id="food-select"></select></label>
@@ -172,7 +215,7 @@
           </div>
         </div>
         <div class="panel"><div class="panel-heading"><h3>Today's food log</h3><button id="clear-food-log" class="link-btn">Clear food log</button></div><div id="food-log"></div></div>
-        <div class="notice">Offline sample foods and recipes still use <strong>illustrative generic estimates</strong>. Live packaged-food values come from Open Food Facts and must be verified against the package. Live scanning uses a third-party, version-pinned browser decoder over HTTPS and needs an internet connection to load it. Continuous focus, zoom, and flashlight controls depend on browser and camera support. The Smart Grocery Advisor compares numbers at the same weight and suggests existing sample home recipes, but does not yet know store inventory, current prices, or calculate the scanned meat within those recipes. The saved-photo picker does not require camera permission. The photo reader uses its own offline UPC-A / EAN-13 / EAN-8 decoder, and works without the experimental BarcodeDetector API. For best results keep the bars vertical, centered, sharp and well-lit. If a photo cannot be decoded, enter the printed digits. There is no image recognition, retailer inventory, price comparison, or clinical validation.</div>
+        <div class="notice">Offline sample foods and recipes still use <strong>illustrative generic estimates</strong>. Live packaged-food values come from Open Food Facts and must be verified against the package. Live scanning uses a third-party, version-pinned browser decoder over HTTPS and needs an internet connection to load it. Continuous focus, zoom, and flashlight controls depend on browser and camera support. The Smart Grocery Advisor compares equal food weights, and the Meal Builder calculates scanned ingredients plus generic recipe ingredients with clearly marked provenance. No live inventory, prices, or automated recognition of ingredients from photos is available. The saved-photo picker does not require camera permission. The photo reader uses its own offline UPC-A / EAN-13 / EAN-8 decoder, and works without the experimental BarcodeDetector API. For best results keep the bars vertical, centered, sharp and well-lit. If a photo cannot be decoded, enter the printed digits. There is no image recognition, retailer inventory, price comparison, or clinical validation.</div>
       </section>
       <section id="training" class="page" aria-labelledby="training-title"><div class="section-header"><div><span class="eyebrow">ENGINE 03</span><h2 id="training-title">Training plan</h2><p>A foundation strength plan that reads your goals, equipment access, and recovery status.</p></div><span class="counter">3 / 5</span></div><div class="two-col"><div id="training-output" class="panel"></div><div class="stack"><div class="panel tinted"><h3>Progressive loading</h3><p>Use controlled repetitions with good technique. Increase one variable at a time only after several well-tolerated sessions—not because a calendar says to.</p></div><div class="panel"><h3>Log a session</h3><p>Completed workouts feed the progress engine.</p><button id="complete-workout" class="primary">Mark one workout complete</button></div></div></div></section>
       <section id="recovery" class="page" aria-labelledby="recovery-title"><div class="section-header"><div><span class="eyebrow">ENGINE 04</span><h2 id="recovery-title">Recovery guardrails</h2><p>Update your current condition. The training plan automatically changes.</p></div><span class="counter">4 / 5</span></div>
@@ -493,7 +536,7 @@ function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventLis
  $('#recovery-form').addEventListener('submit',e=>{e.preventDefault();state.check={sleep:+$('#sleep').value,soreness:$('#soreness').value,pain:$('#pain').value,injury:$('#injury').checked,redFlag:$('#redFlag').checked};save();renderAll();message('Recovery status updated; training recommendations recalculated.');});
  $('#complete-workout').addEventListener('click',()=>{if(recoveryEngine(state.check).level==='stop')return;state.workoutsDone=Math.min(99,state.workoutsDone+1);save();renderAll();message('Workout added to the progress tracker.');});
  $('#weighin-form').addEventListener('submit',e=>{e.preventDefault();const date=$('#weighin-date').value,weight=+$('#weighin-weight').value;if(!date||weight<80||weight>700||!Number.isFinite(weight))return;state.weighins=state.weighins.filter(e=>e.date!==date);state.weighins.push({date,weight});save();renderAll();message('Weigh-in saved locally.');});
- $('#reset').addEventListener('click',()=>{if(!confirm('Reset the entire prototype to the original 300-pound beginner example? This clears locally saved data.'))return;state=structuredClone(initial);localStorage.removeItem(KEY);initProfile();$('#food-search').value='';$('#food-portions').value=1;initFoods();renderAll();message('Demo reset to original sample.');});
+ $('#reset').addEventListener('click',()=>{if(!confirm('Reset the entire prototype to the original 300-pound beginner example? This clears locally saved data.'))return;state=structuredClone(initial);localStorage.removeItem(KEY);mealDraft=defaultMeal();try{localStorage.removeItem(MEAL_STORAGE)}catch{};$('#meal-template').value=mealDraft.recipeId;$('#meal-style').value=mealDraft.kind;$('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;redrawMeal();initProfile();$('#food-search').value='';$('#food-portions').value=1;initFoods();renderAll();message('Demo reset to original sample.');});
 }
 
 // Live food data is not merged with the illustrative sample catalog. User-initiated queries only.
@@ -581,7 +624,7 @@ function renderAdvisor(){
 function renderRecipeIdeas(p){
  const group=productGroup(p),recipeIds=(group==='ground-beef'||group==='ground-turkey')?['nachos','burger','pasta']:(group==='pasta'?['pasta','pizza']:(group==='chips'?['nachos']:(group==='chicken'?['pizza']:['nachos','burger','pasta','pizza'])));
  $('#recipe-ideas').innerHTML=recipeIds.map(id=>{const recipe=RECIPES.find(r=>r.id===id);return `<button class="secondary-btn" type="button" data-recipe-shortcut="${escapeHTML(id)}">${escapeHTML(recipe?.name||id)}</button>`}).join('');
- document.querySelectorAll('[data-recipe-shortcut]').forEach(button=>button.addEventListener('click',()=>{state.recipeId=button.dataset.recipeShortcut;state.recipeKind='smart';save();renderRecipe();$('#recipe-select').scrollIntoView({behavior:'smooth',block:'center'});message('Opened an example home recipe. Its generic ingredients are not automatically replaced with the scanned product.')}));
+ document.querySelectorAll('[data-recipe-shortcut]').forEach(button=>button.addEventListener('click',()=>{const id=button.dataset.recipeShortcut;state.recipeId=id;state.recipeKind='smart';save();renderRecipe();$('#meal-template').value=id;$('#meal-style').value='smart';$('#meal-builder').scrollIntoView({behavior:'smooth',block:'start'});$('#meal-status').textContent='Recipe selected. Tap Load starting ingredients to replace your current draft; then use your scanned ingredients.';}));
 }
 function showLiveProduct(){const i=Number($('#live-product-select').value);selectedLive=liveMatches[i];
  const p=selectedLive;
@@ -788,6 +831,115 @@ async function scanPhoto(file){
 }
 window.FORGE_BARCODE_TEST={decodeBarcodeCanvas,readEANbits,eanCheck};
 
+
+// Ingredient-to-recipe builder v0.5: locally saved draft, never changes Open Food Facts.
+const MEAL_STORAGE='forge-local-meal-draft-v1';
+const MEAL_METRICS=['kcal','protein','carbs','fat','fiber','sodium','saturatedFat','sugar','cholesterol'];
+const MEAL_COOKING={
+ nachos:'Brown ground meat thoroughly, season with spices, warm the beans, and melt the cheese. Keep chips and cold toppings separate until serving. Ground beef needs 160°F (71°C); poultry needs 165°F (74°C).',
+ burger:'Form patties and cook to a safe internal temperature. Ground beef needs 160°F (71°C); poultry patties need 165°F (74°C). Prepare vegetables separately.',
+ pasta:'Cook pasta per the package, brown meat thoroughly, and simmer with sauce and vegetables. Use 160°F (71°C) for ground beef or 165°F (74°C) for poultry.',
+ pizza:'Prepare the base, spread sauce, add toppings and bake until the base is done and cheese melted. Pre-cook raw ground meats or poultry to their safe temperatures before using as toppings.'
+};
+function refreshMealScannedProduct(p){if(!p)return;let changed=false;for(const item of mealDraft.items){if(item.type==='scan'&&item.product.code===p.code){item.product=structuredClone(p);changed=true;}}if(changed){storeMeal();redrawMeal();}}
+function defaultMeal(id='nachos',kind='smart'){
+ const r=RECIPES.find(r=>r.id===id)||RECIPES[0];
+ return {name:r.name,recipeId:r.id,kind,servings:r.serves,items:r[kind].map(([foodId,qty])=>({type:'sample',foodId,qty}))};
+}
+function recoverMeal(){try{
+ const r=JSON.parse(localStorage.getItem(MEAL_STORAGE)||'null');
+ if(!r||typeof r!=='object'||!Array.isArray(r.items)||r.items.length>35)return defaultMeal();
+ const items=r.items.filter(x=>x&&(['sample','scan'].includes(x.type))&&Number.isFinite(Number(x.qty))&&Number(x.qty)>0&&Number(x.qty)<=5000&&((x.type==='sample'&&FOODS[x.foodId])||(x.type==='scan'&&x.product&&x.product.per100&&typeof x.product.name==='string'))).map(x=>x.type==='sample'?{type:'sample',foodId:x.foodId,qty:Number(x.qty)}:{type:'scan',product:x.product,qty:Number(x.qty)});
+ return {name:String(r.name||'Custom meal').slice(0,80),recipeId:RECIPES.some(y=>y.id===r.recipeId)?r.recipeId:'nachos',kind:r.kind==='classic'?'classic':'smart',servings:Math.max(1,Math.min(24,Math.round(Number(r.servings)||1))),items};
+ }catch{return defaultMeal()}}
+let mealDraft=recoverMeal();
+function storeMeal(){try{localStorage.setItem(MEAL_STORAGE,JSON.stringify(mealDraft));return true}catch{$('#meal-status').textContent='This browser could not save the meal draft. Copy the grocery list before closing.';return false}}
+function currentMealItemNutrition(item){
+ if(item.type==='sample'){
+  const f=FOODS[item.foodId];if(!f)return null;
+  return {name:f.name,qty:item.qty,unit:'listed serving(s): '+f.serving,source:'Generic sample — estimated',nutrients:Object.fromEntries(MEAL_METRICS.map(k=>[k,f[k]===undefined?null:f[k]*item.qty])),reference:false};
+ }
+ const p=item.product;if(!p||!p.per100)return null;
+ const n={};for(const k of MEAL_METRICS){
+  const exact=p.labelPerServing?.[k],per=p.per100[k];
+  n[k]=p.labelGrams>0&&exact!==null&&exact!==undefined?Number(exact)*item.qty/p.labelGrams:per===null||per===undefined?null:Number(per)*item.qty/100;
+ }
+ return {name:p.name,qty:item.qty,unit:'g / mL (verify package and raw/cooked form)',source:p.labelOrigin||'Open Food Facts — unverified',nutrients:n,reference:!!p.labelOrigin,code:p.code,labelGrams:p.labelGrams,labelServings:p.labelServings};
+}
+function computeMeal(draft=mealDraft){
+ const rows=draft.items.map(currentMealItemNutrition).filter(Boolean);
+ const total={},incomplete=[];
+ for(const k of MEAL_METRICS){const vals=rows.map(x=>x.nutrients[k]);if(!rows.length||vals.some(v=>v===null||v===undefined||!Number.isFinite(v))){total[k]=null;incomplete.push(k)}else total[k]=vals.reduce((a,b)=>a+b,0)}
+ const servings=Number(draft.servings);
+ const per={};for(const k of MEAL_METRICS)per[k]=total[k]===null?null:round(total[k]/servings);
+ return {rows,total,per,incomplete,complete:['kcal','protein','carbs','fat','fiber','sodium'].every(k=>!incomplete.includes(k))&&rows.length>0};
+}
+function mealQtyDisplay(n){return Number(n).toLocaleString('en-US',{maximumFractionDigits:2})}
+function drawMealItems(){
+ $('#meal-ingredients').innerHTML=mealDraft.items.map((item,i)=>{
+  const f=item.type==='sample'?FOODS[item.foodId]:item.product;if(!f)return '';
+  const unit=item.type==='sample'?'listed servings ( '+f.serving+' )':'grams / mL (check label)';
+  const source=item.type==='sample'?'Illustrative estimate':f.labelOrigin?'Label-based':'Community database';
+  return `<div class="meal-ingredient"><div><strong>${escapeHTML(f.name)}</strong><small>${escapeHTML(unit)} · ${escapeHTML(source)}</small></div><label>Amount <input data-meal-qty="${i}" type="number" min="0.1" max="${item.type==='scan'?'5000':'40'}" step="${item.type==='scan'?'1':'0.25'}" value="${item.qty}"></label><button type="button" class="secondary-btn" data-meal-remove="${i}">Remove</button></div>`;
+ }).join('')||'<p class="muted">No ingredients yet. Load a template, scan a food, or add an ingredient.</p>';
+}
+function shoppingText(calculated=computeMeal()){
+ const lines=[`FORGE grocery list — ${mealDraft.name}`,`Batch yields ${mealDraft.servings} portion(s). Quantities reflect the WHOLE BATCH.`];
+ for(const x of calculated.rows){
+  let amount=`${mealQtyDisplay(x.qty)} ${x.unit}`;
+  if(x.code&&x.labelGrams>0&&x.labelServings>0){const pack=x.labelGrams*x.labelServings;const count=Math.ceil(x.qty/pack);amount+=` — approx. ${count} package(s) if each contains ${mealQtyDisplay(pack)} g (confirm actual package)`}
+  lines.push(`• ${x.name}: ${amount} [${x.source}]`);
+ }
+ lines.push('Quantities for generic ingredients are in example serving units; confirm your specific product before purchasing.');
+ return lines.join('\n');
+}
+function renderMealNumbers(){
+ const result=computeMeal(),nums=result.per,fmt=(key,unit)=>nums[key]===null?'Incomplete':mealQtyDisplay(nums[key])+unit;
+ const stats=[['Calories',fmt('kcal',' kcal')],['Protein',fmt('protein',' g')],['Carbs',fmt('carbs',' g')],['Fat',fmt('fat',' g')]];
+ $('#meal-results').innerHTML=`<p class="fine">Per portion (${mealDraft.servings} total). Values reflect the selected batch ingredients, divided by portions. Generic ingredients use illustrative nutrition, not a verified retailer label.</p><div class="meal-stat-row">${stats.map(([k,v])=>`<div class="meal-stat"><strong>${escapeHTML(v)}</strong><small>${k}</small></div>`).join('')}</div><p class="fine">Whole batch: ${result.total.kcal===null?'Incomplete':mealQtyDisplay(round(result.total.kcal))+' kcal'}; protein ${result.total.protein===null?'Incomplete':mealQtyDisplay(round(result.total.protein))+' g'}; fat ${result.total.fat===null?'Incomplete':mealQtyDisplay(round(result.total.fat))+' g'}.</p><p class="fine">Per portion: fiber ${fmt('fiber',' g')} • sodium ${fmt('sodium',' mg')} • saturated fat ${fmt('saturatedFat',' g')} • sugar ${fmt('sugar',' g')}. Missing source numbers are labeled incomplete, not zero.</p>`;
+ const g=goalEngine(state.profile);if(Number.isFinite(g.calories)&&nums.kcal!==null&&nums.protein!==null){
+  const pctC=Math.round(nums.kcal/g.calories*100),pctP=Math.round(nums.protein/g.protein*100);
+  $('#meal-results').innerHTML+=`<p class="notice">One portion contributes approximately <strong>${pctC}%</strong> of your starting daily calorie target and <strong>${pctP}%</strong> of your protein target. This is educational, not a pass/fail rating.</p>`;
+ }
+ $('#meal-shopping-list').innerHTML=result.rows.map(x=>`<div class="ingredient"><span><strong>${escapeHTML(x.name)}</strong><br><small>${escapeHTML(x.source)}</small></span><span>${mealQtyDisplay(x.qty)} ${x.code?'g / mL':'listed servings'}${x.code&&x.labelGrams>0&&x.labelServings>0?`<br><small>Approx. ${Math.ceil(x.qty/(x.labelGrams*x.labelServings))} pack(s), check label</small>`:''}</span></div>`).join('')||'<p class="muted">No shopping items yet.</p>';
+ $('#meal-prep-notes').textContent=(MEAL_COOKING[mealDraft.recipeId]||'Cook ingredients according to their package instructions and safe food handling guidance.')+' Refrigerate perishable prepared food within 2 hours (within 1 hour in extreme heat); use refrigerated leftovers within 3–4 days or freeze promptly. Keep crunchy and cold toppings separate. The scanner does not determine whether ingredients are raw or cooked.';
+ $('#meal-log-serving').disabled=!result.complete||!Number.isFinite(nums.kcal);
+ if(!result.complete){$('#meal-results').innerHTML+='<p class="fine">Logging is disabled until all calories, protein, carbohydrates, fat, fiber, and sodium values are available. Correct incomplete scanned labels or remove that ingredient.</p>'}
+}
+function redrawMeal(){drawMealItems();renderMealNumbers()}
+function addScannedToMeal(replace=false){
+ if(!selectedLive){$('#meal-status').textContent='Scan or look up an ingredient first.';return}
+ if(!selectedLive.complete){$('#meal-status').textContent='This product is missing calorie or macronutrient data. Correct its label before adding it to a recipe.';return}
+ if(mealDraft.items.length>=35){$('#meal-status').textContent='Meal builder supports up to 35 ingredient rows. Remove a duplicate before adding more.';return}
+ const p=structuredClone(selectedLive);
+ const weight=Number($('#live-quantity').value);
+ const qty=Number.isFinite(weight)&&weight>0&&weight<=5000?weight:p.labelGrams||100;
+ const item={type:'scan',qty,product:p};
+ if(replace){const i=mealDraft.items.findIndex(x=>x.type==='sample'&&['beef80','beef93','turkey93','chicken'].includes(x.foodId));if(i<0){$('#meal-status').textContent='No generic meat ingredient was found in this recipe; use Add scanned ingredient.';return}mealDraft.items[i]=item;$('#meal-status').textContent='Replaced generic meat with '+p.name+'. Confirm raw versus cooked weight.';}
+ else{mealDraft.items.push(item);$('#meal-status').textContent='Added '+p.name+' to your meal. Remove overlapping generic meat to avoid double-counting.';}
+ storeMeal();redrawMeal();$('#meal-builder').scrollIntoView({block:'start',behavior:'smooth'});
+}
+function initMealBuilder(){
+ $('#meal-template').innerHTML=RECIPES.map(r=>`<option value="${r.id}">${escapeHTML(r.name)}</option>`).join('');
+ $('#meal-available-food').innerHTML=FOOD_CATALOG.map(f=>`<option value="${f.id}">${escapeHTML(f.name)} — ${escapeHTML(f.serving)}</option>`).join('');
+ $('#meal-template').value=mealDraft.recipeId;$('#meal-style').value=mealDraft.kind;
+ $('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;
+ $('#meal-load-template').addEventListener('click',()=>{mealDraft=defaultMeal($('#meal-template').value,$('#meal-style').value);$('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;storeMeal();redrawMeal();$('#meal-status').textContent='Template loaded. Your previous unsaved draft ingredients were replaced.'});
+ $('#meal-name').addEventListener('input',e=>{mealDraft.name=e.target.value.slice(0,80);storeMeal()});
+ $('#meal-servings').addEventListener('change',e=>{const n=Number(e.target.value);if(!Number.isInteger(n)||n<1||n>24){e.target.value=mealDraft.servings;$('#meal-status').textContent='Choose 1–24 portions.';return}mealDraft.servings=n;storeMeal();renderMealNumbers()});
+ $('#meal-add-scanned').addEventListener('click',()=>addScannedToMeal());
+ $('#add-live-to-meal').addEventListener('click',()=>addScannedToMeal());
+ $('#meal-replace-meat').addEventListener('click',()=>addScannedToMeal(true));
+ $('#meal-add-reference').addEventListener('click',()=>{const foodId=$('#meal-available-food').value,qty=Number($('#meal-new-qty').value);if(!FOODS[foodId]||!Number.isFinite(qty)||qty<=0||qty>40||mealDraft.items.length>=35){$('#meal-status').textContent='Choose a valid ingredient amount.';return}mealDraft.items.push({type:'sample',foodId,qty});storeMeal();redrawMeal();$('#meal-status').textContent='Added an illustrative generic ingredient.'});
+ $('#meal-ingredients').addEventListener('change',e=>{if(e.target.matches('[data-meal-qty]')){const i=Number(e.target.dataset.mealQty),item=mealDraft.items[i],n=Number(e.target.value),max=item?.type==='scan'?5000:40;if(!item||!Number.isFinite(n)||n<=0||n>max){$('#meal-status').textContent='Invalid quantity. Must be greater than zero and within the allowed limit.';redrawMeal();return}item.qty=n;storeMeal();renderMealNumbers()}});
+ $('#meal-ingredients').addEventListener('click',e=>{const b=e.target.closest('[data-meal-remove]');if(!b)return;const i=Number(b.dataset.mealRemove);if(!mealDraft.items[i])return;mealDraft.items.splice(i,1);storeMeal();redrawMeal()});
+ $('#meal-log-serving').addEventListener('click',()=>{const calc=computeMeal();if(!calc.complete){$('#meal-status').textContent='Cannot log an incomplete meal. Verify all required nutrients first.';return}state.foodLog.push({label:mealDraft.name+' (1 of '+mealDraft.servings+' meal portions; mixed verified/estimate data)',macros:Object.fromEntries(macroKeys.map(k=>[k,round(calc.per[k])]))});save();renderAll();$('#meal-status').textContent='One portion added to today’s food log.';message('One personalized home-cooked portion logged.');});
+ $('#meal-copy-list').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(shoppingText());$('#meal-status').textContent='Grocery list copied to clipboard.'}catch{$('#meal-status').textContent='Clipboard unavailable. You can read the itemized grocery list above.'}});
+ $('#meal-clear').addEventListener('click',()=>{mealDraft.items=[];storeMeal();redrawMeal();$('#meal-status').textContent='Meal ingredients cleared. Add new foods to build a meal.'});
+ redrawMeal();
+}
+window.FORGE_MEAL_TEST={defaultMeal,computeMeal,shoppingText,recoverMeal,mealQtyDisplay};
+
 function bindLive(){
  $('#lookup-mode').addEventListener('change',()=>{closeCamera();updateLiveControls()});
  $('#live-lookup-form').addEventListener('submit',e=>{e.preventDefault();closeCamera();runLiveLookup()});
@@ -826,7 +978,7 @@ function bindLive(){
   if(!selectedLive)return;
   const vals=localLabels();delete vals[selectedLive.code];
   if(!saveLocalLabels(vals)){$('#label-error').textContent='Browser storage is unavailable.';return;}
-  liveMatches[Number($('#live-product-select').value)]=restoreProduct(selectedLive);showLiveProduct();
+  liveMatches[Number($('#live-product-select').value)]=restoreProduct(selectedLive);showLiveProduct();refreshMealScannedProduct(selectedLive);
   liveStatus('Local correction cleared. Existing photographed-label reference may still apply.');
  });
  $('#label-correction').addEventListener('submit',e=>{
@@ -838,7 +990,7 @@ function bindLive(){
   const corrected={grams,servings:count>0?count:null,perServing},vals=localLabels();vals[selectedLive.code]=corrected;
   if(!saveLocalLabels(vals)){$('#label-error').textContent='Could not save on this device. Check browser storage settings.';return;}
   liveMatches[Number($('#live-product-select').value)]=applyLabel({...selectedLive,per100:selectedLive.databasePer100},corrected,'User-entered package label (saved on this device)',true);
-  showLiveProduct();liveStatus('Package label saved locally for this barcode. Verify the numbers before logging.');
+  showLiveProduct();refreshMealScannedProduct(selectedLive);liveStatus('Package label saved locally for this barcode. Verify the numbers before logging.');
  });
  $('#log-live').addEventListener('click',()=>{if(!selectedLive?.complete)return;
   const quantity=Number($('#live-quantity').value);let m;
@@ -846,20 +998,3 @@ function bindLive(){
   state.foodLog.push({label:`${selectedLive.name} (${quantity} g / mL; ${selectedLive.labelOrigin?'package-label values':'community database, check label'})`,macros:m});save();renderAll();message(selectedLive.labelOrigin?'Food logged using label-based numbers.':'Community-sourced packaged food logged. Verify the package label.');
  });
  if(location.protocol==='file:'||location.protocol==='content:'){$('#scan-start').disabled=true;$('#scan-start').title='Live camera scanning needs a hosted HTTPS version. Choose a saved photo instead.';}
- $('#scan-start').addEventListener('click',()=>startCamera());$('#scan-stop').addEventListener('click',closeCamera);
- $('#camera-device').addEventListener('change',async e=>{const id=e.target.value;await closeCamera();startCamera(id);});
- $('#scan-refocus').addEventListener('click',applyCameraFocus);
- $('#scan-zoom').addEventListener('input',e=>{$('#scan-zoom-value').textContent=Number(e.target.value).toFixed(1)+'×';});
- $('#scan-zoom').addEventListener('change',async e=>{try{await liveScanner?.applyVideoConstraints({advanced:[{zoom:Number(e.target.value)}]});}catch{liveStatus('Zoom adjustment is not supported on this lens; try another camera.');}});
- $('#scan-torch').addEventListener('click',async()=>{const b=$('#scan-torch'),on=b.dataset.on!=='true';try{await liveScanner?.applyVideoConstraints({advanced:[{torch:on}]});b.dataset.on=String(on);b.textContent=on?'Turn flashlight off':'Turn flashlight on';}catch{liveStatus('Flashlight control is not available for this lens.');}});
- $('#scan-photo').addEventListener('click',()=>$('#barcode-image').click());
- $('#barcode-image').addEventListener('change',e=>scanPhoto(e.target.files?.[0]));
- $('#barcode-camera-image').addEventListener('change',e=>scanPhoto(e.target.files?.[0]));
- document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.tab!=='nutrition')closeCamera()}));
- window.addEventListener('pagehide',closeCamera);
- updateLiveControls();
-}
-
-initProfile();initFoods();bind();bindLive();renderAll();
-
-</script></body></html>
