@@ -26,6 +26,18 @@
 .scan-guides{font-size:13px;line-height:1.6;padding:12px 0;color:#cadccc}
 #scan-zoom{width:100%;min-height:30px}
 #scanner-preview{border:1px solid #354f3a;border-radius:12px;padding:14px;margin-top:15px}
+
+.advisor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.advisor-stat{border:1px solid #3b5743;border-radius:10px;padding:12px;background:#152319}
+.advisor-stat small{display:block;color:#a5bdad;font-size:11px;margin-bottom:5px}
+.advisor-stat strong{font-size:19px;color:#e9ffcd}
+.comparison-table{overflow:auto;max-width:100%}
+.comparison-table table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+.comparison-table td,.comparison-table th{padding:10px 8px;border-bottom:1px solid #405243;text-align:left;vertical-align:top}
+.comparison-table th{color:#c4fa72;font-weight:700}
+.advisor-ideas{display:flex;gap:8px;flex-wrap:wrap}
+.advisor-ideas button{font-size:13px}
+@media(max-width:660px){.advisor-grid{grid-template-columns:1fr}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head><body>
@@ -78,7 +90,7 @@
         <div class="section-header"><div><span class="eyebrow">ENGINE 02</span><h2 id="nutrition-title">Nutrition & food intelligence</h2><p>Every food is transparent. Compare portions, transform favorite meals, and log what you actually eat.</p></div><span class="counter">2 / 5</span></div>
         <div class="panel"><h3>Daily macro budget</h3><div id="nutrition-budget"></div></div>
         <div class="panel stack" id="live-food-panel">
-          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>Scanner fix v0.3.1:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
+          <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>FORGE v0.4 — Smart Food Comparison:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
           <p class="fine">Enter a barcode, use the photo scanner, or search by product name. An internet connection is required. Searches go to Open Food Facts; no personal fitness profile is sent. This database is crowd-sourced—always check the actual product label and ingredients.</p>
           <form id="live-lookup-form" class="stack">
             <div class="form-grid">
@@ -124,6 +136,22 @@
               <div class="action-row"><button type="submit" class="primary">Save label correction</button><button type="button" class="secondary-btn" id="label-cancel">Cancel</button><button type="button" class="link-btn" id="label-clear">Clear my saved correction</button></div>
               <div id="label-error" class="fine" role="status"></div>
             </form>
+            <div id="food-advisor" class="panel stack" aria-live="polite">
+              <h3>Smart Grocery Advisor</h3>
+              <p class="fine">Educational guidance based on your selected body goal and food amount. No food is automatically forbidden. FORGE prioritizes practical home cooking and checks numbers against product labels.</p>
+              <div id="advisor-guidance"></div>
+              <h3 style="font-size:15px">Compare foods using equal weight</h3>
+              <div class="form-grid">
+                <label>Sample alternative (illustrative)<select id="compare-example"><option value="">Choose a food reference</option></select></label>
+                <label>Another product's barcode<input id="compare-barcode" inputmode="numeric" type="text" pattern="[0-9]{8,14}" maxlength="14" placeholder="Enter 8–14 digits"></label>
+              </div>
+              <div class="action-row"><button type="button" class="secondary-btn" id="compare-reference">Compare sample</button><button type="button" class="secondary-btn" id="compare-product">Look up &amp; compare barcode</button></div>
+              <div id="comparison-status" class="fine" role="status"></div>
+              <div id="comparison-results"></div>
+              <h3 style="font-size:15px">Cook something at home</h3>
+              <p class="fine" id="recipe-link-note">Recipe examples have generic estimated macros. They do not yet recalculate automatically from the scanned product.</p>
+              <div class="advisor-ideas" id="recipe-ideas"></div>
+            </div>
             <button type="button" id="log-live" class="primary">Log this food</button>
           </div>
           <p class="fine">Source: <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener noreferrer">Open Food Facts</a> (Open Database License). Source entries are not independently verified; barcode identity does not confirm a product is stocked at a particular retailer.</p>
@@ -144,7 +172,7 @@
           </div>
         </div>
         <div class="panel"><div class="panel-heading"><h3>Today's food log</h3><button id="clear-food-log" class="link-btn">Clear food log</button></div><div id="food-log"></div></div>
-        <div class="notice">Offline sample foods and recipes still use <strong>illustrative generic estimates</strong>. Live packaged-food values come from Open Food Facts and must be verified against the package. Live scanning uses a third-party, version-pinned browser decoder over HTTPS and needs an internet connection to load it. Continuous focus, zoom, and flashlight controls depend on browser and camera support. The saved-photo picker does not require camera permission. The photo reader uses its own offline UPC-A / EAN-13 / EAN-8 decoder, and works without the experimental BarcodeDetector API. For best results keep the bars vertical, centered, sharp and well-lit. If a photo cannot be decoded, enter the printed digits. There is no image recognition, retailer inventory, price comparison, or clinical validation.</div>
+        <div class="notice">Offline sample foods and recipes still use <strong>illustrative generic estimates</strong>. Live packaged-food values come from Open Food Facts and must be verified against the package. Live scanning uses a third-party, version-pinned browser decoder over HTTPS and needs an internet connection to load it. Continuous focus, zoom, and flashlight controls depend on browser and camera support. The Smart Grocery Advisor compares numbers at the same weight and suggests existing sample home recipes, but does not yet know store inventory, current prices, or calculate the scanned meat within those recipes. The saved-photo picker does not require camera permission. The photo reader uses its own offline UPC-A / EAN-13 / EAN-8 decoder, and works without the experimental BarcodeDetector API. For best results keep the bars vertical, centered, sharp and well-lit. If a photo cannot be decoded, enter the printed digits. There is no image recognition, retailer inventory, price comparison, or clinical validation.</div>
       </section>
       <section id="training" class="page" aria-labelledby="training-title"><div class="section-header"><div><span class="eyebrow">ENGINE 03</span><h2 id="training-title">Training plan</h2><p>A foundation strength plan that reads your goals, equipment access, and recovery status.</p></div><span class="counter">3 / 5</span></div><div class="two-col"><div id="training-output" class="panel"></div><div class="stack"><div class="panel tinted"><h3>Progressive loading</h3><p>Use controlled repetitions with good technique. Increase one variable at a time only after several well-tolerated sessions—not because a calendar says to.</p></div><div class="panel"><h3>Log a session</h3><p>Completed workouts feed the progress engine.</p><button id="complete-workout" class="primary">Mark one workout complete</button></div></div></div></section>
       <section id="recovery" class="page" aria-labelledby="recovery-title"><div class="section-header"><div><span class="eyebrow">ENGINE 04</span><h2 id="recovery-title">Recovery guardrails</h2><p>Update your current condition. The training plan automatically changes.</p></div><span class="counter">4 / 5</span></div>
@@ -160,7 +188,7 @@
       <section id="progress" class="page" aria-labelledby="progress-title"><div class="section-header"><div><span class="eyebrow">ENGINE 05</span><h2 id="progress-title">Progress & adaptation</h2><p>Track trends, not isolated numbers. The app explains when there isn't enough evidence to change the plan.</p></div><span class="counter">5 / 5</span></div>
         <div class="two-col"><div class="panel stack"><h3>Record a weigh-in</h3><form id="weighin-form" class="stack"><label>Date<input id="weighin-date" type="date" required/></label><label>Weight (lb)<input id="weighin-weight" type="number" min="80" max="700" step="0.1" required/></label><button class="primary" type="submit">Save weigh-in</button></form><div id="weighin-list"></div></div><div id="progress-output" class="panel"></div></div>
       </section>
-      <footer><span>FORGE · Fitness foundation · v0.3.1</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
+      <footer><span>FORGE · Fitness foundation · v0.4</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
     </main>
   </div>
 </div><script type="module">
@@ -328,7 +356,7 @@ function saveLocalLabels(x){try{localStorage.setItem(LABEL_STORAGE,JSON.stringif
 function applyLabel(product,record,origin,local=false){
  if(!record||!Number.isFinite(Number(record.grams))||Number(record.grams)<=0)return product;
  const per100=Object.fromEntries(Object.entries(record.perServing).map(([key,val])=>[key,val===null?null:round(Number(val)*100/Number(record.grams))]));
- return {...product,per100,serving:`${record.grams} g / mL (package label)`,labelGrams:Number(record.grams),labelServings:Number(record.servings)||null,labelOrigin:origin,labelLocal:local,complete:['kcal','protein','carbs','fat'].every(k=>per100[k]!==null),source:origin};
+ return {...product,per100,serving:`${record.grams} g / mL (package label)`,labelGrams:Number(record.grams),labelServings:Number(record.servings)||null,labelOrigin:origin,labelLocal:local,labelPerServing:record.perServing,complete:['kcal','protein','carbs','fat'].every(k=>per100[k]!==null),source:origin};
 }
 function applyAvailableLabel(product){
  const saved=localLabels()[product.code];
@@ -337,7 +365,7 @@ function applyAvailableLabel(product){
  return photo?applyLabel(product,photo,photo.origin,false):product;
 }
 function restoreProduct(product){
- const base={...product,per100:product.databasePer100,serving:product.databaseServing,labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,source:'Open Food Facts (community-submitted; verify package label)'};
+ const base={...product,per100:product.databasePer100,serving:product.databaseServing,labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,labelPerServing:null,source:'Open Food Facts (community-submitted; verify package label)'};
  return applyAvailableLabel(base);
 }
 
@@ -364,7 +392,7 @@ function normalizeProduct(raw={}) {
     per100:macros,
     databasePer100:macros,
     databaseServing:String(raw.serving_size||''),
-    labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,
+    labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,labelPerServing:null,
     complete:['kcal','protein','carbs','fat'].every(k=>macros[k]!==null),
     source:'Open Food Facts (community-submitted; verify package label)'
   };
@@ -373,7 +401,7 @@ function normalizeProduct(raw={}) {
 function scaleProduct(product, quantity=100) {
   const amount=Number(quantity);
   if(!Number.isFinite(amount)||amount<=0||amount>5000) throw new Error('Enter a quantity between 1 and 5,000 g / ml.');
-  return Object.fromEntries(Object.entries(product.per100).map(([k,v])=>[k,v===null?null:round(v*amount/100)]));
+  return Object.fromEntries(Object.entries(product.per100).map(([k,v])=>{const original=product.labelPerServing?.[k];return [k,product.labelGrams&&original!==null&&original!==undefined?round(original*amount/product.labelGrams):v===null?null:round(v*amount/100)]}));
 }
 function productLink(code) {
   if (!BARCODE.test(code)) return null;
@@ -453,7 +481,7 @@ function renderRecovery(){const r=recoveryEngine(state.check);$('#recovery-outpu
 function renderProgress(){const p=progressEngine(state.weighins,state.profile.goal,state.workoutsDone,state.profile.days);$('#progress-output').innerHTML=`<h3>Trend review</h3><div class="stat-grid"><div class="stat"><div class="num">${p.trend===null?'—':`${p.trend>0?'+':''}${p.trend}`}</div><div class="name">lb per week trend (first-to-last)</div></div><div class="stat"><div class="num">${safeNum(p.workoutCompletion)}%</div><div class="name">Weekly sessions completed</div></div></div><span class="pill ${p.calibrationReady?'':'hold'}">${p.calibrationReady?'Trend available':'More data needed'}</span><p class="muted">${escapeHTML(p.recommendation)}</p><p class="detail">The trend is a simple first-to-last estimate, not a robust weight-trend model. For production, average repeated weekly weigh-ins and consider context before modifications. No automatic calorie reduction is performed.</p>`;
  $('#weighin-list').innerHTML=state.weighins.length?`<h3 style="font-size:14px">Saved weigh-ins</h3>`+state.weighins.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="entry"><span>${escapeHTML(e.date)} · ${safeNum(e.weight)} lb</span><button type="button" data-remove-weighin="${escapeHTML(e.date)}">Remove</button></div>`).join(''):'<p class="muted">No weigh-ins saved yet. Add dates spanning at least two weeks for a basic trend review.</p>';
  document.querySelectorAll('[data-remove-weighin]').forEach(b=>b.addEventListener('click',()=>{state.weighins=state.weighins.filter(e=>e.date!==b.dataset.removeWeighin);save();renderAll()}));}
-function renderAll(){summary();renderGoal();renderFood();renderRecipe();renderFoodLog();renderTraining();renderRecovery();renderProgress()}
+function renderAll(){summary();renderGoal();renderFood();renderRecipe();renderFoodLog();renderTraining();renderRecovery();renderProgress();if(selectedLive)renderAdvisor()}
 function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));
  $('#profile-form').addEventListener('submit',e=>{e.preventDefault();const next={};for(const k of Object.keys(DEFAULT_PROFILE)){const el=$('#'+k);next[k]=['age','weight','height','referenceWeight','days'].includes(k)?+el.value:el.value}const g=goalEngine(next);if(g.errors){message(g.errors.join(' '),'warning');return;}state.profile=next;save();renderAll();message('Starting plan updated across all five systems.');});
  $('#food-search').addEventListener('input',filterFood);$('#food-select').addEventListener('change',renderFood);$('#food-portions').addEventListener('input',renderFood);
@@ -474,20 +502,102 @@ let liveScanner=null, cameraStarting=false, scanFound=false, activeCameraId=null
 const supportedGroceryFormats=()=>[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,Html5QrcodeSupportedFormats.ITF];
 function liveStatus(s){$('#live-status').textContent=s;}
 function updateLiveControls(){const mode=$('#lookup-mode').value;$('#live-query-label').firstChild.textContent=mode==='barcode'?'Barcode ':'Product name ';$('#live-query').placeholder=mode==='barcode'?'Enter barcode digits':'e.g. unsweetened oat milk';$('#live-query').inputMode=mode==='barcode'?'numeric':'text';$('#scan-start').disabled=mode!=='barcode';liveMatches=[];selectedLive=null;$('#live-results').hidden=true;liveStatus('Enter a product and press Look up food.');}
+// Smart Grocery Advisor - explicit comparisons, never fabricated inventory or prices.
+let comparisonProduct=null,comparisonLastRequest=0;
+function productGroup(p){
+ const value=(p.name+' '+(p.brand||'')).toLowerCase();
+ if(/ground beef|beef mince|hamburger meat/.test(value))return 'ground-beef';
+ if(/ground turkey|turkey mince/.test(value))return 'ground-turkey';
+ if(/chicken breast/.test(value))return 'chicken';
+ if(/pasta|spaghetti|lasagna noodle/.test(value))return 'pasta';
+ if(/tortilla chip|nacho chip/.test(value))return 'chips';
+ if(/sausage/.test(value))return 'sausage';
+ if(/soda|soft drink|cola/.test(value))return 'drinks';
+ return 'other';
+}
+const EXAMPLE_GROUPS={
+ 'ground-beef':['beef80','beef93','turkey93'],
+ 'ground-turkey':['turkey93','beef93','beef80'],
+ 'chicken':['beef93','turkey93'],
+ 'pasta':['pasta','chickpea'],
+ 'chips':['chips'],
+ 'sausage':['beef93','turkey93']
+};
+function examplePer100(id){
+ const food=FOODS[id];if(!food)return null;
+ const match=String(food.serving).match(/(\d+(?:\.\d+)?)\s*g\b/i);
+ if(!match)return null;
+ const weight=Number(match[1]);if(!(weight>0))return null;
+ const per100=Object.fromEntries(['kcal','protein','carbs','fat','fiber','sodium'].map(k=>[k,round(food[k]*100/weight)]));
+ return {code:'',name:food.name,brand:'Illustrative generic example',per100,complete:true,source:'Illustrative sample, not a current retailer product',sample:true};
+}
+function populateExampleChoices(p){
+ const sel=$('#compare-example');sel.replaceChildren();
+ const blank=document.createElement('option');blank.value='';blank.textContent='Choose sample food';sel.appendChild(blank);
+ const ids=EXAMPLE_GROUPS[productGroup(p)]||[];
+ ids.forEach(id=>{const f=FOODS[id];if(!f||!examplePer100(id))return;const option=document.createElement('option');option.value=id;option.textContent=f.name+' (illustrative)';sel.appendChild(option)});
+ $('#compare-reference').disabled=ids.length===0;
+ if(!ids.length)$('#comparison-status').textContent='No comparable sample category yet. You can still compare two real barcodes.';
+}
+function comparisonTable(p,q){
+ const ap=p.per100,bp=q.per100;
+ const r=(name,key,unit)=>{
+  const a=ap[key],b=bp[key];const diff=a===null||a===undefined||b===null||b===undefined?'Unavailable':((b-a)>0?'+':'')+safeNum(round(b-a))+' '+unit;
+  return `<tr><td>${name}</td><td>${a===null||a===undefined?'Unknown':safeNum(a)+' '+unit}</td><td>${b===null||b===undefined?'Unknown':safeNum(b)+' '+unit}</td><td>${diff}</td></tr>`;
+ };
+ const grpA=productGroup(p),grpB=productGroup(q);
+ const warning=grpA!=='other'&&grpB!=='other'&&grpA!==grpB?'<p class="fine">Different food categories: compare nutritional trade-offs, but these may not be direct cooking substitutes.</p>':'';
+ return `<p class="fine">Comparing <strong>${escapeHTML(p.name)}</strong> with <strong>${escapeHTML(q.name)}</strong>. All values below are per 100 g / 100 mL as reported; raw versus cooked weights or different product types may not be comparable. A negative difference means the alternative has less.</p><div class="comparison-table"><table><thead><tr><th>Nutrient</th><th>Selected food</th><th>Alternative</th><th>Difference</th></tr></thead><tbody>${r('Calories','kcal','kcal')}${r('Protein','protein','g')}${r('Carbs','carbs','g')}${r('Fat','fat','g')}${r('Sodium','sodium','mg')}</tbody></table></div>${warning}<p class="fine">Selected: ${escapeHTML(p.source)}. Alternative: ${escapeHTML(q.source)}. Product identity, dietary needs, and actual package labels take priority over comparisons.</p>`;
+}
+function goalAdvice(p,quantity,profile){
+ const m=scaleProduct(p,quantity),g=goalEngine(profile),log=addMacros(state.foodLog.map(e=>e.macros));
+ const target=g.calories, prot=g.protein;
+ const proteinEff=m.kcal>0&&m.protein!==null?round(m.protein/m.kcal*100):null;
+ const remaining=Number.isFinite(target)?target-log.kcal:null;
+ const goal=profile.goal;
+ const focus={lose:'For gradual fat loss, choose satisfying, nutrient-rich meals that help meet protein needs within an appropriate energy intake.',gain:'For muscle growth, meet overall energy and protein needs while maintaining dietary variety.',maintain:'For maintenance or recomposition, combine adequate protein, strength training, and a sustainable eating pattern.'}[goal]||'Build a balanced eating pattern.';
+ const stats=[
+  {label:'Selected amount',value:safeNum(quantity)+(p.labelOrigin?' g':' g / mL')},
+  {label:'Calories',value:m.kcal===null?'Unknown':safeNum(m.kcal)+' kcal'},
+  {label:'Protein',value:m.protein===null?'Unknown':safeNum(m.protein)+' g'},
+  {label:'Protein efficiency',value:proteinEff===null?'Unknown':safeNum(proteinEff)+' g / 100 kcal'}
+ ];
+ let extra='';
+ if(m.protein!==null&&Number.isFinite(prot)&&prot>0)extra+=`This amount supplies about ${safeNum(round(m.protein/prot*100))}% of your estimated daily protein target. `;
+ if(Number.isFinite(remaining)&&m.kcal!==null)extra+=`Against your currently logged food and starting energy estimate, it would leave about ${safeNum(round(remaining-m.kcal))} kcal for the day; this is a planning estimate, not a required limit. `;
+ if(m.saturatedFat!==null)extra+=`Saturated fat for this amount: ${safeNum(m.saturatedFat)} g. `;
+ if(m.sodium===null)extra+='Sodium is not reported—check the package label. ';
+ if(!p.labelOrigin)extra+='Community-sourced nutrition is not label-verified. ';
+ if(p.name.toLowerCase().includes('ground beef'))extra+='For homemade burgers, tacos, nachos, or pasta sauce, cook thoroughly and use raw weight for these raw-product macros; cooked weight changes through moisture loss. ';
+ return `<p class="muted"><strong>Your goal:</strong> ${escapeHTML(focus)}</p><div class="advisor-grid">${stats.map(x=>`<div class="advisor-stat"><small>${x.label}</small><strong>${escapeHTML(x.value)}</strong></div>`).join('')}</div><p class="fine">${escapeHTML(extra)}</p>`;
+}
+function renderAdvisor(){
+ const p=selectedLive;if(!p)return;
+ const amount=Number($('#live-quantity').value);
+ if(!(amount>0&&amount<=5000)){$('#advisor-guidance').innerHTML='<p class="warning">Enter a valid amount before interpreting this food.</p>';return;}
+ $('#advisor-guidance').innerHTML=goalAdvice(p,amount,state.profile);
+ if(comparisonProduct)$('#comparison-results').innerHTML=comparisonTable(p,comparisonProduct);
+}
+function renderRecipeIdeas(p){
+ const group=productGroup(p),recipeIds=(group==='ground-beef'||group==='ground-turkey')?['nachos','burger','pasta']:(group==='pasta'?['pasta','pizza']:(group==='chips'?['nachos']:(group==='chicken'?['pizza']:['nachos','burger','pasta','pizza'])));
+ $('#recipe-ideas').innerHTML=recipeIds.map(id=>{const recipe=RECIPES.find(r=>r.id===id);return `<button class="secondary-btn" type="button" data-recipe-shortcut="${escapeHTML(id)}">${escapeHTML(recipe?.name||id)}</button>`}).join('');
+ document.querySelectorAll('[data-recipe-shortcut]').forEach(button=>button.addEventListener('click',()=>{state.recipeId=button.dataset.recipeShortcut;state.recipeKind='smart';save();renderRecipe();$('#recipe-select').scrollIntoView({behavior:'smooth',block:'center'});message('Opened an example home recipe. Its generic ingredients are not automatically replaced with the scanned product.')}));
+}
 function showLiveProduct(){const i=Number($('#live-product-select').value);selectedLive=liveMatches[i];
  const p=selectedLive;
  if(!p){$('#live-results').hidden=true;return;}
  const detailUrl=productLink(p.code),link=detailUrl?` · <a href="${detailUrl}" target="_blank" rel="noopener noreferrer">See source record</a>`:'';
- $('#live-product-meta').innerHTML=`<strong>${escapeHTML(p.name)}</strong><p class="fine">${escapeHTML(p.brand||'Brand not listed')} · Barcode ${escapeHTML(p.code||'not available')}${link}<br>Package: ${escapeHTML(p.quantity||'not supplied')} · Stated serving: ${escapeHTML(p.serving||'not supplied')} · Nutrients reported per 100 g / 100 mL, depending on product.<br>${p.allergens.length?'Reported allergen tags: '+escapeHTML(p.allergens.join(', ')):'Allergen information not supplied: read the package label.'}</p><p class="fine"><strong>Nutrition source:</strong> ${escapeHTML(p.source)}.${p.labelServings?' About '+safeNum(p.labelServings)+' servings per package.':''} ${p.labelOrigin?'Package-based numbers take priority over the community entry; check your current package for changes.':''}</p>`;
+ $('#live-product-meta').innerHTML=`<strong>${escapeHTML(p.name)}</strong><p class="fine">${escapeHTML(p.brand||'Brand not listed')} · Barcode ${escapeHTML(p.code||'not available')}${link}<br>Package: ${escapeHTML(p.quantity||'not supplied')} · Stated serving: ${escapeHTML(p.serving||'not supplied')} · ${p.labelOrigin?'Nutrition calculated from the package serving.':'Community data provided per 100 g / 100 mL.'}<br>${p.allergens.length?'Reported allergen tags: '+escapeHTML(p.allergens.join(', ')):'Allergen information not supplied: read the package label.'}</p><p class="fine"><strong>Nutrition source:</strong> ${escapeHTML(p.source)}.${p.labelServings?' About '+safeNum(p.labelServings)+' servings per package.':''} ${p.labelOrigin?'Package-based numbers take priority over the community entry; check your current package for changes.':''}</p>`;
  $('#label-correction').hidden=true;
- $('#live-quantity').value=p.labelGrams||100; renderLiveBreakdown();
+ $('#live-quantity').value=p.labelGrams||100; comparisonProduct=null; $('#comparison-results').replaceChildren(); $('#comparison-status').textContent=''; populateExampleChoices(p); renderLiveBreakdown(); renderRecipeIdeas(p);
 }
 function renderLiveBreakdown(){const p=selectedLive;if(!p)return;const amount=Number($('#live-quantity').value);
  let m;try{m=scaleProduct(p,amount)}catch(err){$('#live-breakdown').innerHTML=`<div class="warning">${escapeHTML(err.message)}</div>`;$('#log-live').disabled=true;return;}
  const val=(key,unit)=>m[key]===null?'Not provided':`${safeNum(m[key])} ${unit}`;
  const ratio=m.kcal>0&&m.protein!==null?`${safeNum(m.protein/m.kcal*100)} g`:'Not available';
- $('#live-breakdown').innerHTML=`<div class="detail">Reported nutrition for ${safeNum(amount)} g / mL (use the unit on this product label).</div>${row('Calories',val('kcal','kcal'))}${row('Protein',val('protein','g'))}${row('Carbohydrates',val('carbs','g'))}${row('Fat',val('fat','g'))}${row('Saturated fat',val('saturatedFat','g'))}${row('Sugars',val('sugar','g'))}${row('Fiber',val('fiber','g'))}${row('Sodium',val('sodium','mg'))}${row('Cholesterol',val('cholesterol','mg'))}${row('Protein per 100 calories',ratio)}<p class="fine">${p.labelOrigin?'Values calculated from the stated package serving using its printed numbers.':'Community-submitted data; compare with the packaging.'} Missing nutrients are unknown, not zero. ${p.complete?'':'Core macro data is incomplete; logging is disabled.'}</p>`;
+ $('#live-breakdown').innerHTML=`<div class="detail">${p.labelOrigin?'Package-label nutrition':'Reported nutrition'} for ${safeNum(amount)} ${p.labelOrigin?'g':'g / mL'} (check product label units).</div>${row('Calories',val('kcal','kcal'))}${row('Protein',val('protein','g'))}${row('Carbohydrates',val('carbs','g'))}${row('Fat',val('fat','g'))}${row('Saturated fat',val('saturatedFat','g'))}${row('Sugars',val('sugar','g'))}${row('Fiber',val('fiber','g'))}${row('Sodium',val('sodium','mg'))}${row('Cholesterol',val('cholesterol','mg'))}${row('Protein per 100 calories',ratio)}<p class="fine">${p.labelOrigin?'Values calculated from the stated package serving using its printed numbers.':'Community-submitted data; compare with the packaging.'} Missing nutrients are unknown, not zero. ${p.complete?'':'Core macro data is incomplete; logging is disabled.'}</p>`;
  $('#log-live').disabled=!p.complete;
+ renderAdvisor();
 }
 async function runLiveLookup(){const mode=$('#lookup-mode').value,query=$('#live-query').value.trim();
  const gap=mode==='barcode'?4200:6500,elapsed=Date.now()-lastRequests[mode];
@@ -683,6 +793,27 @@ function bindLive(){
  $('#live-lookup-form').addEventListener('submit',e=>{e.preventDefault();closeCamera();runLiveLookup()});
  $('#live-product-select').addEventListener('change',showLiveProduct);
  $('#live-quantity').addEventListener('input',renderLiveBreakdown);
+ $('#compare-reference').addEventListener('click',()=>{
+  if(!selectedLive)return;
+  const id=$('#compare-example').value;
+  if(!id){$('#comparison-status').textContent='Choose a sample reference first.';return;}
+  comparisonProduct=examplePer100(id);
+  $('#comparison-status').textContent='Sample estimate selected; not a verified retail product.';
+  renderAdvisor();
+ });
+ $('#compare-product').addEventListener('click',async()=>{
+  if(!selectedLive)return;
+  const barcode=$('#compare-barcode').value.trim();
+  if(!BARCODE.test(barcode)){$('#comparison-status').textContent='Enter an 8–14 digit barcode.';return;}
+  if(barcode===selectedLive.code){$('#comparison-status').textContent='That is the same barcode. Scan or enter another product.';return;}
+  if(Date.now()-comparisonLastRequest<5000){$('#comparison-status').textContent='Wait a few seconds before another lookup.';return;}
+  comparisonLastRequest=Date.now();$('#compare-product').disabled=true;
+  $('#comparison-status').textContent='Looking up comparison product…';
+  try{const matches=await lookupBarcode(barcode);if(!matches.length){$('#comparison-status').textContent='No database record for this barcode. Check the package or try another.';return;}
+   comparisonProduct=matches[0];$('#comparison-status').textContent='Comparison loaded. Check both package labels.';renderAdvisor();
+  }catch(err){$('#comparison-status').textContent='Lookup failed: '+String(err.message).slice(0,150)}
+  finally{$('#compare-product').disabled=false}
+ });
  $('#edit-live-label').addEventListener('click',()=>{
   if(!selectedLive)return;
   const p=selectedLive,grams=p.labelGrams||100,m=scaleProduct(p,grams);
