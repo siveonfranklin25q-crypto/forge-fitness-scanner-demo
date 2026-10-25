@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#101a17"/>
-<title>FORGE — Fitness Foundation v0.5</title>
+<title>FORGE — Fitness Foundation v0.6</title>
 <style>
 [hidden]{display:none!important}
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4ef;background:#0e1512;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.app-shell{min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.topbar{height:77px;border-bottom:1px solid #293830;display:flex;justify-content:space-between;align-items:center;padding:0 34px;background:#101915}.brand{display:flex;align-items:center;gap:12px}.brandmark{background:#c4fa72;color:#172011;width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-size:24px;font-weight:950;transform:rotate(-5deg)}.brand strong{font-size:21px;letter-spacing:2px;display:block}.brand small{font-size:9px;letter-spacing:2.2px;color:#a6b4a8}.top-actions{display:flex;gap:22px;align-items:center}.offline-tag,.counter{font-size:11px;letter-spacing:1px;color:#c4fa72;border:1px solid #42633b;background:#1a2b20;padding:8px 10px;border-radius:100px;font-weight:700}.link-btn{background:none;border:none;color:#bddb99;text-decoration:underline;text-underline-offset:3px;padding:5px}.layout{display:grid;grid-template-columns:245px minmax(0,1fr);max-width:1570px;margin:auto}.sidebar{padding:34px 18px;min-height:calc(100vh - 77px);border-right:1px solid #293830;background:#111b16}.overline,.eyebrow{font-size:11px;letter-spacing:2px;color:#b5e575;font-weight:800}.overline{padding-left:14px;margin:0 0 20px}.tabs{display:flex;flex-direction:column;gap:5px}.tab{background:transparent;border:1px solid transparent;border-radius:11px;padding:14px 10px;color:#b2c1b7;display:flex;align-items:center;text-align:left;gap:11px;font-size:13px;font-weight:600;line-height:1.25}.tab:hover,.tab:focus-visible{background:#213128}.tab.active{background:#26392b;color:#f3ffef;border:1px solid #466b3a}.tab-number{font-size:10px;color:#a3ba91}.sidebar-note{border:1px solid #334a36;border-radius:12px;background:#1a281e;margin:38px 5px 0;padding:18px 14px;font-size:13px;line-height:1.65}.sidebar-note p{color:#abbeb0;margin:8px 0 0}.main-content{padding:36px clamp(22px,4.5vw,72px);max-width:1250px;width:100%}h1{font-weight:830;font-size:clamp(27px,3.9vw,48px);letter-spacing:-2.2px;margin:8px 0 12px;line-height:1.12}h1 em{font-style:normal;color:#c4fa72}h2{font-size:clamp(24px,2.6vw,31px);letter-spacing:-.8px;margin:6px 0}h3{font-size:18px;margin:0 0 12px}.lede{font-size:15px;color:#b3c2b9;line-height:1.6;max-width:810px;margin:0 0 24px}.summary-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 38px}.summary-card{background:#18241c;border:1px solid #334437;border-radius:13px;padding:15px}.summary-card small{display:block;font-size:11px;color:#abbdad;margin-bottom:10px}.summary-card strong{font-size:22px;color:#e4f0df;letter-spacing:-.5px}.page{display:none}.page.active{display:block}.section-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:23px}.section-header p{margin:7px 0 0;color:#abbab0;font-size:14px;line-height:1.5}.panel{background:#19251d;border:1px solid #34493a;border-radius:16px;padding:23px;min-width:0}.panel.tinted{background:#213322}.two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:17px;margin-bottom:18px}.stack{display:flex;flex-direction:column;gap:15px}.stack h3{margin-bottom:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{color:#cad8cd;font-size:13px;font-weight:650;display:flex;flex-direction:column;gap:7px}label small,.fine{color:#a1b1a5;font-weight:400;font-size:11px;line-height:1.6}input,select{border:1px solid #475c4a;border-radius:9px;background:#101a14;color:#f5faf5;padding:11px;width:100%;min-height:44px}input:focus,select:focus{outline:2px solid #b9ee74;outline-offset:2px}input[type=checkbox]{min-height:18px;width:18px;accent-color:#c4fa72}.checkbox-row{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.5}.primary{color:#182716;background:#c4fa72;border:1px solid #c4fa72;font-weight:800;padding:13px;border-radius:10px;min-height:45px}.primary:hover{background:#d9ffa8}.primary:focus-visible,button:focus-visible{outline:2px solid #faf4c5;outline-offset:3px}.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}.stat{background:#111b15;border:1px solid #324437;border-radius:11px;padding:14px}.stat .num{font-weight:830;font-size:24px;color:#d0ff90}.stat .name{font-size:11px;margin-top:5px;color:#a9b9ac}.detail,.notice{font-size:12px;line-height:1.65;color:#b6c8b9}.notice{padding:17px 20px;border:1px solid #52603b;background:#202d1c;border-radius:12px;margin-top:20px}.warning{border:1px solid #8a693d;background:#3b2b1b;padding:12px;border-radius:9px;color:#ffd9a2;margin:12px 0;font-size:13px}.danger{border:1px solid #b05d62;background:#3a2325;color:#ffd5d5;padding:12px;border-radius:9px;margin:12px 0;font-size:13px}.success{border:1px solid #416c45;background:#243b29;padding:12px;border-radius:9px;color:#d3f3d0;margin:12px 0;font-size:13px}.nutrient-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #334137;padding:9px 0;color:#b8cabd;font-size:13px}.nutrient-row strong{color:#f2faf3}.muted{color:#adbaaf;font-size:13px;line-height:1.6}.macro-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}.macro-bars>div{border:1px solid #354c39;background:#122017;border-radius:10px;padding:12px}.macro-bars strong{display:block;font-size:20px;color:#d6faa9}.macro-bars small{color:#a8baa8}.segmented{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#111b15;border-radius:10px;padding:5px}.segmented button{background:none;border:1px solid transparent;color:#aebdb1;font-size:12px;border-radius:8px;padding:10px}.segmented button.selected{background:#334a35;border-color:#5d7c56;color:white}.ingredient{font-size:12px;border-bottom:1px solid #334137;display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:#b8cbbd}.ingredient:last-child{border:none}.ingredient span:last-child{text-align:right;white-space:nowrap}.panel-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.entry{padding:12px 0;border-bottom:1px solid #344438;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.entry:last-child{border:0}.entry small{display:block;color:#9fb19f;margin-top:3px}.entry button{border:1px solid #526956;background:transparent;color:#daebd7;padding:6px 10px;border-radius:7px}.pill{font-size:11px;background:#334a31;border:1px solid #50734b;color:#d7fab5;padding:6px 9px;border-radius:100px;font-weight:700;display:inline-block}.pill.reduce,.pill.hold{background:#473d21;border-color:#776c38;color:#ffe6a1}.pill.stop{background:#482628;border-color:#895459;color:#ffd3d0}.exercise{padding:13px 0;border-bottom:1px solid #364739;display:flex;justify-content:space-between;gap:12px;font-size:13px}.exercise:last-child{border:0}.exercise strong{color:#f5fff4}.exercise span{white-space:nowrap;color:#c8fa9b}.progressline{height:9px;overflow:hidden;border-radius:20px;background:#334334;margin:7px 0 12px}.progressline div{height:100%;background:#c4fa72;max-width:100%}#alerts:empty{display:none}#alerts{margin-bottom:12px}footer{border-top:1px solid #2c3e30;display:flex;justify-content:space-between;gap:10px;padding:25px 0 0;color:#8fa296;font-size:11px;margin-top:40px}@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto;border-right:none;border-bottom:1px solid #293830;padding:15px 20px}.overline,.sidebar-note{display:none}.tabs{flex-direction:row;overflow:auto}.tab{min-width:max-content;padding:12px}.topbar{padding:0 20px}.main-content{padding:28px 20px}}@media(max-width:660px){.two-col,.form-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:1fr 1fr}.offline-tag{display:none}.topbar{height:67px}.panel{padding:17px}.section-header{align-items:flex-start}.counter{flex-shrink:0}.macro-bars{grid-template-columns:1fr 1fr}footer{flex-direction:column}h1{letter-spacing:-1px}}
@@ -54,6 +54,28 @@
 .meal-stat small{color:#b5c5b3;font-size:11px}
 #meal-shopping-list .ingredient{border-bottom:1px solid #354d3b;padding:10px 0}
 @media(max-width:650px){.meal-grid{grid-template-columns:1fr}.meal-stat-row{grid-template-columns:repeat(2,1fr)}.meal-ingredient{grid-template-columns:minmax(0,1fr) 83px;}.meal-ingredient button{grid-column:2;width:100%;padding:7px}.meal-ingredient input{max-width:82px}}
+
+/* Weekly meal planner v0.6: configurable, local-only, transparent estimates. */
+#week-planner{margin-top:20px}
+.week-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.week-checks{display:flex;flex-wrap:wrap;gap:12px 18px}
+.week-checks label{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#e2ece0}
+.week-checks input{accent-color:#c4fa72}
+.week-day{border:1px solid #405846;border-radius:12px;padding:13px;margin:10px 0;background:#14221a}
+.week-day h4{margin:0 0 9px;font-size:15px;color:#d1f5b7}
+.week-slot{display:grid;grid-template-columns:105px minmax(0,1fr) 94px;gap:10px;align-items:end;margin-bottom:9px}
+.week-slot label{font-size:11px;color:#b6cbb9;display:block}
+.week-slot select,.week-slot input{width:100%;min-width:0;padding:9px 7px;margin-top:4px;font-size:12px}
+.week-slot .slot-label{font-size:13px;font-weight:650;align-self:center;color:#e0f2e0}
+.week-day-summary{font-size:12px;line-height:1.5;color:#c9dec9;margin:7px 0 0}
+.week-alert{padding:11px;border-radius:9px;background:#42331c;border:1px solid #a18539;color:#f3e5bd;font-size:12px;line-height:1.5;margin:7px 0}
+.week-shopping-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #3b513e}
+.week-shopping-row strong{display:block;font-size:13px}
+.week-shopping-row small{display:block;color:#b6c9b7;font-size:11px;margin-top:5px;line-height:1.45}
+.week-shopping-row label{font-size:11px;color:#c6d5c7}
+.week-shopping-row input{max-width:110px;padding:8px 7px;width:100%;margin-top:4px}
+@media(max-width:700px){.week-options{grid-template-columns:1fr 1fr}.week-slot{grid-template-columns:72px minmax(0,1fr) 77px;gap:7px}.week-slot select,.week-slot input{font-size:12px;padding:8px 5px}}
+@media(max-width:420px){.week-options{grid-template-columns:1fr}.week-shopping-row{grid-template-columns:minmax(0,1fr) 94px}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head><body>
@@ -199,6 +221,36 @@
           <div class="action-row"><button type="button" id="meal-log-serving" class="primary">Log one meal portion</button><button type="button" id="meal-copy-list" class="secondary-btn">Copy grocery list</button><button type="button" id="meal-clear" class="secondary-btn">Clear meal ingredients</button></div>
           <p class="fine">This is a local editable draft, not a retailer inventory or pricing service. Calculations from community food records or generic examples remain estimates. Confirm allergens and labels. Recipe cooking instructions are general examples, not a personalized food-safety plan.</p>
         </section>
+
+        <section class="panel stack" id="week-planner" aria-labelledby="week-planner-heading">
+          <h3 id="week-planner-heading">Weekly Meal Planner · v0.6</h3>
+          <p class="fine">Plan 7 days of homemade meals using the current body goal and the recipes in FORGE. Meal quantities are starting estimates; this is not a complete prescribed diet. Choose foods you enjoy, edit portions, and view honest calorie/protein gaps. Your week and preferences stay on this browser.</p>
+          <div class="week-options">
+            <label>Preferred shopping store<select id="week-store"><option value="Aldi">Aldi</option><option value="Publix">Publix</option><option value="Walmart">Walmart</option><option value="BJ's">BJ's</option><option value="Sam's Club">Sam's Club</option><option value="Other store">Other store</option></select></label>
+            <label>Weekly grocery budget ($, optional)<input id="week-budget" type="number" min="0" max="10000" step="1" placeholder="Enter your budget"></label>
+            <label>Foods to avoid (comma-separated)<input id="week-avoid" maxlength="180" placeholder="e.g. chicken, tomato"></label>
+          </div>
+          <div class="week-checks" aria-label="Ingredient exclusions (basic screening only)">
+            <label><input type="checkbox" id="week-no-dairy"> Avoid dairy ingredients</label>
+            <label><input type="checkbox" id="week-no-wheat"> Avoid wheat ingredients</label>
+            <label><input type="checkbox" id="week-no-soy"> Avoid soy ingredients</label>
+            <label><input type="checkbox" id="week-no-eggs"> Avoid egg ingredients</label>
+          </div>
+          <p class="fine">Exclusions screen known example ingredients only; they cannot verify allergen absence, cross-contact or the safety of real packaged products. Always review actual labels, particularly with allergies.</p>
+          <div class="action-row">
+            <button type="button" class="primary" id="week-generate">Generate a 7-day starter plan</button>
+            <button type="button" class="secondary-btn" id="week-add-custom">Include current Meal Builder recipe</button>
+            <button type="button" class="secondary-btn" id="week-copy">Copy weekly grocery list</button>
+          </div>
+          <p class="fine" id="week-status" role="status" aria-live="polite">Generate a plan, then customize any meal and servings. Nothing is automatically purchased.</p>
+          <div id="week-targets"></div>
+          <div id="week-days"></div>
+          <h3>One combined grocery list</h3>
+          <p class="fine">Generic ingredients are counted in their listed serving units, while scanned products use grams and verified package quantities where available. Enter actual store prices to estimate your total; FORGE does not invent prices or claim inventory availability.</p>
+          <div id="week-shopping"></div>
+          <div id="week-cost"></div>
+          <p class="fine">Prep in batches, refrigerate perishable foods within 2 hours (within 1 hour above 90°F), use refrigerated leftovers within 3–4 days or freeze them. Reheat leftovers to 165°F (74°C). Cook ground beef to 160°F (71°C), ground poultry to 165°F (74°C). Keep wet toppings and crunchy ingredients separate until serving. The grocery list does not account for spoilage, package sizes of generic foods, or pantry stock.</p>
+        </section>
         <div class="two-col">
           <div class="panel stack"><h3>Browse offline sample foods</h3><label>Search foods and ingredients<input id="food-search" type="search" placeholder="Try beef, chips, chicken, soda..."/></label>
             <label>Choose an item<select id="food-select"></select></label>
@@ -231,7 +283,7 @@
       <section id="progress" class="page" aria-labelledby="progress-title"><div class="section-header"><div><span class="eyebrow">ENGINE 05</span><h2 id="progress-title">Progress & adaptation</h2><p>Track trends, not isolated numbers. The app explains when there isn't enough evidence to change the plan.</p></div><span class="counter">5 / 5</span></div>
         <div class="two-col"><div class="panel stack"><h3>Record a weigh-in</h3><form id="weighin-form" class="stack"><label>Date<input id="weighin-date" type="date" required/></label><label>Weight (lb)<input id="weighin-weight" type="number" min="80" max="700" step="0.1" required/></label><button class="primary" type="submit">Save weigh-in</button></form><div id="weighin-list"></div></div><div id="progress-output" class="panel"></div></div>
       </section>
-      <footer><span>FORGE · Fitness foundation · v0.4</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
+      <footer><span>FORGE · Fitness foundation · v0.6</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
     </main>
   </div>
 </div><script type="module">
@@ -526,7 +578,7 @@ function renderProgress(){const p=progressEngine(state.weighins,state.profile.go
  document.querySelectorAll('[data-remove-weighin]').forEach(b=>b.addEventListener('click',()=>{state.weighins=state.weighins.filter(e=>e.date!==b.dataset.removeWeighin);save();renderAll()}));}
 function renderAll(){summary();renderGoal();renderFood();renderRecipe();renderFoodLog();renderTraining();renderRecovery();renderProgress();if(selectedLive)renderAdvisor()}
 function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));
- $('#profile-form').addEventListener('submit',e=>{e.preventDefault();const next={};for(const k of Object.keys(DEFAULT_PROFILE)){const el=$('#'+k);next[k]=['age','weight','height','referenceWeight','days'].includes(k)?+el.value:el.value}const g=goalEngine(next);if(g.errors){message(g.errors.join(' '),'warning');return;}state.profile=next;save();renderAll();message('Starting plan updated across all five systems.');});
+ $('#profile-form').addEventListener('submit',e=>{e.preventDefault();const next={};for(const k of Object.keys(DEFAULT_PROFILE)){const el=$('#'+k);next[k]=['age','weight','height','referenceWeight','days'].includes(k)?+el.value:el.value}const g=goalEngine(next);if(g.errors){message(g.errors.join(' '),'warning');return;}state.profile=next;save();renderAll();renderWeek();message('Starting plan updated across all five systems and the weekly planner.');});
  $('#food-search').addEventListener('input',filterFood);$('#food-select').addEventListener('change',renderFood);$('#food-portions').addEventListener('input',renderFood);
  $('#log-food').addEventListener('click',()=>{const id=$('#food-select').value,n=Number($('#food-portions').value);if(!FOODS[id]||n<=0||n>30)return;state.foodLog.push({label:`${FOODS[id].name} × ${n}`,macros:foodMacros(id,n)});save();renderAll();message('Food added to your local demo log.');});
  $('#recipe-select').addEventListener('change',e=>{state.recipeId=e.target.value;save();renderRecipe()});
@@ -536,7 +588,7 @@ function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventLis
  $('#recovery-form').addEventListener('submit',e=>{e.preventDefault();state.check={sleep:+$('#sleep').value,soreness:$('#soreness').value,pain:$('#pain').value,injury:$('#injury').checked,redFlag:$('#redFlag').checked};save();renderAll();message('Recovery status updated; training recommendations recalculated.');});
  $('#complete-workout').addEventListener('click',()=>{if(recoveryEngine(state.check).level==='stop')return;state.workoutsDone=Math.min(99,state.workoutsDone+1);save();renderAll();message('Workout added to the progress tracker.');});
  $('#weighin-form').addEventListener('submit',e=>{e.preventDefault();const date=$('#weighin-date').value,weight=+$('#weighin-weight').value;if(!date||weight<80||weight>700||!Number.isFinite(weight))return;state.weighins=state.weighins.filter(e=>e.date!==date);state.weighins.push({date,weight});save();renderAll();message('Weigh-in saved locally.');});
- $('#reset').addEventListener('click',()=>{if(!confirm('Reset the entire prototype to the original 300-pound beginner example? This clears locally saved data.'))return;state=structuredClone(initial);localStorage.removeItem(KEY);mealDraft=defaultMeal();try{localStorage.removeItem(MEAL_STORAGE)}catch{};$('#meal-template').value=mealDraft.recipeId;$('#meal-style').value=mealDraft.kind;$('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;redrawMeal();initProfile();$('#food-search').value='';$('#food-portions').value=1;initFoods();renderAll();message('Demo reset to original sample.');});
+ $('#reset').addEventListener('click',()=>{if(!confirm('Reset the entire prototype to the original 300-pound beginner example? This clears locally saved data.'))return;state=structuredClone(initial);localStorage.removeItem(KEY);mealDraft=defaultMeal();try{localStorage.removeItem(MEAL_STORAGE)}catch{};$('#meal-template').value=mealDraft.recipeId;$('#meal-style').value=mealDraft.kind;$('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;redrawMeal();initProfile();$('#food-search').value='';$('#food-portions').value=1;initFoods();weekState=defaultWeek();try{localStorage.removeItem(WEEK_KEY)}catch{};populateWeekPrefs();renderWeek();renderAll();message('Demo reset to original sample.');});
 }
 
 // Live food data is not merged with the illustrative sample catalog. User-initiated queries only.
@@ -940,6 +992,129 @@ function initMealBuilder(){
 }
 window.FORGE_MEAL_TEST={defaultMeal,computeMeal,shoppingText,recoverMeal,mealQtyDisplay};
 
+
+// Weekly Meal Planner v0.6: no retailer prices, allergen certifications or purchases.
+const WEEK_KEY='forge-week-plan-v1';
+const WEEK_DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const WEEK_SLOTS=['breakfast','lunch','dinner','snack'];
+const WEEK_EXTRA={ oats:{name:'Oats & soy milk breakfast',category:['breakfast','snack'],serves:1,items:[['oats',1],['milksoy',1]]},
+ savory:{name:'Savory beef & bean bowl',category:['breakfast','lunch','dinner'],serves:1,items:[['beef93',1],['beans',1],['spinach',1],['tomato',1]]},
+ chickenSalad:{name:'Chicken & vegetable bowl',category:['lunch','dinner'],serves:1,items:[['chicken',1],['lettuce',2],['tomato',2],['oliveoil',.5]]},
+ beanCup:{name:'Seasoned bean cup with salsa',category:['snack','lunch'],serves:1,items:[['beans',1],['salsa',1],['tomato',1]]},
+ beefWrap:{name:'Beef and vegetable breakfast wrap',category:['breakfast','lunch'],serves:1,items:[['beef93',1],['tortilla',1],['spinach',1],['tomato',1]]}
+};
+const WEEK_RECIPE_CATEGORIES={nachos:['lunch','dinner'],burger:['lunch','dinner'],pasta:['lunch','dinner'],pizza:['lunch','dinner']};
+function weekPresets(){
+ const entries=Object.fromEntries(RECIPES.map(r=>[r.id,{id:r.id,name:r.name,category:WEEK_RECIPE_CATEGORIES[r.id]||['lunch','dinner'],serves:r.serves,items:r.smart.map(([foodId,qty])=>({type:'sample',foodId,qty}))}]));
+ for(const [id,entry] of Object.entries(WEEK_EXTRA))entries[id]={id,name:entry.name,category:entry.category,serves:entry.serves,items:entry.items.map(([foodId,qty])=>({type:'sample',foodId,qty}))};
+ if(weekState?.custom && Array.isArray(weekState.custom.items) && weekState.custom.items.length){
+  const x=weekState.custom;entries.custom={id:'custom',name:x.name||'My homemade meal',category:['breakfast','lunch','dinner','snack'],serves:x.servings,items:x.items};
+ }
+ return entries;
+}
+function defaultWeek(){return {options:{store:'Aldi',budget:'',avoid:'',noDairy:false,noWheat:false,noSoy:false,noEggs:false},days:[],prices:{},custom:null};}
+function recoverWeek(){try{const x=JSON.parse(localStorage.getItem(WEEK_KEY)||'null');if(!x||typeof x!=='object')return defaultWeek();const o=defaultWeek();const allowed=['store','budget','avoid','noDairy','noWheat','noSoy','noEggs'];o.options={...o.options,...Object.fromEntries(Object.entries(x.options||{}).filter(([k])=>allowed.includes(k)))};o.days=Array.isArray(x.days)?x.days.slice(0,7).map(d=>Object.fromEntries(WEEK_SLOTS.map(slot=>{const v=d?.[slot];return [slot,v&&typeof v.id==='string'&&Number.isFinite(+v.portions)?{id:v.id,portions:Math.max(.5,Math.min(3,Math.round(+v.portions*2)/2))}:{id:'',portions:1}]}))):[];o.prices=x.prices&&typeof x.prices==='object'&&!Array.isArray(x.prices)?x.prices:{};o.custom=x.custom&&Array.isArray(x.custom.items)&&x.custom.items.length<=35?x.custom:null;return o;}catch{return defaultWeek();}}
+let weekState=recoverWeek();
+function storeWeek(){try{localStorage.setItem(WEEK_KEY,JSON.stringify(weekState));return true}catch{$('#week-status').textContent='Storage is blocked. Your week may not be saved after closing this tab.';return false}}
+function weekWarningsForRecipe(recipe,opts){
+ const words=String(opts.avoid||'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
+ const issues=[];
+ for(const item of recipe.items){const f=item.type==='sample'?FOODS[item.foodId]:item.product;if(!f)continue;
+  const name=String(f.name||'').toLowerCase(),tags=Array.isArray(f.allergens)?f.allergens.map(x=>String(x).toLowerCase()):[];
+  const knownDairy=/\b(cheese|mozzarella|cheddar|yogurt|dairy|milk)\b/.test(name)&&!name.includes('soy milk');
+  const knownWheat=['pasta','bun','tortilla'].includes(item.foodId)||/\b(wheat|flour|pasta|bun|tortilla)\b/.test(name);
+  const knownSoy=item.foodId==='milksoy'||/\b(soy|tofu)\b/.test(name);
+  const knownEgg=/\b(eggs?|mayonnaise)\b/.test(name);
+  if(opts.noDairy&&(knownDairy||tags.some(x=>x.includes('milk'))))issues.push('dairy ingredient');
+  if(opts.noWheat&&(knownWheat||tags.some(x=>x.includes('wheat'))))issues.push('wheat ingredient');
+  if(opts.noSoy&&(knownSoy||tags.some(x=>x.includes('soy'))))issues.push('soy ingredient');
+  if(opts.noEggs&&(knownEgg||tags.some(x=>x.includes('egg'))))issues.push('egg ingredient');
+  if(words.some(word=>word.length>=2&&name.includes(word)))issues.push('disliked ingredient: '+f.name);
+ }
+ return [...new Set(issues)];
+}
+function weekRecipeDraft(recipe,portions=1){const multiple=portions/recipe.serves;return {name:recipe.name,recipeId:recipe.id,kind:'smart',servings:portions,items:recipe.items.map(item=>({...structuredClone(item),qty:item.qty*multiple}))};}
+function weekRecipeNumbers(recipe,portions=1){const d=weekRecipeDraft(recipe,portions);const result=computeMeal(d);return result.total;}
+function weekAllowed(slot){const options=weekState.options;return Object.values(weekPresets()).filter(r=>r.category.includes(slot)&&weekWarningsForRecipe(r,options).length===0)}
+function weekBuild(){
+ const templates=weekPresets(),out=[];
+ const goal=goalEngine(state.profile),target=Number.isFinite(goal.calories)?goal.calories:2000;
+ const ratios={breakfast:.23,lunch:.30,dinner:.37,snack:.10};
+ const slotsOrder={breakfast:['oats','beefWrap','savory'],lunch:['chickenSalad','savory','burger','nachos','pasta'],dinner:['nachos','pasta','burger','pizza','chickenSalad','savory'],snack:['oats','beanCup']};
+ for(let day=0;day<7;day++){
+  const d={};for(const slot of WEEK_SLOTS){const eligible=weekAllowed(slot),preferred=slotsOrder[slot].map(k=>templates[k]).filter(r=>r&&eligible.some(x=>x.id===r.id));const options=preferred.length?preferred:eligible;
+   const chosen=options.length?options[day%options.length]:null;
+   if(!chosen){d[slot]={id:'',portions:1};continue}
+   const per=weekRecipeNumbers(chosen,1).kcal;
+   const n=Number.isFinite(per)&&per>0?Math.max(.5,Math.min(3,Math.round(target*ratios[slot]/per*2)/2)):1;
+   d[slot]={id:chosen.id,portions:n};
+  }out.push(d);
+ }
+ weekState.days=out;storeWeek();return out;
+}
+function weekTotals(){
+ const presets=weekPresets(),days=[],grocery=new Map();
+ for(const d of weekState.days){const totals=Object.fromEntries(['kcal','protein','carbs','fat','fiber','sodium'].map(k=>[k,0]));const errors=[];
+  for(const slot of WEEK_SLOTS){const assignment=d[slot],recipe=presets[assignment?.id];if(!recipe){errors.push(slot+': no meal planned');continue;}
+   const n=Number(assignment.portions);if(!Number.isFinite(n)||n<=0||n>3){errors.push(slot+': invalid portions');continue;}
+   const conflicts=weekWarningsForRecipe(recipe,weekState.options);if(conflicts.length)errors.push(`${slot} — ${recipe.name}: ${conflicts.join(', ')}`);
+   const batch=computeMeal(weekRecipeDraft(recipe,n));
+   for(const k of Object.keys(totals)){if(totals[k]===null||batch.total[k]===null||!Number.isFinite(batch.total[k]))totals[k]=null;else totals[k]+=batch.total[k];}
+   for(const row of batch.rows){const key=row.code?'barcode:'+row.code:'sample:'+recipe.items.find(item=>item.type==='sample'&&FOODS[item.foodId]?.name===row.name)?.foodId;
+    if(!key||key.endsWith('undefined')){errors.push('Unrecognized grocery ingredient');continue;}
+    const prev=grocery.get(key),add=row.qty;
+    if(prev)prev.qty+=add;
+    else grocery.set(key,{key,name:row.name,qty:add,unit:row.code?'g/mL':'listed servings',serving:row.unit,source:row.source,packSize:row.code&&row.labelGrams>0&&row.labelServings>0?row.labelGrams*row.labelServings:null});
+   }
+  }
+  days.push({totals,errors});
+ }
+ return {days,shopping:[...grocery.values()].sort((a,b)=>a.name.localeCompare(b.name))};
+}
+function weekShoppingCost(item){const raw=weekState.prices?.[item.key];if(raw===''||raw===null||raw===undefined)return null;const unitPrice=Number(raw);if(!Number.isFinite(unitPrice)||unitPrice<0||unitPrice>10000)return null;
+ const n=item.unit==='g/mL'?(item.packSize?Math.ceil(item.qty/item.packSize):item.qty/100):item.qty;
+ return Math.round(unitPrice*n*100)/100;
+}
+function weekShoppingText(){const x=weekTotals(),lines=[`FORGE 7-day homemade meal grocery list — ${weekState.options.store}`,`Body goal: ${state.profile.goal} | Prices entered manually; not store quotes.`,`DO NOT use without checking ingredient labels, allergies, raw/cooked weights and portions.`];
+ for(const item of x.shopping){const unit=item.packSize?`approx ${Math.ceil(item.qty/item.packSize)} pack(s) of ${mealQtyDisplay(item.packSize)} g; ${mealQtyDisplay(item.qty)} g total`:item.unit==='g/mL'?`${mealQtyDisplay(item.qty)} g/mL (price per 100 g/mL)`:`${mealQtyDisplay(item.qty)} listed servings (${item.serving})`;
+  const cost=weekShoppingCost(item);lines.push(`• ${item.name}: ${unit} — ${cost===null?'Price not entered':'Est. $'+cost.toFixed(2)} [${item.source}]`);
+ }
+ const missing=x.shopping.filter(i=>weekShoppingCost(i)===null).length;const total=x.shopping.reduce((sum,i)=>sum+(weekShoppingCost(i)||0),0);
+ lines.push(missing?`Cost partial: $${total.toFixed(2)} for priced lines; ${missing} items unpriced.`:`All prices manually entered: estimated $${total.toFixed(2)}.`);
+ lines.push('Foods shown are examples, not store inventory. Refrigerate/freeze prepped food safely.');return lines.join('\n');
+}
+function weekStatus(text){$('#week-status').textContent=text}
+function populateWeekPrefs(){const o=weekState.options;$('#week-store').value=o.store||'Aldi';$('#week-budget').value=o.budget??'';$('#week-avoid').value=o.avoid||'';for(const [id,key] of [['week-no-dairy','noDairy'],['week-no-wheat','noWheat'],['week-no-soy','noSoy'],['week-no-eggs','noEggs']])$('#'+id).checked=!!o[key]}
+function weekOptionList(slot,current){const templates=weekPresets();return `<option value="">Not planned</option>`+Object.values(templates).filter(r=>r.category.includes(slot)||r.id===current).map(r=>{const warn=weekWarningsForRecipe(r,weekState.options);return `<option value="${escapeHTML(r.id)}" ${r.id===current?'selected':''}>${escapeHTML(r.name)}${warn.length?' ⚠ Check ingredients':''}</option>`}).join('')}
+function renderWeek(){const g=goalEngine(state.profile),result=weekTotals(),goalKcal=Number.isFinite(g.calories)?g.calories:null,targetProtein=Number.isFinite(g.protein)?g.protein:null;
+ $('#week-targets').innerHTML=`<div class="notice"><strong>Current profile:</strong> ${escapeHTML(state.profile.goal==='lose'?'Gradual fat loss':state.profile.goal==='gain'?'Build muscle':'Maintain / recomposition')} · Estimated daily energy target: <strong>${goalKcal===null?'Medical review required':safeNum(goalKcal)+' kcal'}</strong> · Estimated protein target: <strong>${targetProtein===null?'Unknown':safeNum(targetProtein)+' g'}</strong>. Daily totals below are from planned meals only; gaps do not mean you must eat more or less without reviewing your needs.</div>`;
+ if(!weekState.days.length){$('#week-days').innerHTML='<p class="fine">No saved week yet. Select your preferences and tap Generate a 7-day starter plan.</p>';$('#week-shopping').innerHTML='';$('#week-cost').innerHTML='';return;}
+ $('#week-days').innerHTML=weekState.days.map((d,i)=>{const totals=result.days[i]?.totals||{},errors=result.days[i]?.errors||[];
+  const entries=WEEK_SLOTS.map(slot=>{const a=d[slot]||{id:'',portions:1};return `<div class="week-slot"><span class="slot-label">${slot[0].toUpperCase()+slot.slice(1)}</span><label>Home meal<select data-week-day="${i}" data-week-slot="${slot}">${weekOptionList(slot,a.id)}</select></label><label>Portions<input type="number" step="0.5" min="0.5" max="3" value="${a.portions}" data-week-portions-day="${i}" data-week-portions-slot="${slot}"></label></div>`}).join('');
+  const short=(k,suffix)=>totals[k]===null?'Incomplete':mealQtyDisplay(round(totals[k]))+suffix;
+  const delta=goalKcal!==null&&totals.kcal!==null?` · ${Math.round(totals.kcal-goalKcal)>=0?'+':''}${Math.round(totals.kcal-goalKcal)} kcal vs goal estimate`:'';
+  const proteinGap=targetProtein!==null&&totals.protein!==null?` · ${Math.round(totals.protein-targetProtein)>=0?'+':''}${Math.round(totals.protein-targetProtein)} g protein vs target`:'';
+  return `<div class="week-day"><h4>${WEEK_DAYS[i]}</h4>${entries}<p class="week-day-summary"><strong>Planned:</strong> ${short('kcal',' kcal')} · ${short('protein',' g protein')} · ${short('carbs',' g carbs')} · ${short('fat',' g fat')}${delta}${proteinGap}</p>${errors.map(e=>`<p class="week-alert">Review: ${escapeHTML(e)}. Change this meal or verify ingredients and labels.</p>`).join('')}</div>`;
+ }).join('');
+ $('#week-shopping').innerHTML=result.shopping.length?result.shopping.map(item=>{const cost=weekShoppingCost(item),unit=item.unit==='g/mL'?(item.packSize?`per package, ${mealQtyDisplay(item.packSize)} g`:'per 100 g/mL'):'per listed serving';const qty=item.packSize?`~${Math.ceil(item.qty/item.packSize)} pack(s), ${mealQtyDisplay(item.qty)} g/mL planned`:`${mealQtyDisplay(item.qty)} ${item.unit}`;
+ return `<div class="week-shopping-row"><div><strong>${escapeHTML(item.name)}</strong><small>${escapeHTML(qty)} · ${escapeHTML(item.source)}</small><small>Cost: ${cost===null?'Not priced':'$'+cost.toFixed(2)} · ${escapeHTML(weekState.options.store)} selected as shopping preference; inventory not checked</small></div><label>Price ($) ${escapeHTML(unit)}<input type="number" min="0" max="10000" step="0.01" placeholder="Unknown" value="${weekState.prices?.[item.key]??''}" data-week-price="${escapeHTML(item.key)}"></label></div>`}).join(''):'<p class="fine">No groceries yet. Assign at least one meal.</p>';
+ const missing=result.shopping.filter(i=>weekShoppingCost(i)===null).length,cost=result.shopping.reduce((a,i)=>a+(weekShoppingCost(i)||0),0),budget=weekState.options.budget===''?null:Number(weekState.options.budget);
+ $('#week-cost').innerHTML=`<p class="notice"><strong>Estimated shopping total from entered prices:</strong> $${cost.toFixed(2)} ${missing?`(${missing} ingredient${missing!==1?'s':''} not priced; total is incomplete)`:'(all items priced manually)'}${Number.isFinite(budget)&&budget>0?` · Weekly budget $${budget.toFixed(2)}${missing?'; cannot confirm budget fit until all prices are entered':cost>budget?'; entered prices exceed budget':'; entered prices are within budget'}`:''}.<br><small>These are user-entered estimates, not live Aldi/Publix/Walmart/BJ’s/Sam’s Club prices.</small></p>`;
+}
+function initWeekPlanner(){populateWeekPrefs();
+ $('#week-generate').addEventListener('click',()=>{weekBuild();renderWeek();weekStatus('Seven-day starter schedule generated. Verify food tolerances, adjust servings, and fill in prices.');});
+ $('#week-add-custom').addEventListener('click',()=>{const x=computeMeal();if(!mealDraft.items.length||['kcal','protein','carbs','fat'].some(k=>x.total[k]===null)){weekStatus('Your current Meal Builder recipe needs ingredients and complete core macros before adding it to the week.');return;}weekState.custom=structuredClone(mealDraft);storeWeek();renderWeek();weekStatus('Saved a snapshot of your current Meal Builder recipe. Select it from any daily meal dropdown; later edits to the draft will not silently change this snapshot.');});
+ $('#week-copy').addEventListener('click',async()=>{if(!weekState.days.length){weekStatus('Generate a plan first.');return;}try{await navigator.clipboard.writeText(weekShoppingText());weekStatus('Combined grocery list copied to clipboard.');}catch{weekStatus('Clipboard unavailable. You can review the grocery list on screen.');}});
+ for(const [id,key] of [['week-store','store'],['week-budget','budget'],['week-avoid','avoid'],['week-no-dairy','noDairy'],['week-no-wheat','noWheat'],['week-no-soy','noSoy'],['week-no-eggs','noEggs']])$('#'+id).addEventListener('change',e=>{if(key==='store'&&weekState.options.store!==e.target.value)weekState.prices={};weekState.options[key]=e.target.type==='checkbox'?e.target.checked:e.target.value;storeWeek();renderWeek();weekStatus('Preferences saved. Existing meals with conflicting ingredients are highlighted; regenerate to replace them automatically. Changing stores clears prior manual price entries.');});
+ $('#week-days').addEventListener('change',e=>{const t=e.target;let day=Number(t.dataset.weekDay??t.dataset.weekPortionsDay),slot=t.dataset.weekSlot??t.dataset.weekPortionsSlot;if(!Number.isInteger(day)||day<0||day>6||!WEEK_SLOTS.includes(slot)||!weekState.days[day])return;
+ if(t.hasAttribute('data-week-slot'))weekState.days[day][slot].id=t.value;
+ else{const n=Number(t.value);if(!Number.isFinite(n)||n<.5||n>3||Math.round(n*2)!==n*2){weekStatus('Meal portions must be between 0.5 and 3, in 0.5 increments.');renderWeek();return;}weekState.days[day][slot].portions=n;}
+ storeWeek();renderWeek();weekStatus('Weekly meal quantities and grocery list updated.');});
+ $('#week-shopping').addEventListener('change',e=>{if(!e.target.matches('[data-week-price]'))return;const key=e.target.dataset.weekPrice,v=e.target.value;if(v!==''&&(!Number.isFinite(Number(v))||Number(v)<0||Number(v)>10000)){weekStatus('Price must be between $0 and $10,000, or blank if unknown.');renderWeek();return;}if(v==='')delete weekState.prices[key];else weekState.prices[key]=v;storeWeek();renderWeek();weekStatus('Manual ingredient price saved on your device.');});
+ renderWeek();
+}
+window.FORGE_WEEK_TEST={weekBuild,weekTotals,weekPresets,weekWarningsForRecipe,weekShoppingText,weekShoppingCost,weekRecipeNumbers};
+
 function bindLive(){
  $('#lookup-mode').addEventListener('change',()=>{closeCamera();updateLiveControls()});
  $('#live-lookup-form').addEventListener('submit',e=>{e.preventDefault();closeCamera();runLiveLookup()});
@@ -998,3 +1173,20 @@ function bindLive(){
   state.foodLog.push({label:`${selectedLive.name} (${quantity} g / mL; ${selectedLive.labelOrigin?'package-label values':'community database, check label'})`,macros:m});save();renderAll();message(selectedLive.labelOrigin?'Food logged using label-based numbers.':'Community-sourced packaged food logged. Verify the package label.');
  });
  if(location.protocol==='file:'||location.protocol==='content:'){$('#scan-start').disabled=true;$('#scan-start').title='Live camera scanning needs a hosted HTTPS version. Choose a saved photo instead.';}
+ $('#scan-start').addEventListener('click',()=>startCamera());$('#scan-stop').addEventListener('click',closeCamera);
+ $('#camera-device').addEventListener('change',async e=>{const id=e.target.value;await closeCamera();startCamera(id);});
+ $('#scan-refocus').addEventListener('click',applyCameraFocus);
+ $('#scan-zoom').addEventListener('input',e=>{$('#scan-zoom-value').textContent=Number(e.target.value).toFixed(1)+'×';});
+ $('#scan-zoom').addEventListener('change',async e=>{try{await liveScanner?.applyVideoConstraints({advanced:[{zoom:Number(e.target.value)}]});}catch{liveStatus('Zoom adjustment is not supported on this lens; try another camera.');}});
+ $('#scan-torch').addEventListener('click',async()=>{const b=$('#scan-torch'),on=b.dataset.on!=='true';try{await liveScanner?.applyVideoConstraints({advanced:[{torch:on}]});b.dataset.on=String(on);b.textContent=on?'Turn flashlight off':'Turn flashlight on';}catch{liveStatus('Flashlight control is not available for this lens.');}});
+ $('#scan-photo').addEventListener('click',()=>$('#barcode-image').click());
+ $('#barcode-image').addEventListener('change',e=>scanPhoto(e.target.files?.[0]));
+ $('#barcode-camera-image').addEventListener('change',e=>scanPhoto(e.target.files?.[0]));
+ document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.tab!=='nutrition')closeCamera()}));
+ window.addEventListener('pagehide',closeCamera);
+ updateLiveControls();
+}
+
+initProfile();initFoods();bind();bindLive();initMealBuilder();initWeekPlanner();renderAll();
+
+</script></body></html>
