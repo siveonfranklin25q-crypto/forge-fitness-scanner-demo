@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#101a17"/>
-<title>FORGE — Fitness Foundation v0.6</title>
+<title>FORGE — Fitness Foundation v0.8</title>
 <style>
 [hidden]{display:none!important}
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4ef;background:#0e1512;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.app-shell{min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.topbar{height:77px;border-bottom:1px solid #293830;display:flex;justify-content:space-between;align-items:center;padding:0 34px;background:#101915}.brand{display:flex;align-items:center;gap:12px}.brandmark{background:#c4fa72;color:#172011;width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-size:24px;font-weight:950;transform:rotate(-5deg)}.brand strong{font-size:21px;letter-spacing:2px;display:block}.brand small{font-size:9px;letter-spacing:2.2px;color:#a6b4a8}.top-actions{display:flex;gap:22px;align-items:center}.offline-tag,.counter{font-size:11px;letter-spacing:1px;color:#c4fa72;border:1px solid #42633b;background:#1a2b20;padding:8px 10px;border-radius:100px;font-weight:700}.link-btn{background:none;border:none;color:#bddb99;text-decoration:underline;text-underline-offset:3px;padding:5px}.layout{display:grid;grid-template-columns:245px minmax(0,1fr);max-width:1570px;margin:auto}.sidebar{padding:34px 18px;min-height:calc(100vh - 77px);border-right:1px solid #293830;background:#111b16}.overline,.eyebrow{font-size:11px;letter-spacing:2px;color:#b5e575;font-weight:800}.overline{padding-left:14px;margin:0 0 20px}.tabs{display:flex;flex-direction:column;gap:5px}.tab{background:transparent;border:1px solid transparent;border-radius:11px;padding:14px 10px;color:#b2c1b7;display:flex;align-items:center;text-align:left;gap:11px;font-size:13px;font-weight:600;line-height:1.25}.tab:hover,.tab:focus-visible{background:#213128}.tab.active{background:#26392b;color:#f3ffef;border:1px solid #466b3a}.tab-number{font-size:10px;color:#a3ba91}.sidebar-note{border:1px solid #334a36;border-radius:12px;background:#1a281e;margin:38px 5px 0;padding:18px 14px;font-size:13px;line-height:1.65}.sidebar-note p{color:#abbeb0;margin:8px 0 0}.main-content{padding:36px clamp(22px,4.5vw,72px);max-width:1250px;width:100%}h1{font-weight:830;font-size:clamp(27px,3.9vw,48px);letter-spacing:-2.2px;margin:8px 0 12px;line-height:1.12}h1 em{font-style:normal;color:#c4fa72}h2{font-size:clamp(24px,2.6vw,31px);letter-spacing:-.8px;margin:6px 0}h3{font-size:18px;margin:0 0 12px}.lede{font-size:15px;color:#b3c2b9;line-height:1.6;max-width:810px;margin:0 0 24px}.summary-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 38px}.summary-card{background:#18241c;border:1px solid #334437;border-radius:13px;padding:15px}.summary-card small{display:block;font-size:11px;color:#abbdad;margin-bottom:10px}.summary-card strong{font-size:22px;color:#e4f0df;letter-spacing:-.5px}.page{display:none}.page.active{display:block}.section-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:23px}.section-header p{margin:7px 0 0;color:#abbab0;font-size:14px;line-height:1.5}.panel{background:#19251d;border:1px solid #34493a;border-radius:16px;padding:23px;min-width:0}.panel.tinted{background:#213322}.two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:17px;margin-bottom:18px}.stack{display:flex;flex-direction:column;gap:15px}.stack h3{margin-bottom:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{color:#cad8cd;font-size:13px;font-weight:650;display:flex;flex-direction:column;gap:7px}label small,.fine{color:#a1b1a5;font-weight:400;font-size:11px;line-height:1.6}input,select{border:1px solid #475c4a;border-radius:9px;background:#101a14;color:#f5faf5;padding:11px;width:100%;min-height:44px}input:focus,select:focus{outline:2px solid #b9ee74;outline-offset:2px}input[type=checkbox]{min-height:18px;width:18px;accent-color:#c4fa72}.checkbox-row{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.5}.primary{color:#182716;background:#c4fa72;border:1px solid #c4fa72;font-weight:800;padding:13px;border-radius:10px;min-height:45px}.primary:hover{background:#d9ffa8}.primary:focus-visible,button:focus-visible{outline:2px solid #faf4c5;outline-offset:3px}.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}.stat{background:#111b15;border:1px solid #324437;border-radius:11px;padding:14px}.stat .num{font-weight:830;font-size:24px;color:#d0ff90}.stat .name{font-size:11px;margin-top:5px;color:#a9b9ac}.detail,.notice{font-size:12px;line-height:1.65;color:#b6c8b9}.notice{padding:17px 20px;border:1px solid #52603b;background:#202d1c;border-radius:12px;margin-top:20px}.warning{border:1px solid #8a693d;background:#3b2b1b;padding:12px;border-radius:9px;color:#ffd9a2;margin:12px 0;font-size:13px}.danger{border:1px solid #b05d62;background:#3a2325;color:#ffd5d5;padding:12px;border-radius:9px;margin:12px 0;font-size:13px}.success{border:1px solid #416c45;background:#243b29;padding:12px;border-radius:9px;color:#d3f3d0;margin:12px 0;font-size:13px}.nutrient-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #334137;padding:9px 0;color:#b8cabd;font-size:13px}.nutrient-row strong{color:#f2faf3}.muted{color:#adbaaf;font-size:13px;line-height:1.6}.macro-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}.macro-bars>div{border:1px solid #354c39;background:#122017;border-radius:10px;padding:12px}.macro-bars strong{display:block;font-size:20px;color:#d6faa9}.macro-bars small{color:#a8baa8}.segmented{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#111b15;border-radius:10px;padding:5px}.segmented button{background:none;border:1px solid transparent;color:#aebdb1;font-size:12px;border-radius:8px;padding:10px}.segmented button.selected{background:#334a35;border-color:#5d7c56;color:white}.ingredient{font-size:12px;border-bottom:1px solid #334137;display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:#b8cbbd}.ingredient:last-child{border:none}.ingredient span:last-child{text-align:right;white-space:nowrap}.panel-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.entry{padding:12px 0;border-bottom:1px solid #344438;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.entry:last-child{border:0}.entry small{display:block;color:#9fb19f;margin-top:3px}.entry button{border:1px solid #526956;background:transparent;color:#daebd7;padding:6px 10px;border-radius:7px}.pill{font-size:11px;background:#334a31;border:1px solid #50734b;color:#d7fab5;padding:6px 9px;border-radius:100px;font-weight:700;display:inline-block}.pill.reduce,.pill.hold{background:#473d21;border-color:#776c38;color:#ffe6a1}.pill.stop{background:#482628;border-color:#895459;color:#ffd3d0}.exercise{padding:13px 0;border-bottom:1px solid #364739;display:flex;justify-content:space-between;gap:12px;font-size:13px}.exercise:last-child{border:0}.exercise strong{color:#f5fff4}.exercise span{white-space:nowrap;color:#c8fa9b}.progressline{height:9px;overflow:hidden;border-radius:20px;background:#334334;margin:7px 0 12px}.progressline div{height:100%;background:#c4fa72;max-width:100%}#alerts:empty{display:none}#alerts{margin-bottom:12px}footer{border-top:1px solid #2c3e30;display:flex;justify-content:space-between;gap:10px;padding:25px 0 0;color:#8fa296;font-size:11px;margin-top:40px}@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto;border-right:none;border-bottom:1px solid #293830;padding:15px 20px}.overline,.sidebar-note{display:none}.tabs{flex-direction:row;overflow:auto}.tab{min-width:max-content;padding:12px}.topbar{padding:0 20px}.main-content{padding:28px 20px}}@media(max-width:660px){.two-col,.form-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:1fr 1fr}.offline-tag{display:none}.topbar{height:67px}.panel{padding:17px}.section-header{align-items:flex-start}.counter{flex-shrink:0}.macro-bars{grid-template-columns:1fr 1fr}footer{flex-direction:column}h1{letter-spacing:-1px}}
@@ -97,6 +97,24 @@
 .lab-panel select,.lab-panel input{width:100%}
 .lab-warning{border:1px solid #99664c;background:#34261d;color:#fbe0c1;padding:12px;border-radius:9px;margin:9px 0;font-size:13px;line-height:1.6}
 @media(max-width:760px){.lab-cols,.lab-grid{grid-template-columns:1fr}.lab-kpi{grid-template-columns:1fr}}
+
+/* Correct grid min-content overflow when the mobile tabs list grows. */
+@media(max-width:950px){.layout{grid-template-columns:minmax(0,1fr);width:100%;min-width:0}.sidebar{width:100%;min-width:0;overflow:hidden}.tabs{width:100%;min-width:0;overflow-x:auto}.main-content{width:100%;min-width:0;max-width:100%}}
+/* v0.8 strength tracker — works as a local-first progressive-overload log */
+.strength-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.strength-card{border:1px solid #3d5744;background:#19271e;border-radius:13px;padding:16px;min-width:0}
+.strength-card h3{margin:0 0 12px}
+.strength-table{overflow-x:auto;margin-top:8px}
+.strength-table table{width:100%;border-collapse:collapse;font-size:12px;min-width:470px}
+.strength-table td,.strength-table th{border-bottom:1px solid #385042;padding:9px 7px;text-align:left;vertical-align:top}
+.strength-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.strength-actions button{flex:1 1 130px}
+.strength-pill{font-size:11px;background:#263d2b;border:1px solid #4b7354;border-radius:99px;padding:4px 9px;display:inline-block;margin:3px}
+.strength-history{border-top:1px solid #3a5041;padding:10px 0}
+.strength-history small{display:block;color:#b9cdbb;margin-top:4px}
+.strength-history button{margin-top:7px}
+.strength-msg{padding:10px 12px;border:1px solid #536b53;border-radius:9px;background:#142318;margin:10px 0;font-size:13px}
+@media(max-width:760px){.strength-grid{grid-template-columns:1fr}.strength-table table{min-width:410px}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head><body>
@@ -114,13 +132,14 @@
         <button data-tab="training" class="tab"><span class="tab-number">03</span> Training</button>
         <button data-tab="recovery" class="tab"><span class="tab-number">04</span> Recovery</button>
         <button data-tab="movement-lab" class="tab"><span class="tab-number">03+</span> Exercise & body-part lab</button>
+        <button data-tab="strength-lab" class="tab"><span class="tab-number">03++</span> Strength tracker</button>
         <button data-tab="health-lab" class="tab"><span class="tab-number">04+</span> Cardio & health lab</button>
         <button data-tab="progress" class="tab"><span class="tab-number">05</span> Progress & adaptation</button>
       </nav>
       <div class="sidebar-note"><strong>Proof of concept</strong><p>One profile drives calorie targets, recipes, training, recovery guidance, and progress reviews.</p></div>
     </aside>
     <main class="main-content">
-      <div class="eyebrow">FOUNDATION BUILD / v0.5</div>
+      <div class="eyebrow">FOUNDATION BUILD / v0.8</div>
       <h1>Make the next good choice <em>obvious.</em></h1>
       <p class="lede">A connected fitness planning system. Start with the 300-pound beginner test case, change any input, and watch the plan adapt.</p>
       <div id="alerts" aria-live="polite"></div>
@@ -338,6 +357,48 @@
         </div>
         <p class="lab-info">This module provides adult general education. Injury rehabilitation, postpartum abdominal doming, pregnancy-related concerns, and persistent pain require individualized assessment. Training progress is based on technique, recovery, and gradual workload—not arbitrary deadlines.</p>
       </section>
+
+      <section id="strength-lab" class="page" aria-labelledby="strength-title">
+        <div class="section-header"><div><span class="eyebrow">ENGINE 03 · v0.8</span><h2 id="strength-title">Strength & progressive overload tracker</h2><p>Log actual sets, reps and resistance. Look for a trend before deciding whether to increase weight. Everything is stored only on this device.</p></div><span class="counter">TRAINING LOG</span></div>
+        <p class="lab-warning">For adults without unresolved injury concerns. Don't test maximal strength. Pain, loss of function, new swelling, chest pain or fainting require stopping and appropriate medical attention. A saved set is not proof a movement is safe; increase load only when form and recovery are stable.</p>
+        <div class="strength-grid">
+          <div class="strength-card stack">
+            <h3>Log an actual workout</h3>
+            <div class="form-grid">
+              <label>Date of workout<input id="strength-date" type="date" required></label>
+              <label>Weight unit<select id="strength-unit"><option value="lb">Pounds (lb)</option><option value="kg">Kilograms (kg)</option></select></label>
+            </div>
+            <label>Exercise<select id="strength-exercise"></select></label>
+            <div class="form-grid">
+              <label>External weight (<span id="strength-unit-label">lb</span>)<input id="strength-load" type="number" min="0" max="2000" step="0.5" value="0"></label>
+              <label>Repetitions<input id="strength-reps" type="number" min="1" max="40" step="1" value="10"></label>
+              <label>Reps in reserve (RIR)<select id="strength-rir"><option value="3">3 — easy</option><option value="2" selected>2 — controlled</option><option value="1">1 — hard</option><option value="0">0 — no reps left</option><option value="4">4 — very easy</option><option value="5">5+ — warm-up effort</option></select></label>
+              <label>Set type<select id="strength-type"><option value="working">Working set</option><option value="warmup">Warm-up set</option></select></label>
+            </div>
+            <label>Response today<select id="strength-symptoms"><option value="none">No concerning pain</option><option value="mild">Mild / stable — hold progression</option><option value="worse">Pain worsened / abnormal symptoms</option></select></label>
+            <p class="lab-info">Weight means additional resistance you moved, not body weight. For unweighted exercises, enter 0; weighted-volume comparisons then aren't meaningful. RIR is an estimate, not a performance grade. Enter each completed set separately.</p>
+            <button type="button" id="strength-add" class="secondary-btn">Add completed set to draft</button>
+            <div id="strength-message" role="status" aria-live="polite" class="strength-msg">Start with a comfortable load and record the sets you actually complete.</div>
+            <div id="strength-draft" aria-live="polite"></div>
+            <div class="strength-actions"><button type="button" id="strength-save" class="primary">Save completed session</button><button type="button" id="strength-clear" class="secondary-btn">Clear unsaved sets</button></div>
+          </div>
+          <div class="strength-card stack">
+            <h3>Progression recommendations</h3>
+            <p class="lab-info">Select an exercise to review its last sessions. Suggestions require repeatable technique, recovery and symptom checks. FORGE never increases your weights automatically.</p>
+            <label>Exercise to review<select id="strength-review-exercise"></select></label>
+            <div id="strength-progression" class="lab-out" aria-live="polite"></div>
+            <h3>Training volume by primary body region</h3>
+            <div id="strength-weekly" class="lab-out" aria-live="polite"></div>
+            <p class="lab-info">Working sets count toward the listed primary muscle group only; exercises may also train secondary muscles. Weighted volume is additional load × reps, and does not reflect bodyweight load, tension or technique.</p>
+          </div>
+        </div>
+        <div class="strength-card stack" style="margin-top:16px">
+          <h3>Saved workout history</h3>
+          <p class="lab-info">Sessions saved locally in this browser; no cross-device synchronization. You can delete a mistaken session. This tracker and the simpler workout-complete button are alternate ways to log activity: don't use both for the same workout.</p>
+          <div id="strength-history" aria-live="polite"></div>
+        </div>
+      </section>
+
       <section id="recovery" class="page" aria-labelledby="recovery-title"><div class="section-header"><div><span class="eyebrow">ENGINE 04</span><h2 id="recovery-title">Recovery guardrails</h2><p>Update your current condition. The training plan automatically changes.</p></div><span class="counter">4 / 5</span></div>
         <div class="two-col"><form id="recovery-form" class="panel stack"><h3>Today's check-in</h3>
           <label>Sleep last night (hours)<input id="sleep" type="number" min="0" max="16" step="0.5"/></label>
@@ -388,7 +449,7 @@
       <section id="progress" class="page" aria-labelledby="progress-title"><div class="section-header"><div><span class="eyebrow">ENGINE 05</span><h2 id="progress-title">Progress & adaptation</h2><p>Track trends, not isolated numbers. The app explains when there isn't enough evidence to change the plan.</p></div><span class="counter">5 / 5</span></div>
         <div class="two-col"><div class="panel stack"><h3>Record a weigh-in</h3><form id="weighin-form" class="stack"><label>Date<input id="weighin-date" type="date" required/></label><label>Weight (lb)<input id="weighin-weight" type="number" min="80" max="700" step="0.1" required/></label><button class="primary" type="submit">Save weigh-in</button></form><div id="weighin-list"></div></div><div id="progress-output" class="panel"></div></div>
       </section>
-      <footer><span>FORGE · Fitness foundation · v0.7</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
+      <footer><span>FORGE · Fitness foundation · v0.8</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
     </main>
   </div>
 </div><script type="module">
@@ -652,7 +713,7 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch{messag
 function message(msg,cls='success'){$('#alerts').innerHTML=`<div class="${cls}" role="status">${escapeHTML(msg)}</div>`;}
 const row=(name,value)=>`<div class="nutrient-row"><span>${name}</span><strong>${value}</strong></div>`;
 function summary(){const g=goalEngine(state.profile);const r=recoveryEngine(state.check);const p=progressEngine(state.weighins,state.profile.goal,state.workoutsDone,state.profile.days);
- const stats=[['Calorie estimate',g.calories===null?'Review needed':`${safeNum(g.calories)} kcal`],['Protein target',`${safeNum(g.protein)} g`],['Training this week',`${state.workoutsDone} / ${state.profile.days}`],['Recovery status',r.title]];
+ const stats=[['Calorie estimate',g.calories===null?'Review needed':`${safeNum(g.calories)} kcal`],['Protein target',`${safeNum(g.protein)} g`],['Workout entries (total)',`${state.workoutsDone} / ${state.profile.days}`],['Recovery status',r.title]];
  $('#summary').innerHTML=stats.map(([label,value])=>`<div class="summary-card"><small>${label}</small><strong>${escapeHTML(value)}</strong></div>`).join('');
 }
 function initProfile(){for(const k of Object.keys(state.profile)){const element=$('#'+k);if(element)element.value=state.profile[k]}for(const k of Object.keys(state.check)){const el=$('#'+k);if(el)el.type==='checkbox'?el.checked=!!state.check[k]:el.value=state.check[k]}$('#weighin-date').value=new Date().toISOString().slice(0,10);$('#weighin-weight').value=state.profile.weight;}
@@ -678,11 +739,11 @@ function renderFoodLog(){const totals=addMacros(state.foodLog.map(e=>e.macros));
  document.querySelectorAll('[data-remove-food]').forEach(b=>b.addEventListener('click',()=>{state.foodLog.splice(+b.dataset.removeFood,1);save();renderAll()}));}
 function renderTraining(){const t=trainingEngine(state.profile,state.check,state.workoutsDone);const r=t.recovery;$('#training-output').innerHTML=`<h3>Suggested session</h3><span class="pill ${r.level}">${escapeHTML(r.title)}</span><p class="muted">${escapeHTML(t.rule)}</p>${t.exercises.length?t.exercises.map(e=>`<div class="exercise"><strong>${escapeHTML(e.name)}</strong><span>${escapeHTML(e.sets)}</span></div>`).join(''):'<div class="danger">Workout paused due to a reported warning sign.</div>'}<h3 style="font-size:15px;margin-top:22px">Cardio / activity</h3><p class="muted">${escapeHTML(t.cardio)}</p><p class="detail">This is a basic adult fitness template, not an individualized rehabilitation program. Existing tendon load counts toward training stress. No maximal testing is required.</p>`;$('#complete-workout').disabled=r.level==='stop';}
 function renderRecovery(){const r=recoveryEngine(state.check);$('#recovery-output').innerHTML=`<h3>Today's decision</h3><span class="pill ${r.level}">${escapeHTML(r.title)}</span><p class="muted">${escapeHTML(r.explanation)}</p>${row('Training adjustment',r.volumeFactor===0?'Hold workout':r.volumeFactor===1?'Normal plan':`${Math.round(r.volumeFactor*100)}% of baseline volume, illustrative`)}<p class="detail">Recovery rules are conservative educational defaults, not validated clinical pain thresholds. Persistent or worsening tendon pain, swelling, or functional loss requires a qualified assessment. Next-day recovery is one input, not a guarantee of safety.</p>`;}
-function renderProgress(){const p=progressEngine(state.weighins,state.profile.goal,state.workoutsDone,state.profile.days);$('#progress-output').innerHTML=`<h3>Trend review</h3><div class="stat-grid"><div class="stat"><div class="num">${p.trend===null?'—':`${p.trend>0?'+':''}${p.trend}`}</div><div class="name">lb per week trend (first-to-last)</div></div><div class="stat"><div class="num">${safeNum(p.workoutCompletion)}%</div><div class="name">Weekly sessions completed</div></div></div><span class="pill ${p.calibrationReady?'':'hold'}">${p.calibrationReady?'Trend available':'More data needed'}</span><p class="muted">${escapeHTML(p.recommendation)}</p><p class="detail">The trend is a simple first-to-last estimate, not a robust weight-trend model. For production, average repeated weekly weigh-ins and consider context before modifications. No automatic calorie reduction is performed.</p>`;
+function renderProgress(){const p=progressEngine(state.weighins,state.profile.goal,state.workoutsDone,state.profile.days);$('#progress-output').innerHTML=`<h3>Trend review</h3><div class="stat-grid"><div class="stat"><div class="num">${p.trend===null?'—':`${p.trend>0?'+':''}${p.trend}`}</div><div class="name">lb per week trend (first-to-last)</div></div><div class="stat"><div class="num">${safeNum(p.workoutCompletion)}%</div><div class="name">Cumulative entries / weekly goal (not a weekly reset)</div></div></div><span class="pill ${p.calibrationReady?'':'hold'}">${p.calibrationReady?'Trend available':'More data needed'}</span><p class="muted">${escapeHTML(p.recommendation)}</p><p class="detail">The trend is a simple first-to-last estimate, not a robust weight-trend model. For production, average repeated weekly weigh-ins and consider context before modifications. No automatic calorie reduction is performed.</p>`;
  $('#weighin-list').innerHTML=state.weighins.length?`<h3 style="font-size:14px">Saved weigh-ins</h3>`+state.weighins.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="entry"><span>${escapeHTML(e.date)} · ${safeNum(e.weight)} lb</span><button type="button" data-remove-weighin="${escapeHTML(e.date)}">Remove</button></div>`).join(''):'<p class="muted">No weigh-ins saved yet. Add dates spanning at least two weeks for a basic trend review.</p>';
  document.querySelectorAll('[data-remove-weighin]').forEach(b=>b.addEventListener('click',()=>{state.weighins=state.weighins.filter(e=>e.date!==b.dataset.removeWeighin);save();renderAll()}));}
 function renderAll(){summary();renderGoal();renderFood();renderRecipe();renderFoodLog();renderTraining();renderRecovery();renderProgress();if(selectedLive)renderAdvisor()}
-function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}));
+function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active');if(b.dataset.tab==='strength-lab')strengthRender();window.scrollTo({top:0,behavior:'smooth'});}));
  $('#profile-form').addEventListener('submit',e=>{e.preventDefault();const next={};for(const k of Object.keys(DEFAULT_PROFILE)){const el=$('#'+k);next[k]=['age','weight','height','referenceWeight','days'].includes(k)?+el.value:el.value}const g=goalEngine(next);if(g.errors){message(g.errors.join(' '),'warning');return;}state.profile=next;save();renderAll();renderWeek();message('Starting plan updated across all five systems and the weekly planner.');});
  $('#food-search').addEventListener('input',filterFood);$('#food-select').addEventListener('change',renderFood);$('#food-portions').addEventListener('input',renderFood);
  $('#log-food').addEventListener('click',()=>{const id=$('#food-select').value,n=Number($('#food-portions').value);if(!FOODS[id]||n<=0||n>30)return;state.foodLog.push({label:`${FOODS[id].name} × ${n}`,macros:foodMacros(id,n)});save();renderAll();message('Food added to your local demo log.');});
@@ -693,7 +754,7 @@ function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventLis
  $('#recovery-form').addEventListener('submit',e=>{e.preventDefault();state.check={sleep:+$('#sleep').value,soreness:$('#soreness').value,pain:$('#pain').value,injury:$('#injury').checked,redFlag:$('#redFlag').checked};save();renderAll();renderLabPlan();renderCardioLab();message('Recovery status updated; training and cardio guidance recalculated.');});
  $('#complete-workout').addEventListener('click',()=>{if(recoveryEngine(state.check).level==='stop')return;state.workoutsDone=Math.min(99,state.workoutsDone+1);save();renderAll();message('Workout added to the progress tracker.');});
  $('#weighin-form').addEventListener('submit',e=>{e.preventDefault();const date=$('#weighin-date').value,weight=+$('#weighin-weight').value;if(!date||weight<80||weight>700||!Number.isFinite(weight))return;state.weighins=state.weighins.filter(e=>e.date!==date);state.weighins.push({date,weight});save();renderAll();message('Weigh-in saved locally.');});
- $('#reset').addEventListener('click',()=>{if(!confirm('Reset the entire prototype to the original 300-pound beginner example? This clears locally saved data.'))return;state=structuredClone(initial);localStorage.removeItem(KEY);mealDraft=defaultMeal();try{localStorage.removeItem(MEAL_STORAGE)}catch{};$('#meal-template').value=mealDraft.recipeId;$('#meal-style').value=mealDraft.kind;$('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;redrawMeal();initProfile();$('#food-search').value='';$('#food-portions').value=1;initFoods();weekState=defaultWeek();try{localStorage.removeItem(WEEK_KEY)}catch{};populateWeekPrefs();renderWeek();renderAll();message('Demo reset to original sample.');});
+ $('#reset').addEventListener('click',()=>{if(!confirm('Reset the entire prototype to the original 300-pound beginner example? This clears locally saved data.'))return;state=structuredClone(initial);localStorage.removeItem(KEY);resetStrengthTracker();mealDraft=defaultMeal();try{localStorage.removeItem(MEAL_STORAGE)}catch{};$('#meal-template').value=mealDraft.recipeId;$('#meal-style').value=mealDraft.kind;$('#meal-name').value=mealDraft.name;$('#meal-servings').value=mealDraft.servings;redrawMeal();initProfile();$('#food-search').value='';$('#food-portions').value=1;initFoods();weekState=defaultWeek();try{localStorage.removeItem(WEEK_KEY)}catch{};populateWeekPrefs();renderWeek();renderAll();message('Demo reset to original sample.');});
 }
 
 // Live food data is not merged with the illustrative sample catalog. User-initiated queries only.
@@ -936,8 +997,7 @@ function decodeRow(bits){
     }
     if(ok){const code=readEANbits(sampled.join(''));if(code)return code;}
    }
-  }
- }
+  } }
  return null;
 }
 function decodeBarcodeCanvas(canvas){
@@ -997,7 +1057,8 @@ const MEAL_COOKING={
  burger:'Form patties and cook to a safe internal temperature. Ground beef needs 160°F (71°C); poultry patties need 165°F (74°C). Prepare vegetables separately.',
  pasta:'Cook pasta per the package, brown meat thoroughly, and simmer with sauce and vegetables. Use 160°F (71°C) for ground beef or 165°F (74°C) for poultry.',
  pizza:'Prepare the base, spread sauce, add toppings and bake until the base is done and cheese melted. Pre-cook raw ground meats or poultry to their safe temperatures before using as toppings.'
-};function refreshMealScannedProduct(p){if(!p)return;let changed=false;for(const item of mealDraft.items){if(item.type==='scan'&&item.product.code===p.code){item.product=structuredClone(p);changed=true;}}if(changed){storeMeal();redrawMeal();}}
+};
+function refreshMealScannedProduct(p){if(!p)return;let changed=false;for(const item of mealDraft.items){if(item.type==='scan'&&item.product.code===p.code){item.product=structuredClone(p);changed=true;}}if(changed){storeMeal();redrawMeal();}}
 function defaultMeal(id='nachos',kind='smart'){
  const r=RECIPES.find(r=>r.id===id)||RECIPES[0];
  return {name:r.name,recipeId:r.id,kind,servings:r.serves,items:r[kind].map(([foodId,qty])=>({type:'sample',foodId,qty}))};
@@ -1374,6 +1435,79 @@ function initMovementLabs(){const muscle=$('#lab-muscle');muscle.innerHTML=LAB_G
 }
 window.FORGE_MOVEMENT_TEST={getLabExercises,labPlanCore,cardioPlan,LAB_EXERCISES};
 
-initProfile();initFoods();bind();bindLive();initMealBuilder();initWeekPlanner();renderAll();initMovementLabs();
+
+// v0.8 — exercise-aware, local-only set tracking and conservative double progression.
+const STRENGTH_STORAGE='forge-strength-v08-sessions';
+const STRENGTH_EXCLUDE=new Set([6,9,10,15,27,29,31,32,33,34,35]); // technique, timed holds, low-pressure drills
+const STRENGTH_EXERCISES=LAB_EXERCISES.filter(e=>!STRENGTH_EXCLUDE.has(e.id));
+const STRENGTH_KEYS=new Set(STRENGTH_EXERCISES.map(e=>e.id));
+const strengthUnitToKg=(weight,unit)=>unit==='lb'?weight*0.45359237:weight;
+const strengthKgToUnit=(kg,unit)=>unit==='lb'?kg/0.45359237:kg;
+const STRENGTH_MS_DAY=86400000;
+function validStrengthDate(s){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(s)))return false;const time=Date.parse(s+'T12:00:00Z');return Number.isFinite(time)&&new Date(time).toISOString().slice(0,10)===s;}
+function strengthLocalToday(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function safeStrengthSet(x){const reps=Number(x?.reps),kg=Number(x?.kg),rir=Number(x?.rir);if(!STRENGTH_KEYS.has(Number(x?.exerciseId))||!Number.isInteger(reps)||reps<1||reps>40||!Number.isFinite(kg)||kg<0||kg>1000||!Number.isInteger(rir)||rir<0||rir>5||!['working','warmup'].includes(x?.type))return null;return {exerciseId:Number(x.exerciseId),reps,kg,rir,type:x.type};}
+function safeStrengthSession(x){if(!x||!validStrengthDate(x.date)||!Array.isArray(x.sets)||x.sets.length>150)return null;const sets=x.sets.map(safeStrengthSet);if(sets.length!==x.sets.length||!sets.some(s=>s.type==='working'))return null;return {id:String(x.id||'').slice(0,80),date:x.date,sets,symptoms:['none','mild','worse'].includes(x.symptoms)?x.symptoms:'mild',counted:x.counted===true};}
+function loadStrengthHistory(){try{const a=JSON.parse(localStorage.getItem(STRENGTH_STORAGE)||'[]');return Array.isArray(a)?a.map(safeStrengthSession).filter(Boolean).slice(-200):[]}catch{return []}}
+let strengthHistory=loadStrengthHistory(),strengthDraft=[];
+function strengthStore(){try{localStorage.setItem(STRENGTH_STORAGE,JSON.stringify(strengthHistory.slice(-200)));return true}catch{return false}}
+function strengthNotice(text){$('#strength-message').textContent=text;}
+function strengthWorkingSets(session,id){return session.sets.filter(s=>s.exerciseId===id&&s.type==='working');}
+function strengthPerformance(session,id){const sets=strengthWorkingSets(session,id);if(!sets.length)return null;const maxKg=Math.max(...sets.map(s=>s.kg));const top=sets.filter(s=>Math.abs(s.kg-maxKg)<0.0001);return {date:session.date,sets:sets.length,topKg:maxKg,minTopReps:Math.min(...top.map(s=>s.reps)),bestTopReps:Math.max(...top.map(s=>s.reps)),lowestRir:Math.min(...sets.map(s=>s.rir)),allAtTop:sets.every(s=>s.reps>=12),symptoms:session.symptoms};}
+function strengthAdvice(sessions,id,recovery){
+ if(recovery.level==='stop')return {level:'stop',headline:'Pause training and seek appropriate assessment',detail:'The latest recovery check-in has a significant warning sign. Do not use progression suggestions until that is resolved.'};
+ const matches=sessions.filter(s=>strengthWorkingSets(s,id).length).sort((a,b)=>a.date.localeCompare(b.date));
+ if(recovery.level==='reduce'||recovery.level==='hold')return {level:'hold',headline:'Hold or reduce today',detail:'Recovery is not at baseline. Focus on technique and the response after training; do not add weight.'};
+ if(!matches.length)return {level:'baseline',headline:'Build your baseline',detail:'Record at least two separate, well-tolerated workouts of this exercise before assessing progression.'};
+ const last=matches.at(-1),recent=strengthPerformance(last,id);
+ if(last.symptoms==='worse')return {level:'stop',headline:'Back off and reassess',detail:'Worsening symptoms were logged. Stop aggravating work and seek professional advice if symptoms continue.'};
+ if(last.symptoms==='mild')return {level:'hold',headline:'Keep the load steady',detail:'Mild symptoms were logged. Review the next-day response and do not increase resistance.'};
+ if(recent.lowestRir<=1)return {level:'hold',headline:'Maintain or reduce effort',detail:'A logged set was at 0–1 reps in reserve. Recover and preserve technique before adding resistance.'};
+ if(matches.length<2)return {level:'baseline',headline:'One workout logged',detail:'Repeat the exercise on another suitable day at a tolerable effort; do not increase load based on one workout.'};
+ const prev=strengthPerformance(matches.at(-2),id);
+ const separation=Math.round((Date.parse(last.date+'T12:00:00Z')-Date.parse(prev.date+'T12:00:00Z'))/STRENGTH_MS_DAY);
+ if(separation<1)return {level:'baseline',headline:'Collect another training-day result',detail:'The two latest workout logs share a date. Count a separate day before evaluating progressive overload.'};
+ if(separation>30)return {level:'baseline',headline:'Re-establish your baseline',detail:'These workouts were more than 30 days apart. Start from current comfort and technique rather than an old best.'};
+ if(recent.sets>=2&&prev.sets>=2&&recent.allAtTop&&prev.allAtTop&&prev.lowestRir>=2&&recent.topKg>0&&Math.abs(recent.topKg-prev.topKg)<0.01&&prev.symptoms==='none')
+  return {level:'ready',headline:'Consider a small increase next time',detail:'Two separate sessions reached 12 repetitions on all working sets at the same top load with at least 2 reps in reserve and no logged symptoms. If technique and next-day recovery were also good, consider a small 2–5% external-load increase; otherwise hold.'};
+ if(recent.topKg===0&&recent.allAtTop&&prev.allAtTop&&last.sets>=2&&prev.sets>=2&&prev.symptoms==='none')
+  return {level:'ready',headline:'Consider a harder variation',detail:'Both sessions used no added weight. If technique and recovery are good, consider a slightly harder variation, a controlled tempo or an extra rep range rather than guessing an external weight.'};
+ return {level:'hold',headline:'Build consistent repetitions first',detail:'Repeat the load with smooth technique. Gradually work toward 8–12 reps with roughly 2–3 reps in reserve. Hold or reduce load if recovery or control declines.'};
+}
+function strengthWeekStats(sessions,today){const start=Date.parse(today+'T12:00:00Z')-6*STRENGTH_MS_DAY;const totals=new Map();for(const s of sessions){const t=Date.parse(s.date+'T12:00:00Z');if(t<start||t>Date.parse(today+'T12:00:00Z'))continue;for(const set of s.sets){if(set.type!=='working')continue;const g=LAB_EXERCISES[set.exerciseId]?.group||'other';totals.set(g,(totals.get(g)||0)+1)}}return [...totals].sort((a,b)=>b[1]-a[1]);}
+function strengthDisplayWeight(kg,unit){return `${safeNum(Math.round(strengthKgToUnit(kg,unit)*10)/10)} ${unit}`;}
+function strengthDraftRender(){const node=$('#strength-draft');if(!strengthDraft.length){node.innerHTML='<p class="lab-info">No sets recorded for this draft yet.</p>';return;}
+ node.innerHTML=`<div class="strength-table"><table><thead><tr><th>Exercise</th><th>Weight</th><th>Reps</th><th>RIR</th><th>Type</th><th></th></tr></thead><tbody>${strengthDraft.map((s,i)=>`<tr><td>${escapeHTML(LAB_EXERCISES[s.exerciseId].name)}</td><td>${strengthDisplayWeight(s.kg,$('#strength-unit').value)}</td><td>${s.reps}</td><td>${s.rir}</td><td>${escapeHTML(s.type)}</td><td><button class="link-btn" type="button" data-strength-remove="${i}">Remove</button></td></tr>`).join('')}</tbody></table></div>`;
+ node.querySelectorAll('[data-strength-remove]').forEach(b=>b.addEventListener('click',()=>{strengthDraft.splice(Number(b.dataset.strengthRemove),1);strengthDraftRender();}));
+}
+function strengthRenderHistory(){const unit=$('#strength-unit').value;const box=$('#strength-history');if(!strengthHistory.length){box.innerHTML='<p class="lab-info">Nothing saved yet. Your first logged session becomes your baseline.</p>';return;}
+ box.innerHTML=strengthHistory.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,20).map(s=>`<div class="strength-history"><strong>${escapeHTML(s.date)}</strong> · ${s.sets.filter(x=>x.type==='working').length} working sets <small>${[...new Set(s.sets.map(x=>LAB_EXERCISES[x.exerciseId]?.name||'Unknown exercise'))].map(escapeHTML).join(' · ')}</small><small>Additional weighted volume (where applicable): ${safeNum(Math.round(s.sets.filter(x=>x.type==='working').reduce((n,x)=>n+strengthKgToUnit(x.kg,unit)*x.reps,0)))} ${unit}×reps · Symptom report: ${escapeHTML(s.symptoms)}</small><button type="button" class="link-btn" data-strength-delete="${escapeHTML(s.id)}">Delete session</button></div>`).join('');
+ box.querySelectorAll('[data-strength-delete]').forEach(b=>b.addEventListener('click',()=>{if(!confirm('Delete this logged session? This cannot be undone.'))return;const id=b.dataset.strengthDelete,idx=strengthHistory.findIndex(s=>s.id===id);if(idx<0)return;const deleted=strengthHistory.splice(idx,1)[0];if(!strengthStore()){strengthHistory.splice(idx,0,deleted);strengthNotice('Unable to save deletion; local storage may be blocked.');return;}if(deleted.counted)state.workoutsDone=Math.max(0,state.workoutsDone-1);save();renderAll();strengthRender();strengthNotice('Session deleted.');}));
+}
+function strengthRender(){const id=Number($('#strength-review-exercise').value),unit=$('#strength-unit').value,exercise=LAB_EXERCISES[id];if(!STRENGTH_KEYS.has(id))return;
+ const advice=strengthAdvice(strengthHistory,id,recoveryEngine(state.check));const latest=strengthHistory.filter(s=>strengthWorkingSets(s,id).length).sort((a,b)=>a.date.localeCompare(b.date)).slice(-3).reverse();
+ $('#strength-progression').innerHTML=`<strong>${escapeHTML(exercise.name)}</strong><p><strong>${escapeHTML(advice.headline)}</strong></p><p>${escapeHTML(advice.detail)}</p><div class="strength-table"><table><thead><tr><th>Date</th><th>Top weight</th><th>Top reps</th><th>Working sets</th></tr></thead><tbody>${latest.length?latest.map(s=>{const x=strengthPerformance(s,id);return `<tr><td>${escapeHTML(x.date)}</td><td>${strengthDisplayWeight(x.topKg,unit)}</td><td>${x.bestTopReps}</td><td>${x.sets}</td></tr>`;}).join(''):'<tr><td colspan="4">No sessions for this exercise yet.</td></tr>'}</tbody></table></div><p class="fine">Top reps describe a set at the highest external resistance in that session, not an estimated one-rep max.</p>`;
+ const stats=strengthWeekStats(strengthHistory,strengthLocalToday());$('#strength-weekly').innerHTML=stats.length?stats.map(([group,sets])=>`<span class="strength-pill">${escapeHTML(LAB_GROUPS.find(x=>x[0]===group)?.[1]||group)} · ${sets} sets</span>`).join(''):'<p>No working sets logged in the past 7 calendar days.</p>';
+ strengthDraftRender();strengthRenderHistory();
+}
+function strengthAdd(){const id=Number($('#strength-exercise').value),load=Number($('#strength-load').value),reps=Number($('#strength-reps').value),rir=Number($('#strength-rir').value),type=$('#strength-type').value;
+ if(!STRENGTH_KEYS.has(id)||!Number.isFinite(load)||load<0||load>2000||!Number.isInteger(reps)||reps<1||reps>40||!Number.isInteger(rir)||rir<0||rir>5||!['working','warmup'].includes(type)){strengthNotice('Enter a valid exercise, resistance 0–2000, repetitions 1–40, and RIR 0–5.');return;}
+ if(strengthDraft.length>=80){strengthNotice('Maximum 80 sets in one draft. Save a session before adding more.');return;}
+ strengthDraft.push({exerciseId:id,kg:strengthUnitToKg(load,$('#strength-unit').value),reps,rir,type});strengthDraftRender();strengthNotice(`Set added. Draft now contains ${strengthDraft.length} set(s).`);
+}
+function strengthSave(){const date=$('#strength-date').value,today=strengthLocalToday(),age=Date.parse(today+'T12:00:00Z')-Date.parse(date+'T12:00:00Z'),symptoms=$('#strength-symptoms').value;
+ if(!validStrengthDate(date)||!Number.isFinite(age)||age<0||age>365*STRENGTH_MS_DAY){strengthNotice('Choose a real workout date within the past year, not a future date.');return;}
+ if(!strengthDraft.some(s=>s.type==='working')){strengthNotice('Log at least one completed working set before saving a session.');return;}
+ if(recoveryEngine(state.check).level==='stop'&&date===today){strengthNotice('Today’s recovery check-in indicates a warning sign. Do not log a new workout as completed today; seek appropriate care. Earlier historical workouts may still be recorded.');return;}
+ if(symptoms==='worse'&&date===today){strengthNotice('Worsening pain or abnormal symptoms: stop exercising and consider medical evaluation. Do not log an ongoing workout as complete today.');return;}
+ const obj={id:`${Date.now()}-${Math.floor(Math.random()*100000)}`,date,sets:strengthDraft.map(s=>({...s})),symptoms,counted:true};strengthHistory.push(obj);strengthHistory=strengthHistory.slice(-200);
+ if(!strengthStore()){strengthHistory=strengthHistory.filter(s=>s.id!==obj.id);strengthNotice('Cannot save this workout because browser storage is unavailable. No progress was counted.');return;}
+ strengthDraft=[];state.workoutsDone=Math.min(99,state.workoutsDone+1);save();renderAll();strengthRender();strengthNotice('Session saved on this device; your training count was updated. Avoid also pressing the basic workout-complete button for this session.');
+}
+function resetStrengthTracker(){strengthHistory=[];strengthDraft=[];try{localStorage.removeItem(STRENGTH_STORAGE)}catch{};if($('#strength-history'))strengthRender();}
+function initStrengthTracker(){const choices=STRENGTH_EXERCISES.map(e=>`<option value="${e.id}">${escapeHTML(LAB_GROUPS.find(g=>g[0]===e.group)?.[1]||e.group)} — ${escapeHTML(e.name)}</option>`).join('');$('#strength-exercise').innerHTML=choices;$('#strength-review-exercise').innerHTML=choices;$('#strength-date').value=strengthLocalToday();$('#strength-date').max=strengthLocalToday();$('#strength-exercise').addEventListener('change',()=>{$('#strength-review-exercise').value=$('#strength-exercise').value;strengthRender()});$('#strength-review-exercise').addEventListener('change',strengthRender);$('#strength-add').addEventListener('click',strengthAdd);$('#strength-save').addEventListener('click',strengthSave);$('#strength-clear').addEventListener('click',()=>{strengthDraft=[];strengthDraftRender();strengthNotice('Unsaved sets cleared; saved history was not changed.');});$('#strength-unit').addEventListener('change',()=>{$('#strength-unit-label').textContent=$('#strength-unit').value;strengthRender();});strengthRender();}
+window.FORGE_STRENGTH_TEST={strengthAdvice,strengthWeekStats,strengthPerformance,safeStrengthSet,safeStrengthSession,strengthUnitToKg,strengthKgToUnit};
+
+initProfile();initFoods();bind();bindLive();initMealBuilder();initWeekPlanner();renderAll();initMovementLabs();initStrengthTracker();
 
 </script></body></html>
