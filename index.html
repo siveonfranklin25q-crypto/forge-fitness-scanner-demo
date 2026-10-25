@@ -4,6 +4,7 @@
 <meta name="theme-color" content="#101a17"/>
 <title>FORGE — Fitness Foundation v0.3</title>
 <style>
+[hidden]{display:none!important}
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf4ef;background:#0e1512;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.app-shell{min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.topbar{height:77px;border-bottom:1px solid #293830;display:flex;justify-content:space-between;align-items:center;padding:0 34px;background:#101915}.brand{display:flex;align-items:center;gap:12px}.brandmark{background:#c4fa72;color:#172011;width:43px;height:43px;border-radius:12px;display:grid;place-items:center;font-size:24px;font-weight:950;transform:rotate(-5deg)}.brand strong{font-size:21px;letter-spacing:2px;display:block}.brand small{font-size:9px;letter-spacing:2.2px;color:#a6b4a8}.top-actions{display:flex;gap:22px;align-items:center}.offline-tag,.counter{font-size:11px;letter-spacing:1px;color:#c4fa72;border:1px solid #42633b;background:#1a2b20;padding:8px 10px;border-radius:100px;font-weight:700}.link-btn{background:none;border:none;color:#bddb99;text-decoration:underline;text-underline-offset:3px;padding:5px}.layout{display:grid;grid-template-columns:245px minmax(0,1fr);max-width:1570px;margin:auto}.sidebar{padding:34px 18px;min-height:calc(100vh - 77px);border-right:1px solid #293830;background:#111b16}.overline,.eyebrow{font-size:11px;letter-spacing:2px;color:#b5e575;font-weight:800}.overline{padding-left:14px;margin:0 0 20px}.tabs{display:flex;flex-direction:column;gap:5px}.tab{background:transparent;border:1px solid transparent;border-radius:11px;padding:14px 10px;color:#b2c1b7;display:flex;align-items:center;text-align:left;gap:11px;font-size:13px;font-weight:600;line-height:1.25}.tab:hover,.tab:focus-visible{background:#213128}.tab.active{background:#26392b;color:#f3ffef;border:1px solid #466b3a}.tab-number{font-size:10px;color:#a3ba91}.sidebar-note{border:1px solid #334a36;border-radius:12px;background:#1a281e;margin:38px 5px 0;padding:18px 14px;font-size:13px;line-height:1.65}.sidebar-note p{color:#abbeb0;margin:8px 0 0}.main-content{padding:36px clamp(22px,4.5vw,72px);max-width:1250px;width:100%}h1{font-weight:830;font-size:clamp(27px,3.9vw,48px);letter-spacing:-2.2px;margin:8px 0 12px;line-height:1.12}h1 em{font-style:normal;color:#c4fa72}h2{font-size:clamp(24px,2.6vw,31px);letter-spacing:-.8px;margin:6px 0}h3{font-size:18px;margin:0 0 12px}.lede{font-size:15px;color:#b3c2b9;line-height:1.6;max-width:810px;margin:0 0 24px}.summary-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 38px}.summary-card{background:#18241c;border:1px solid #334437;border-radius:13px;padding:15px}.summary-card small{display:block;font-size:11px;color:#abbdad;margin-bottom:10px}.summary-card strong{font-size:22px;color:#e4f0df;letter-spacing:-.5px}.page{display:none}.page.active{display:block}.section-header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:23px}.section-header p{margin:7px 0 0;color:#abbab0;font-size:14px;line-height:1.5}.panel{background:#19251d;border:1px solid #34493a;border-radius:16px;padding:23px;min-width:0}.panel.tinted{background:#213322}.two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:17px;margin-bottom:18px}.stack{display:flex;flex-direction:column;gap:15px}.stack h3{margin-bottom:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{color:#cad8cd;font-size:13px;font-weight:650;display:flex;flex-direction:column;gap:7px}label small,.fine{color:#a1b1a5;font-weight:400;font-size:11px;line-height:1.6}input,select{border:1px solid #475c4a;border-radius:9px;background:#101a14;color:#f5faf5;padding:11px;width:100%;min-height:44px}input:focus,select:focus{outline:2px solid #b9ee74;outline-offset:2px}input[type=checkbox]{min-height:18px;width:18px;accent-color:#c4fa72}.checkbox-row{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.5}.primary{color:#182716;background:#c4fa72;border:1px solid #c4fa72;font-weight:800;padding:13px;border-radius:10px;min-height:45px}.primary:hover{background:#d9ffa8}.primary:focus-visible,button:focus-visible{outline:2px solid #faf4c5;outline-offset:3px}.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}.stat{background:#111b15;border:1px solid #324437;border-radius:11px;padding:14px}.stat .num{font-weight:830;font-size:24px;color:#d0ff90}.stat .name{font-size:11px;margin-top:5px;color:#a9b9ac}.detail,.notice{font-size:12px;line-height:1.65;color:#b6c8b9}.notice{padding:17px 20px;border:1px solid #52603b;background:#202d1c;border-radius:12px;margin-top:20px}.warning{border:1px solid #8a693d;background:#3b2b1b;padding:12px;border-radius:9px;color:#ffd9a2;margin:12px 0;font-size:13px}.danger{border:1px solid #b05d62;background:#3a2325;color:#ffd5d5;padding:12px;border-radius:9px;margin:12px 0;font-size:13px}.success{border:1px solid #416c45;background:#243b29;padding:12px;border-radius:9px;color:#d3f3d0;margin:12px 0;font-size:13px}.nutrient-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #334137;padding:9px 0;color:#b8cabd;font-size:13px}.nutrient-row strong{color:#f2faf3}.muted{color:#adbaaf;font-size:13px;line-height:1.6}.macro-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:13px 0}.macro-bars>div{border:1px solid #354c39;background:#122017;border-radius:10px;padding:12px}.macro-bars strong{display:block;font-size:20px;color:#d6faa9}.macro-bars small{color:#a8baa8}.segmented{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#111b15;border-radius:10px;padding:5px}.segmented button{background:none;border:1px solid transparent;color:#aebdb1;font-size:12px;border-radius:8px;padding:10px}.segmented button.selected{background:#334a35;border-color:#5d7c56;color:white}.ingredient{font-size:12px;border-bottom:1px solid #334137;display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:#b8cbbd}.ingredient:last-child{border:none}.ingredient span:last-child{text-align:right;white-space:nowrap}.panel-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.entry{padding:12px 0;border-bottom:1px solid #344438;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px}.entry:last-child{border:0}.entry small{display:block;color:#9fb19f;margin-top:3px}.entry button{border:1px solid #526956;background:transparent;color:#daebd7;padding:6px 10px;border-radius:7px}.pill{font-size:11px;background:#334a31;border:1px solid #50734b;color:#d7fab5;padding:6px 9px;border-radius:100px;font-weight:700;display:inline-block}.pill.reduce,.pill.hold{background:#473d21;border-color:#776c38;color:#ffe6a1}.pill.stop{background:#482628;border-color:#895459;color:#ffd3d0}.exercise{padding:13px 0;border-bottom:1px solid #364739;display:flex;justify-content:space-between;gap:12px;font-size:13px}.exercise:last-child{border:0}.exercise strong{color:#f5fff4}.exercise span{white-space:nowrap;color:#c8fa9b}.progressline{height:9px;overflow:hidden;border-radius:20px;background:#334334;margin:7px 0 12px}.progressline div{height:100%;background:#c4fa72;max-width:100%}#alerts:empty{display:none}#alerts{margin-bottom:12px}footer{border-top:1px solid #2c3e30;display:flex;justify-content:space-between;gap:10px;padding:25px 0 0;color:#8fa296;font-size:11px;margin-top:40px}@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto;border-right:none;border-bottom:1px solid #293830;padding:15px 20px}.overline,.sidebar-note{display:none}.tabs{flex-direction:row;overflow:auto}.tab{min-width:max-content;padding:12px}.topbar{padding:0 20px}.main-content{padding:28px 20px}}@media(max-width:660px){.two-col,.form-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:1fr 1fr}.offline-tag{display:none}.topbar{height:67px}.panel{padding:17px}.section-header{align-items:flex-start}.counter{flex-shrink:0}.macro-bars{grid-template-columns:1fr 1fr}footer{flex-direction:column}h1{letter-spacing:-1px}}
 
 /* Live packaged-food lookup */
@@ -103,6 +104,26 @@
             <div id="live-product-meta"></div>
             <label>Amount eaten (grams or mL; check product label)<input id="live-quantity" type="number" min="1" max="5000" step="1" value="100"/></label>
             <div id="live-breakdown"></div>
+            <button type="button" id="edit-live-label" class="secondary-btn">Correct nutrition using package label</button>
+            <form id="label-correction" class="panel stack" hidden>
+              <h3>Package-label correction</h3>
+              <p class="fine">Enter the numbers printed on your package PER SERVING. The corrected values are saved on this browser only. The original community database record is not changed.</p>
+              <div class="form-grid">
+                <label>Serving weight (grams or mL)<input id="label-grams" type="number" min="1" max="5000" step="0.1" required></label>
+                <label>Servings per package (optional)<input id="label-count" type="number" min="0.1" max="100" step="0.1"></label>
+                <label>Calories per serving<input id="label-kcal" type="number" min="0" max="5000" step="0.1" required></label>
+                <label>Protein (g)<input id="label-protein" type="number" min="0" max="1000" step="0.1" required></label>
+                <label>Carbohydrates (g)<input id="label-carbs" type="number" min="0" max="1000" step="0.1" required></label>
+                <label>Total fat (g)<input id="label-fat" type="number" min="0" max="1000" step="0.1" required></label>
+                <label>Saturated fat (g)<input id="label-saturatedFat" type="number" min="0" max="1000" step="0.1"></label>
+                <label>Sugars (g)<input id="label-sugar" type="number" min="0" max="1000" step="0.1"></label>
+                <label>Fiber (g)<input id="label-fiber" type="number" min="0" max="1000" step="0.1"></label>
+                <label>Sodium (mg)<input id="label-sodium" type="number" min="0" max="30000" step="0.1"></label>
+                <label>Cholesterol (mg)<input id="label-cholesterol" type="number" min="0" max="3000" step="0.1"></label>
+              </div>
+              <div class="action-row"><button type="submit" class="primary">Save label correction</button><button type="button" class="secondary-btn" id="label-cancel">Cancel</button><button type="button" class="link-btn" id="label-clear">Clear my saved correction</button></div>
+              <div id="label-error" class="fine" role="status"></div>
+            </form>
             <button type="button" id="log-live" class="primary">Log this food</button>
           </div>
           <p class="fine">Source: <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener noreferrer">Open Food Facts</a> (Open Database License). Source entries are not independently verified; barcode identity does not confirm a product is stocked at a particular retailer.</p>
@@ -296,6 +317,29 @@ const read = (n,key) => numberOrNull(n?.[key]);
 const round = (n) => n === null ? null : Math.round(n * 10) / 10;
 const fields='code,product_name,product_name_en,brands,quantity,serving_size,nutriments,allergens_tags,nutrition_data_per';
 const BARCODE=/^\d{8,14}$/;
+// Photographed retail package (October 2026); values can change with reformulation.
+// No user photos or personal data are published with this demonstration.
+const LABEL_REFERENCE={
+  '4099100310030':{grams:112,servings:4,perServing:{kcal:170,protein:22,carbs:0,fat:8,saturatedFat:3,sugar:0,fiber:0,sodium:75,cholesterol:70},origin:'Package photograph checked October 2026 — confirm current label'}
+};
+const LABEL_STORAGE='forge-local-package-labels-v1';
+function localLabels(){try{const x=JSON.parse(localStorage.getItem(LABEL_STORAGE)||'{}');return x&&typeof x==='object'&&!Array.isArray(x)?x:{}}catch{return {}}}
+function saveLocalLabels(x){try{localStorage.setItem(LABEL_STORAGE,JSON.stringify(x));return true}catch{return false}}
+function applyLabel(product,record,origin,local=false){
+ if(!record||!Number.isFinite(Number(record.grams))||Number(record.grams)<=0)return product;
+ const per100=Object.fromEntries(Object.entries(record.perServing).map(([key,val])=>[key,val===null?null:round(Number(val)*100/Number(record.grams))]));
+ return {...product,per100,serving:`${record.grams} g / mL (package label)`,labelGrams:Number(record.grams),labelServings:Number(record.servings)||null,labelOrigin:origin,labelLocal:local,complete:['kcal','protein','carbs','fat'].every(k=>per100[k]!==null),source:origin};
+}
+function applyAvailableLabel(product){
+ const saved=localLabels()[product.code];
+ if(saved)return applyLabel(product,saved,'User-entered package label (saved on this device)',true);
+ const photo=LABEL_REFERENCE[product.code];
+ return photo?applyLabel(product,photo,photo.origin,false):product;
+}
+function restoreProduct(product){
+ const base={...product,per100:product.databasePer100,serving:product.databaseServing,labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,source:'Open Food Facts (community-submitted; verify package label)'};
+ return applyAvailableLabel(base);
+}
 
 function normalizeProduct(raw={}) {
   const n=raw.nutriments || {};
@@ -307,9 +351,10 @@ function normalizeProduct(raw={}) {
     fiber:read(n,'fiber_100g'),
     sugar:read(n,'sugars_100g'),
     saturatedFat:read(n,'saturated-fat_100g'),
-    sodium:read(n,'sodium_100g') === null ? null : round(read(n,'sodium_100g') * 1000)
+    sodium:read(n,'sodium_100g') === null ? null : round(read(n,'sodium_100g') * 1000),
+    cholesterol:read(n,'cholesterol_100g') === null ? null : round(read(n,'cholesterol_100g') * 1000)
   };
-  return {
+  const product={
     code: String(raw.code || ''),
     name:String(raw.product_name_en || raw.product_name || 'Unnamed packaged food'),
     brand:String(raw.brands || ''),
@@ -317,9 +362,13 @@ function normalizeProduct(raw={}) {
     serving:String(raw.serving_size || ''),
     allergens:Array.isArray(raw.allergens_tags) ? raw.allergens_tags.map(x=>String(x).replace(/^en:/,'').replace(/-/g,' ')) : [],
     per100:macros,
+    databasePer100:macros,
+    databaseServing:String(raw.serving_size||''),
+    labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,
     complete:['kcal','protein','carbs','fat'].every(k=>macros[k]!==null),
     source:'Open Food Facts (community-submitted; verify package label)'
   };
+  return applyAvailableLabel(product);
 }
 function scaleProduct(product, quantity=100) {
   const amount=Number(quantity);
@@ -429,14 +478,15 @@ function showLiveProduct(){const i=Number($('#live-product-select').value);selec
  const p=selectedLive;
  if(!p){$('#live-results').hidden=true;return;}
  const detailUrl=productLink(p.code),link=detailUrl?` · <a href="${detailUrl}" target="_blank" rel="noopener noreferrer">See source record</a>`:'';
- $('#live-product-meta').innerHTML=`<strong>${escapeHTML(p.name)}</strong><p class="fine">${escapeHTML(p.brand||'Brand not listed')} · Barcode ${escapeHTML(p.code||'not available')}${link}<br>Package: ${escapeHTML(p.quantity||'not supplied')} · Stated serving: ${escapeHTML(p.serving||'not supplied')} · Nutrients reported per 100 g / 100 mL, depending on product.<br>${p.allergens.length?'Reported allergen tags: '+escapeHTML(p.allergens.join(', ')):'Allergen information not supplied: read the package label.'}</p>`;
- $('#live-quantity').value='100'; renderLiveBreakdown();
+ $('#live-product-meta').innerHTML=`<strong>${escapeHTML(p.name)}</strong><p class="fine">${escapeHTML(p.brand||'Brand not listed')} · Barcode ${escapeHTML(p.code||'not available')}${link}<br>Package: ${escapeHTML(p.quantity||'not supplied')} · Stated serving: ${escapeHTML(p.serving||'not supplied')} · Nutrients reported per 100 g / 100 mL, depending on product.<br>${p.allergens.length?'Reported allergen tags: '+escapeHTML(p.allergens.join(', ')):'Allergen information not supplied: read the package label.'}</p><p class="fine"><strong>Nutrition source:</strong> ${escapeHTML(p.source)}.${p.labelServings?' About '+safeNum(p.labelServings)+' servings per package.':''} ${p.labelOrigin?'Package-based numbers take priority over the community entry; check your current package for changes.':''}</p>`;
+ $('#label-correction').hidden=true;
+ $('#live-quantity').value=p.labelGrams||100; renderLiveBreakdown();
 }
 function renderLiveBreakdown(){const p=selectedLive;if(!p)return;const amount=Number($('#live-quantity').value);
  let m;try{m=scaleProduct(p,amount)}catch(err){$('#live-breakdown').innerHTML=`<div class="warning">${escapeHTML(err.message)}</div>`;$('#log-live').disabled=true;return;}
  const val=(key,unit)=>m[key]===null?'Not provided':`${safeNum(m[key])} ${unit}`;
  const ratio=m.kcal>0&&m.protein!==null?`${safeNum(m.protein/m.kcal*100)} g`:'Not available';
- $('#live-breakdown').innerHTML=`<div class="detail">Reported nutrition for ${safeNum(amount)} g / mL (use the unit on this product label).</div>${row('Calories',val('kcal','kcal'))}${row('Protein',val('protein','g'))}${row('Carbohydrates',val('carbs','g'))}${row('Fat',val('fat','g'))}${row('Saturated fat',val('saturatedFat','g'))}${row('Sugars',val('sugar','g'))}${row('Fiber',val('fiber','g'))}${row('Sodium',val('sodium','mg'))}${row('Protein per 100 calories',ratio)}<p class="fine">Community-submitted data; compare with the packaging. Missing nutrients are unknown, not zero. ${p.complete?'':'Core macro data is incomplete; logging is disabled.'}</p>`;
+ $('#live-breakdown').innerHTML=`<div class="detail">Reported nutrition for ${safeNum(amount)} g / mL (use the unit on this product label).</div>${row('Calories',val('kcal','kcal'))}${row('Protein',val('protein','g'))}${row('Carbohydrates',val('carbs','g'))}${row('Fat',val('fat','g'))}${row('Saturated fat',val('saturatedFat','g'))}${row('Sugars',val('sugar','g'))}${row('Fiber',val('fiber','g'))}${row('Sodium',val('sodium','mg'))}${row('Cholesterol',val('cholesterol','mg'))}${row('Protein per 100 calories',ratio)}<p class="fine">${p.labelOrigin?'Values calculated from the stated package serving using its printed numbers.':'Community-submitted data; compare with the packaging.'} Missing nutrients are unknown, not zero. ${p.complete?'':'Core macro data is incomplete; logging is disabled.'}</p>`;
  $('#log-live').disabled=!p.complete;
 }
 async function runLiveLookup(){const mode=$('#lookup-mode').value,query=$('#live-query').value.trim();
@@ -527,12 +577,10 @@ async function startCamera(deviceId=null){
  try{
   const scanner=new Html5Qrcode('barcode-live-reader',{formatsToSupport:supportedGroceryFormats(),useBarCodeDetectorIfSupported:false,verbose:false});
   liveScanner=scanner;
-  // Html5Qrcode.start() accepts a device ID string OR a one-key camera object.
-  // Width/height MUST NOT be spread into cameraIdOrConfig; the library rejects that.
+  // Html5Qrcode.start() takes a device string OR a one-key camera selector.
   const camera=deviceId?deviceId:{facingMode:'environment'};
   const onFound=(raw)=>{if(scanFound||!liveScanner)return;const code=sanitizeDetectedBarcode(raw);if(!code)return;scanFound=true;setBarcodeAndLookUp(code);};
   const onMiss=()=>{};
-  // Request conservative scan settings; query focus/zoom/torch capabilities only after start.
   await scanner.start(camera,{fps:10},onFound,onMiss);
   if(!liveScanner){try{await scanner.stop();}catch{}return;}
   cameraStarting=false;activeCameraId=deviceId;
@@ -635,10 +683,36 @@ function bindLive(){
  $('#live-lookup-form').addEventListener('submit',e=>{e.preventDefault();closeCamera();runLiveLookup()});
  $('#live-product-select').addEventListener('change',showLiveProduct);
  $('#live-quantity').addEventListener('input',renderLiveBreakdown);
+ $('#edit-live-label').addEventListener('click',()=>{
+  if(!selectedLive)return;
+  const p=selectedLive,grams=p.labelGrams||100,m=scaleProduct(p,grams);
+  $('#label-grams').value=grams;$('#label-count').value=p.labelServings||'';
+  for(const k of ['kcal','protein','carbs','fat','saturatedFat','sugar','fiber','sodium','cholesterol'])$('#label-'+k).value=m[k]===null?'':m[k];
+  $('#label-error').textContent='';$('#label-correction').hidden=false;
+ });
+ $('#label-cancel').addEventListener('click',()=>$('#label-correction').hidden=true);
+ $('#label-clear').addEventListener('click',()=>{
+  if(!selectedLive)return;
+  const vals=localLabels();delete vals[selectedLive.code];
+  if(!saveLocalLabels(vals)){$('#label-error').textContent='Browser storage is unavailable.';return;}
+  liveMatches[Number($('#live-product-select').value)]=restoreProduct(selectedLive);showLiveProduct();
+  liveStatus('Local correction cleared. Existing photographed-label reference may still apply.');
+ });
+ $('#label-correction').addEventListener('submit',e=>{
+  e.preventDefault();if(!selectedLive)return;
+  const grams=Number($('#label-grams').value),count=Number($('#label-count').value);
+  const n=(key)=>{const v=$('#label-'+key).value.trim();return v===''?null:Number(v)};
+  const perServing=Object.fromEntries(['kcal','protein','carbs','fat','saturatedFat','sugar','fiber','sodium','cholesterol'].map(k=>[k,n(k)]));
+  if(!Number.isFinite(grams)||grams<=0||grams>5000||Object.values(perServing).some(v=>v!==null&&(!Number.isFinite(v)||v<0))||['kcal','protein','carbs','fat'].some(k=>perServing[k]===null)){$('#label-error').textContent='Enter a valid serving weight and all four core macros.';return;}
+  const corrected={grams,servings:count>0?count:null,perServing},vals=localLabels();vals[selectedLive.code]=corrected;
+  if(!saveLocalLabels(vals)){$('#label-error').textContent='Could not save on this device. Check browser storage settings.';return;}
+  liveMatches[Number($('#live-product-select').value)]=applyLabel({...selectedLive,per100:selectedLive.databasePer100},corrected,'User-entered package label (saved on this device)',true);
+  showLiveProduct();liveStatus('Package label saved locally for this barcode. Verify the numbers before logging.');
+ });
  $('#log-live').addEventListener('click',()=>{if(!selectedLive?.complete)return;
   const quantity=Number($('#live-quantity').value);let m;
   try{m=scaleProduct(selectedLive,quantity)}catch{return;}
-  state.foodLog.push({label:`${selectedLive.name} (${quantity} g / mL, Open Food Facts; check label)`,macros:m});save();renderAll();message('Community-sourced packaged food logged. Verify the package label.');
+  state.foodLog.push({label:`${selectedLive.name} (${quantity} g / mL; ${selectedLive.labelOrigin?'package-label values':'community database, check label'})`,macros:m});save();renderAll();message(selectedLive.labelOrigin?'Food logged using label-based numbers.':'Community-sourced packaged food logged. Verify the package label.');
  });
  if(location.protocol==='file:'||location.protocol==='content:'){$('#scan-start').disabled=true;$('#scan-start').title='Live camera scanning needs a hosted HTTPS version. Choose a saved photo instead.';}
  $('#scan-start').addEventListener('click',()=>startCamera());$('#scan-stop').addEventListener('click',closeCamera);
