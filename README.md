@@ -1,4 +1,4 @@
-# FORGE Fitness — Public Educational Prototype (v0.7)
+# FORGE Fitness — Public Educational Prototype (v0.8)
 
 A free HTTPS proof-of-concept for fitness education and food planning. The original FORGE project is independent of The Brain.
 
@@ -36,3 +36,21 @@ The app stores entered profiles, progress records, meal drafts and training-lab 
 Manual: launch in a mobile/desktop browser; open **Exercise & body-part lab**, change equipment/muscle, generate and log a session, then use **Recovery** to select an urgent warning symptom and confirm lab training pauses. Open **Cardio & health lab** and review zone and hydration guidance. Return to **Nutrition & meals** and verify the existing barcode scanning and weekly planner still operate.
 
 Automated (development only): run `node --check` on the extracted inline module and run browser interaction checks across desktop and 390px width. This is a prototype and has not passed production-level clinical, accessibility, security or real-device regression suites.
+
+
+## v0.8 — Strength Tracker and progressive overload
+
+Open **Strength tracker** from the navigation. This new local-only tracker covers 25 resistance-training candidates in the existing exercise library; slow control, breathing and similar drills remain in the educational finder rather than being scored for maximum weight.
+
+- Record each actual working or warm-up set by exercise, date, repetitions (1–40), estimated reps in reserve (0–5), and external weight (lb/kg). Added external weight of 0 is valid for bodyweight movements.
+- Save multi-exercise sessions in local browser storage. Review the last 20 sessions, delete erroneous entries and see a rolling seven-calendar-day count of direct working sets by the listed primary body region.
+- Review an exercise's recent top externally loaded set, working-set count, and progression recommendation.
+- A modest resistance increase is merely an option after **two separate days** at the same top externally loaded weight, all working sets at 12 controlled reps, two or more working sets, at least 2 reps in reserve and no logged worsening symptoms. The recommendation also respects the global recovery check-in; no weight is added automatically.
+- No estimated one-rep maximum, no guaranteed hypertrophy or automatic injury treatment. Training-load comparisons for bodyweight exercises don't capture body-mass resistance.
+- The original workout counter is cumulative; it does not automatically reset each week. Detailed sessions are date-stamped, but the prior basic completion button has no dates. Avoid logging the same completed workout using both mechanisms.
+
+**Local regression smoke test:** `python tests/strength_tracker_smoke.py` after `pip install playwright` and installing Chromium (system Chromium or Playwright-managed Chromium). It uses an isolated in-browser storage mock and disables the external scanner library, so it does **not** prove live camera operation, nutritional lookup uptime or medical safety.
+
+### Remaining work after v0.8
+
+More detailed exercise videos and form analysis, personally adaptive weekly programming, robust muscle-target programming, structured physiotherapy pathways, measured performance changes, secure cross-device accounts, fully reconciled weekly adherence, accessibility/clinical review, end-to-end tests and launch privacy/security controls. This remains an **educational prototype**, not a production medical or fitness service.
