@@ -43,3 +43,13 @@ No paid generation, no merge and no production deployment are authorized by this
 ## Private artifact
 
 An interactive **self-contained owner-only HTML preview** with the verified rigged GLB embedded was created in the private conversation as a downloadable ZIP, separate from GitHub. It is not an internet-hosted FORGE deployment and must not be shared publicly.
+
+## Owner-approved private turning clips (2026-11-08)
+
+The owner reviewed private rendered turn previews and said: **"they are good lets go."** This is **visual approval for continuing integration**, not an instruction to merge, deploy, spend, or publicly distribute the owner's recognizable 3D mesh.
+
+A **private derivative**, distinct from the unchanged original GLB, includes four additional one-shot skeletal animations: `Turn90Left_PrivateV1`, `Turn90Right_PrivateV1` (1.70 s each), and `Turn180Left_PrivateV1`, `Turn180Right_PrivateV1` (2.58 s each). These names, not the private 3D files, are available to the public-source avatar controls.
+
+FORGE's 3D stage discovers these clips only when the owner locally selects a file that includes them. If found, an optional private turn panel presents four buttons, Replay turn, and Back to idle. Each turn plays once at 1×, **disables the viewer's rigid display turntable**, and holds near the final pose after the `finished` event to avoid a looping snap. This is a **private character preview**, not yet locomotion-integrated third-person steering or accumulated heading. Existing models without these clips continue to function without an empty control panel.
+
+The owner may select **Remember on this device** for a browser-local IndexedDB copy; this is opt-in and is not an encrypted vault or cloud backup. **Never commit the GLB, textures, identifiable screenshots or private file details.** Testing with the real private mesh on a physical Chromebook/Android browser, plus performance, controls and accessibility, remains a release gate. Automated CI uses synthetic/mocked geometry only.
