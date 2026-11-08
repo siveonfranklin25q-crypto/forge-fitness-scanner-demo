@@ -79,6 +79,39 @@
     navObserver.observe(nav,{subtree:true,attributes:true,attributeFilter:["class"]});
     syncDock();
 
+    function updateMomentum(profile,isSample){
+      const ring=document.getElementById("forge-momentum-ring"),
+            pct=document.getElementById("forge-momentum-percent"),
+            count=document.getElementById("forge-momentum-count"),
+            heading=document.getElementById("forge-momentum-title"),
+            caption=document.getElementById("forge-momentum-caption"),
+            days=document.getElementById("forge-momentum-days");
+      if(!ring||!pct||!count||!heading||!caption||!days)return;
+      let sessions=[];
+      try{const x=JSON.parse(localStorage.getItem("forge-strength-v08-sessions")||"[]");if(Array.isArray(x))sessions=x;}catch(_){}
+      const ds=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
+      const today=new Date();today.setHours(12,0,0,0);
+      const recent=Array.from({length:7},(_,i)=>{const date=new Date(today);date.setDate(date.getDate()+i-6);return {iso:ds(date),label:date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,2)};});
+      const logged=new Set(sessions.filter(s=>s&&typeof s.date==="string"&&Array.isArray(s.sets)&&s.sets.some(x=>x.type==="working")).map(s=>s.date));
+      const completed=recent.filter(d=>logged.has(d.iso)).length;
+      const goal=Number(profile?.days),validGoal=!isSample&&Number.isInteger(goal)&&goal>=1&&goal<=7;
+      const n=validGoal?Math.min(100,Math.round(completed/goal*100)):0;
+      ring.style.setProperty("--momentum",n+"%");
+      pct.textContent=validGoal?n+"%":"—";
+      count.textContent=validGoal?completed+" / "+goal:String(completed);
+      heading.textContent=isSample?"Make this your training story":completed===0?"One real session begins the momentum":validGoal&&completed>=goal?"Weekly training goal logged":"Your consistency is taking shape";
+      caption.textContent=isSample?"Set your real training days in your profile. Only dated strength sessions count.":completed===0?"No dated strength sessions in the last seven days. Record what you actually complete.":validGoal&&completed>=goal?"Your chosen weekly count is reached. Recovery and rest are part of the plan.":"Only completed working-set days recorded in Strength Tracker count, not assumed activity.";
+      days.replaceChildren();
+      for(const d of recent){
+        const node=document.createElement("span");
+        node.className="forge-momentum-day"+(logged.has(d.iso)?" logged":"");
+        node.textContent=d.label;
+        node.title=d.iso+(logged.has(d.iso)?" — logged":" — no dated strength log");
+        days.appendChild(node);
+      }
+      days.setAttribute("aria-label",completed+" logged strength-training days in the last 7 days");
+    }
+
     function updateMission(){
       let profile,workoutsDone=0,weighins=0;
       try {
@@ -103,6 +136,7 @@
         mission.textContent="Keep building the evidence";
         missionDetail.textContent="You've logged progress here. Review your trends and plan the next session.";
       }
+      updateMomentum(profile,isSample);
     }
     if(summary){
       const observer=new MutationObserver(updateMission);
