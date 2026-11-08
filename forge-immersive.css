@@ -112,7 +112,7 @@ body{
 .forge-still *::after{animation-play-state:paused!important}
 body.forge-drawer-locked{overflow:hidden}
 .forge-command .forge-kicker{color:#8fe5e0;letter-spacing:2px;font-size:10px;font-weight:900}
-.forge-command .forge-kicker-dot{background:#ff9959;box-shadow:0 0 14px #f78e51;animation:forge-beat 3.4s ease-in-out 3 both}
+.forge-command .forge-kicker-dot{background:#ff9959;box-shadow:0 0 14px #f78e51;animation:forge-beat 2s ease-in-out 2 both}
 .forge-command .forge-privacy{
  display:inline-flex;align-items:center;gap:7px;color:#a3cad2;
  background:rgba(11,30,41,.72);border:1px solid rgba(121,209,226,.3);
@@ -222,17 +222,17 @@ body.forge-drawer-locked{overflow:hidden}
 .forge-holo-halo-a{
  width:268px;height:268px;margin:-134px 0 0 -134px;
  border-top:2px solid #66eae5;border-right:2px solid rgba(255,153,103,.48);
- animation:forge-orbit 9s linear 1 both;
+ animation:forge-orbit 4s linear 1 both;
 }
 .forge-holo-halo-b{
  width:345px;height:345px;margin:-172px 0 0 -172px;
  border-left:2px dashed rgba(90,212,228,.5);border-bottom:1px solid rgba(90,212,228,.5);
- animation:forge-orbit 9s linear 1 reverse both;
+ animation:forge-orbit 4s linear 1 reverse both;
 }
 .forge-holo-halo-c{
  width:410px;height:410px;margin:-205px 0 0 -205px;opacity:.36;
  border:1px dotted rgba(122,238,234,.6);
- animation:forge-orbit 9s linear 1 both;
+ animation:forge-orbit 4s linear 1 both;
 }
 .forge-holo-floor{
  position:absolute;width:310px;height:80px;border-radius:50%;
@@ -249,12 +249,12 @@ body.forge-drawer-locked{overflow:hidden}
  position:absolute;z-index:2;left:50%;top:51%;height:min(335px,96%);width:auto;
  transform:translate(-50%,-50%);
  filter:drop-shadow(0 0 10px rgba(68,246,245,.31)) drop-shadow(0 0 31px rgba(67,196,255,.08));
- animation:forge-breathe 4s ease-in-out 2 both;
+ animation:forge-breathe 2s ease-in-out 2 both;
 }
 .forge-holo-sweep{
  position:absolute;z-index:3;top:-55%;left:18%;right:18%;height:55%;
  background:linear-gradient(to bottom,transparent,rgba(84,238,240,.065) 70%,rgba(145,255,250,.36) 99%,transparent);
- mix-blend-mode:screen;pointer-events:none;animation:forge-sweep 7s linear 1 both;
+ mix-blend-mode:screen;pointer-events:none;animation:forge-sweep 3.5s linear 1 both;
 }
 .forge-holo-node{
  position:absolute;z-index:4;display:flex;flex-direction:column;gap:3px;
