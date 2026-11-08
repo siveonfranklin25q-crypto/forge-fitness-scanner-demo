@@ -209,6 +209,20 @@
                 <label id="forge-avatar-turn-wrap" class="forge-avatar-turn" hidden>Turntable speed (display only) <input id="forge-avatar-turn-speed" type="range" min="30" max="180" step="5" value="85" aria-label="Rigid display turntable speed in degrees per second, not a skeletal character turn"/><output id="forge-avatar-turn-output" for="forge-avatar-turn-speed">85°/s</output></label>
                 <button id="forge-avatar-forget" type="button" class="forge-avatar-forget" hidden>Remove model</button>
               </div>
+              <section id="forge-avatar-turn-pad" class="forge-avatar-turn-pad" aria-label="Interactive private 3D turning controls" hidden>
+                <div class="forge-avatar-turn-pad-title"><span>PRECISION TURN // PRIVATE MODEL</span><small>Body animation · plays once</small></div>
+                <div class="forge-avatar-turn-grid">
+                  <button type="button" data-forge-private-turn="Turn90Left_PrivateV1" hidden>↶ 90° Left</button>
+                  <button type="button" data-forge-private-turn="Turn90Right_PrivateV1" hidden>90° Right ↷</button>
+                  <button type="button" data-forge-private-turn="Turn180Left_PrivateV1" hidden>↶ 180° Left</button>
+                  <button type="button" data-forge-private-turn="Turn180Right_PrivateV1" hidden>180° Right ↷</button>
+                </div>
+                <div class="forge-avatar-turn-footer">
+                  <button type="button" id="forge-avatar-replay" disabled>Replay turn</button>
+                  <button type="button" id="forge-avatar-idle">Back to idle</button>
+                  <small>These moves rotate the actual rig—not the display turntable.</small>
+                </div>
+              </section>
               <p id="forge-avatar-status" role="status" aria-live="polite">Your likeness stays in this browser. Choose a GLB once; optional local saving keeps it here for your next visit.</p>
             </div>
           </div>
