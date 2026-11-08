@@ -127,6 +127,21 @@ with local_site() as url,sync_playwright() as playwright:
         page.locator(".forge-avatar-panel.is-loaded").wait_for()
         assert page.locator("#forge-avatar-empty").is_hidden()
         assert page.locator("#forge-avatar-animation").input_value()=="Idle"
+        assert page.locator("#forge-avatar-turn-wrap").is_hidden()
+        page.locator("#forge-avatar-animation").select_option("TurnInPlace")
+        assert page.locator("#forge-avatar-turn-wrap").is_visible()
+        assert page.locator("#forge-avatar-turn-output").inner_text()=="85°/s"
+        assert page.locator("#forge-avatar-viewer").get_attribute("rotation-per-second")=="85deg"
+        assert page.evaluate("document.getElementById('forge-avatar-viewer').timeScale")==1.65
+        page.locator("#forge-avatar-turn-speed").evaluate(
+            "(el)=>{el.value='115';el.dispatchEvent(new Event('input',{bubbles:true}));}"
+        )
+        assert page.locator("#forge-avatar-viewer").get_attribute("rotation-per-second")=="115deg"
+        page.locator("#forge-avatar-animation").select_option("Walk")
+        assert page.locator("#forge-avatar-turn-wrap").is_hidden()
+        assert page.locator("#forge-avatar-viewer").get_attribute("rotation-per-second")=="22deg"
+        page.locator("#forge-avatar-animation").select_option("Idle")
+
         assert page.locator("#forge-avatar-status").is_visible()
         assert page.locator("#forge-avatar-forget").is_visible()
 
