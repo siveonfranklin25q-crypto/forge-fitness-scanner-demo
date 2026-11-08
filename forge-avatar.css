@@ -160,3 +160,13 @@
  .forge-avatar-mark{animation:none}
 }
 .forge-still .forge-avatar-mark{animation-play-state:paused}
+
+
+/* On phones and compact tablets the actual character, not a text hero,
+   is the first screen users encounter. Keep all functionality below. */
+@media(max-width:780px){
+ .forge-command:not(.is-secondary) .forge-hero-grid{display:flex;flex-direction:column;gap:8px}
+ .forge-command:not(.is-secondary) .forge-avatar-panel{order:-1;width:100%;margin:0}
+ .forge-command:not(.is-secondary) .forge-story{order:1;min-width:0}
+ .forge-command:not(.is-secondary) .forge-story h1{font-size:clamp(39px,9.7vw,53px)}
+}
