@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FORGE perf baseline — bare model-viewer stage</title>
+<!-- Baseline control for tools/performance/bench.mjs: same element contract as the
+     FORGE avatar stage (ids/classes), none of the FORGE UI. Lets the report separate
+     viewer/model cost from interface cost. Synthetic models only. -->
+<style>
+  body{margin:0;font:16px system-ui,sans-serif;background:#10141b;color:#eef}
+  .forge-avatar-panel{padding:16px}
+  model-viewer{width:100%;height:60vh;background:#1b2230}
+  #forge-avatar-status{min-height:1.5em}
+  label{display:inline-block;margin:8px 0}
+  .spacer{height:200vh}
+</style>
+</head>
+<body>
+<main>
+  <section class="forge-avatar-panel" aria-label="3D character">
+    <label for="forge-avatar-file">Choose GLB</label>
+    <input id="forge-avatar-file" type="file" accept=".glb,model/gltf-binary">
+    <button id="forge-motion-toggle" type="button" aria-pressed="true">Motion</button>
+    <p id="forge-avatar-status" role="status"></p>
+    <model-viewer id="forge-avatar-viewer" alt="Synthetic test character" camera-controls touch-action="pan-y"
+      interaction-prompt="none" environment-image="neutral" exposure="1.2" shadow-intensity="0.9"
+      camera-orbit="0deg 75deg auto" field-of-view="29deg" loading="eager" hidden></model-viewer>
+  </section>
+  <div class="spacer" aria-hidden="true"></div>
+</main>
+<script type="module">
+const VIEWER_URL = "https://cdnjs.cloudflare.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js";
+const panel = document.querySelector(".forge-avatar-panel");
+const view = document.getElementById("forge-avatar-viewer");
+const status = document.getElementById("forge-avatar-status");
+const motion = document.getElementById("forge-motion-toggle");
+const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+let on = !reduced.matches;
+function sync(){
+  motion.setAttribute("aria-pressed", String(on));
+  if (on) { view.setAttribute("auto-rotate", ""); view.setAttribute("rotation-per-second", "22deg"); view.play?.(); }
+  else { view.removeAttribute("auto-rotate"); view.pause?.(); }
+}
+motion.addEventListener("click", () => { on = !on; sync(); });
+document.getElementById("forge-avatar-file").addEventListener("change", async e => {
+  const file = e.target.files[0]; if (!file) return;
+  panel.classList.add("is-loading");
+  try { await import(VIEWER_URL); await customElements.whenDefined("model-viewer"); }
+  catch { status.textContent = "The 3D viewer could not load."; status.dataset.tone = "error"; panel.classList.remove("is-loading"); return; }
+  view.hidden = false;
+  view.addEventListener("load", () => {
+    const clips = view.availableAnimations || [];
+    if (clips.length) view.animationName = clips.find(n => /idle/i.test(n)) || clips[0];
+    sync(); panel.classList.remove("is-loading"); panel.classList.add("is-loaded");
+    status.textContent = "Ready"; status.dataset.tone = "success";
+  }, { once: true });
+  view.addEventListener("error", ev => {
+    panel.classList.remove("is-loading");
+    status.textContent = "Model could not be displayed: " + (ev.detail?.type || "error"); status.dataset.tone = "error";
+  }, { once: true });
+  view.src = URL.createObjectURL(file);
+});
+</script>
+</body>
+</html>

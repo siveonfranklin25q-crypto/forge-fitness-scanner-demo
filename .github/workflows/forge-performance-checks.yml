@@ -1,0 +1,81 @@
+name: FORGE 3D performance harness
+
+on:
+  pull_request:
+    paths:
+      - "tools/performance/**"
+      - "tests/performance/**"
+      - ".github/workflows/forge-performance-checks.yml"
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: "Branch to benchmark (full matrix, report artifact only)"
+        default: "design/forge-command-ui-20261108"
+
+permissions:
+  contents: read
+
+jobs:
+  harness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install pinned Playwright + Chromium
+        run: |
+          npm install --no-save --prefix tools/performance playwright@1.49.1
+          npx --prefix tools/performance playwright install --with-deps chromium
+      - name: Fetch pinned third-party files from npm
+        run: bash tools/performance/fetch_vendor.sh "$RUNNER_TEMP/vendor"
+      - name: Compare npm copies with the live CDN files the app loads
+        run: |
+          set -e
+          check() { curl -fsSL "$1" -o "$RUNNER_TEMP/cdn.js" || { echo "::warning::CDN unreachable: $1"; return 0; }
+                    a=$(sha256sum < "$RUNNER_TEMP/cdn.js" | cut -c1-64); b=$(sha256sum < "$2" | cut -c1-64)
+                    echo "$1 cdn=$a npm=$b"; [ "$a" = "$b" ] || { echo "::error::CDN file differs from npm copy: $1"; exit 1; }; }
+          check https://cdnjs.cloudflare.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js "$RUNNER_TEMP/vendor/model-viewer.min.js"
+          check https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js "$RUNNER_TEMP/vendor/html5-qrcode.min.js"
+      - name: Synthetic character tests
+        run: python -m unittest discover -s tests/performance -v
+      - name: Harness smoke on bare baseline stage
+        run: node tests/performance/bench_smoke.mjs "$RUNNER_TEMP/vendor"
+
+  full-benchmark:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+          path: target
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: |
+          npm install --no-save --prefix tools/performance playwright@1.49.1
+          npx --prefix tools/performance playwright install --with-deps chromium
+          bash tools/performance/fetch_vendor.sh "$RUNNER_TEMP/vendor"
+      - name: Benchmark target (emulation only)
+        run: |
+          mkdir -p perf-report
+          node tools/performance/bench.mjs --root target --page index.html --vendor "$RUNNER_TEMP/vendor" \
+            --models light,typical,heavy --profiles desktop,mobile-emu --runs 3 --checks \
+            --label "${{ inputs.target_ref }}@$(git -C target rev-parse --short HEAD) (GitHub runner)" \
+            --out perf-report/report.json --md perf-report/report.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: forge-performance-report
+          path: perf-report/
+          retention-days: 14
