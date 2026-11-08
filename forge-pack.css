@@ -1,0 +1,36 @@
+/* FORGE / Meal Prep Command — high-information, tactile packing console. */
+#forge-pack.forge-pack{position:relative;overflow:hidden;background:radial-gradient(ellipse at 100% 0,rgba(255,146,69,.11),transparent 41%),linear-gradient(145deg,#152d3a,#0e1b2b)!important;border:1px solid rgba(116,211,222,.38)!important;padding:clamp(17px,3vw,27px);border-radius:19px!important}
+.forge-pack::before{content:"";position:absolute;top:0;left:0;height:3px;width:55%;background:linear-gradient(90deg,#ffb77d,#7cf5e8,transparent)}
+.forge-pack-top{display:flex;align-items:start;justify-content:space-between;gap:16px}
+.forge-pack-top h3{font-size:clamp(25px,3vw,34px);line-height:1.05;letter-spacing:-.8px;margin:9px 0;color:#fff6ee}
+.forge-pack-top .fine{color:#b2d0dc;line-height:1.5;max-width:740px;margin:0}
+.forge-pack-eyebrow{font-size:10px;color:#87ebdf;letter-spacing:1.6px;font-weight:900}
+.forge-pack-symbol{font-size:43px;color:#ffb880;text-shadow:0 0 25px #ffad7566;line-height:1}
+.forge-pack-form{display:grid;gap:13px;margin-top:6px}
+.forge-pack-form fieldset{border:1px solid #315c6c;border-radius:13px;padding:13px;min-width:0;background:rgba(9,25,38,.52)}
+.forge-pack-form legend{font-weight:900;font-size:11px;letter-spacing:1.2px;color:#8fe9e5;padding:0 9px;text-transform:uppercase}
+.forge-pack-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px}
+.forge-pack-fields label{display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:750;color:#bed9e2}
+.forge-pack-fields input{width:100%;min-width:0;min-height:43px;border:1px solid #3e6a77;border-radius:9px;padding:9px 11px;background:#0a1a28;color:#fff0dc;font-size:14px;appearance:textfield}
+.forge-pack-fields input:focus{outline:2px solid #7af5e9;outline-offset:2px}
+.forge-pack-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.forge-pack-actions button{font-size:12px;min-height:43px}
+.forge-pack-actions .forge-pack-reset{border:1px solid #476b78;color:#adccd6;background:transparent;border-radius:10px;padding:10px 15px}
+.forge-pack-actions .forge-pack-reset:hover{border-color:#e8b293;color:#ffe8d3}
+.forge-pack-result{border:1px solid rgba(112,195,214,.35);border-radius:14px;background:radial-gradient(circle at 90% 10%,rgba(36,144,156,.13),transparent 40%),#0d2530;padding:18px;min-height:58px;color:#afcbd3}
+.forge-pack-result[data-state="error"]{border-color:rgba(245,151,120,.45)}
+.forge-pack-result-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:13px}
+.forge-pack-result-head strong{color:#ffce9e;font-size:17px;letter-spacing:-.3px}
+.forge-pack-result-head span{font-size:10px;color:#8eb8c6;letter-spacing:.5px}
+.forge-pack-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.forge-pack-tile{display:flex;flex-direction:column;gap:5px;padding:11px;background:linear-gradient(145deg,#173b48,#112a37);border:1px solid rgba(106,199,211,.23);border-radius:10px}
+.forge-pack-tile span{color:#96d4d5;font-size:9px;letter-spacing:.8px;font-weight:850}
+.forge-pack-tile strong{color:#fff6e9;font-size:clamp(23px,3.3vw,35px);font-weight:930;line-height:1;font-variant-numeric:tabular-nums}
+.forge-pack-tile small{font-size:10px;color:#94b6c3}
+.forge-pack-totals{color:#e3f4f5;line-height:1.6;font-size:12px;margin:13px 0 0}
+.forge-pack-footnote{color:#92b9c4;font-size:10px;line-height:1.6;margin:8px 0 0}
+.forge-pack-error{color:#ffb6a1;font-size:12px;margin:0}
+.forge-pack-saved{color:#9bf1d3;font-size:12px;font-weight:700;margin:11px 0 0}
+@media(max-width:760px){.forge-pack-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.forge-pack-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.forge-pack-fields label{font-size:10px}.forge-pack-symbol{font-size:32px}}
+@media(max-width:375px){.forge-pack-fields{grid-template-columns:1fr 1fr;gap:6px}.forge-pack-fields input{padding:9px 7px;font-size:12px}.forge-pack-actions .forge-command-btn,.forge-pack-actions .forge-command-ghost{padding:9px 11px;font-size:11px}.forge-pack-tile strong{font-size:22px}}
+@media(prefers-reduced-motion:reduce){#forge-pack *{transition:none!important}}
