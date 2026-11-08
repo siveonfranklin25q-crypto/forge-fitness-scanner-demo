@@ -1,7 +1,7 @@
-"""FORGE UI refresh browser smoke test.
+"""FORGE immersive interface browser smoke test.
 Run: python tests/ui_refresh_smoke.py
-Requires Playwright, Chromium. Serves the actual HTML, CSS, and JS over localhost.
-No personal profile is uploaded; external barcode library is disabled in the test.
+Uses a local HTTP server to load the real HTML, CSS and JS. No external
+barcode library or user data; Playwright uses an isolated browser context.
 """
 from contextlib import contextmanager
 from functools import partial
@@ -46,35 +46,66 @@ with local_site() as url, sync_playwright() as playwright:
     for width in (320, 390, 768, 1280):
         page = browser.new_page(viewport={"width": width, "height": 844})
         page.emulate_media(reduced_motion="reduce")
-        # The external library isn't needed to test local navigation and should
-        # not make smoke tests dependent on third-party availability.
         page.route("https://cdn.jsdelivr.net/**", lambda route: route.abort())
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(url, wait_until="domcontentloaded")
+
         assert page.locator(".forge-hero").is_visible()
-        if width in (390, 1280):
-            page.screenshot(path=str(shots / f"forge-dashboard-{width}.png"), animations="disabled")
+        assert page.locator(".forge-holo-panel").is_visible()
+        assert page.locator(".forge-atlas-body").count() == 1
+        assert page.locator(".forge-mission-tile").count() == 4
         assert page.locator(".summary-card").count() == 4
         assert page.locator(".tabs [data-tab]").count() == 8
-        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), width
-        assert page.locator("#forge-active-section").is_visible()
-        if width == 1280:
-            assert page.locator(".sidebar").evaluate(
+        assert page.evaluate(
+            "document.documentElement.scrollWidth <= window.innerWidth"
+        ), f"Horizontal overflow at {width}px"
+        assert "sample profile" in page.locator("#forge-mission-caption").inner_text().lower()
+
+        # Motion is off for a user who requests reduced motion, but can be toggled.
+        assert page.locator("#forge-motion-toggle").get_attribute("aria-pressed") == "false"
+        page.locator("#forge-motion-toggle").click()
+        assert page.locator("#forge-motion-toggle").get_attribute("aria-pressed") == "true"
+        page.locator("#forge-motion-toggle").click()
+        assert page.locator("#forge-motion-toggle").get_attribute("aria-pressed") == "false"
+
+        if width in (390, 1280):
+            page.screenshot(path=str(shots / f"forge-dashboard-{width}.png"), animations="disabled")
+        if width < 781:
+            assert page.locator("#forge-mobile-dock").is_visible()
+            assert not page.locator("#forge-sidebar").is_visible()
+            page.locator("#forge-dock-more").click()
+            assert page.locator("#forge-sidebar").is_visible()
+            assert page.locator("#forge-dock-more").get_attribute("aria-expanded") == "true"
+            page.locator('#forge-sidebar [data-tab="movement-lab"]').click()
+            assert page.locator("#movement-lab").is_visible()
+            assert not page.locator("#forge-sidebar").is_visible()
+            page.locator('#forge-mobile-dock [data-forge-go="profile"]').click()
+            assert page.locator("#profile").is_visible()
+        else:
+            assert page.locator("#forge-sidebar").is_visible()
+            assert not page.locator("#forge-mobile-dock").is_visible()
+            assert page.locator("#forge-sidebar").evaluate(
                 "(el) => getComputedStyle(el).position"
             ) == "sticky"
 
-        page.locator('[data-forge-go="strength-lab"]').click()
+        # Use the same visible mission card that an actual user would tap.
+        page.locator('.forge-mission-tile[data-forge-go="strength-lab"]').click()
         assert page.locator("#strength-lab").is_visible()
-        assert page.locator(".forge-hero").evaluate("(el) => el.classList.contains('is-secondary')")
-        if width == 390:
-            page.screenshot(path=str(shots / "forge-strength-390.png"), animations="disabled")
+        assert page.locator(".forge-hero").evaluate(
+            "(el) => el.classList.contains('is-secondary')"
+        )
+        assert page.evaluate("location.hash") == "#strength-lab"
         assert page.locator('[data-tab="strength-lab"]').get_attribute(
             "aria-current"
         ) == "page"
-        assert page.evaluate("location.hash") == "#strength-lab"
-
-        page.locator('[data-tab="nutrition"]').click()
+        if width == 390:
+            page.screenshot(path=str(shots / "forge-strength-390.png"), animations="disabled")
+            page.locator('#forge-mobile-dock [data-forge-go="nutrition"]').click()
+        elif width < 781:
+            page.locator('#forge-mobile-dock [data-forge-go="nutrition"]').click()
+        else:
+            page.locator('#forge-sidebar [data-tab="nutrition"]').click()
         assert page.locator("#nutrition").is_visible()
         assert page.locator("#live-food-panel").count() == 1
         assert page.evaluate("location.hash") == "#nutrition"
@@ -88,4 +119,4 @@ with local_site() as url, sync_playwright() as playwright:
         page.close()
 
     browser.close()
-print("PASS: FORGE UI navigation, deep links, quick actions, mobile layout, and legacy content")
+print("PASS: FORGE immersive UI, reduced-motion, navigation, mobile menu, deep links and legacy content")
