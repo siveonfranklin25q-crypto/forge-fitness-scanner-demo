@@ -118,7 +118,9 @@
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <link rel="stylesheet" href="./forge-ui.css"/>
+<link rel="stylesheet" href="./forge-immersive.css"/>
 <script defer src="./forge-ui.js"></script>
+<script defer src="./forge-immersive.js"></script>
 </head><body>
 <a class="forge-skip" href="#profile">Skip to main workspace</a>
 <div class="app-shell">
@@ -127,7 +129,7 @@
     <div class="top-actions"><span class="offline-tag">LOCAL APP · LIVE LOOKUP NEEDS INTERNET</span><button id="reset" class="link-btn">Reset demo</button></div>
   </header>
   <div class="layout">
-    <aside class="sidebar">
+    <aside id="forge-sidebar" class="sidebar">
       <p class="overline">YOUR WORKSPACES</p>
       <nav class="tabs" aria-label="FORGE workspaces">
         <button data-tab="profile" class="tab active" type="button"><span class="tab-number">01</span> Overview</button>
@@ -142,21 +144,107 @@
       <div class="sidebar-note"><strong>Built for daily progress</strong><p>Your saved entries stay in this browser. Keep a backup of anything important; cross-device sync is not available yet.</p></div>
     </aside>
     <main class="main-content">
-      <div id="forge-hero" class="forge-hero">
+      <div id="forge-hero" class="forge-hero forge-command">
         <div class="forge-hero-top">
-          <span class="forge-kicker"><span class="forge-kicker-dot" aria-hidden="true"></span> FORGE // YOUR FITNESS WORKSPACE</span>
-          <span class="forge-privacy">LOCAL-FIRST · NO ACCOUNT REQUIRED</span>
+          <span class="forge-kicker"><span class="forge-kicker-dot" aria-hidden="true"></span> FORGE / HUMAN PERFORMANCE SYSTEM</span>
+          <span class="forge-privacy"><span class="forge-privacy-dot" aria-hidden="true"></span> PRIVATE · ON THIS DEVICE</span>
         </div>
-        <h1>Your progress. <em>Built on purpose.</em></h1>
-        <p class="lede">Plan meals, train with intention, track real sets, and review your progress in one focused workspace. Start with your profile; all starting numbers are estimates.</p>
-        <div class="forge-quick-actions" aria-label="Quick workspace shortcuts">
-          <button type="button" class="forge-quick primary-quick" data-forge-go="nutrition">Plan my meals</button>
-          <button type="button" class="forge-quick" data-forge-go="strength-lab">Log strength</button>
-          <button type="button" class="forge-quick" data-forge-go="recovery">Recovery check</button>
-          <button type="button" class="forge-quick" data-forge-go="progress">Review progress</button>
+        <div class="forge-hero-grid">
+          <div class="forge-story">
+            <div class="forge-chapter"><span>001</span> PHYSIQUE DEVELOPMENT <span class="forge-chapter-line" aria-hidden="true"></span></div>
+            <h1>BUILD YOUR<br/><em>LEGACY.</em></h1>
+            <p class="forge-story-copy">The work is the transformation. Train, fuel, recover and watch your performance take shape.</p>
+            <div class="forge-mission-card">
+              <div class="forge-mission-glyph" aria-hidden="true">◎</div>
+              <div class="forge-mission-copy">
+                <span class="forge-label">YOUR NEXT OBJECTIVE</span>
+                <strong id="forge-mission-headline">Establish your baseline</strong>
+                <small id="forge-mission-caption">Set up your profile to personalize your performance readout.</small>
+              </div>
+              <span class="forge-mission-tick" aria-hidden="true">↗</span>
+            </div>
+            <div class="forge-story-actions" aria-label="Start working">
+              <button type="button" class="forge-command-btn" data-forge-go="training"><span aria-hidden="true">▰</span> Enter training</button>
+              <button type="button" class="forge-command-ghost" data-forge-go="nutrition">Fuel the mission <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <div class="forge-holo-panel" aria-hidden="true">
+            <div class="forge-holo-id"><span>FORGE / ANATOMY</span><strong>FIGURE 001</strong></div>
+            <div class="forge-holo-stage">
+              <div class="forge-holo-floor"></div>
+              <div class="forge-holo-halo forge-holo-halo-a"></div>
+              <div class="forge-holo-halo forge-holo-halo-b"></div>
+              <div class="forge-holo-halo forge-holo-halo-c"></div>
+              <div class="forge-holo-grid"></div>
+              <svg class="forge-atlas-body" viewBox="0 0 240 355" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+                <defs>
+                  <linearGradient id="forge-person-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#4be4df" stop-opacity=".24"/>
+                    <stop offset="52%" stop-color="#235a80" stop-opacity=".42"/>
+                    <stop offset="100%" stop-color="#54dcd7" stop-opacity=".12"/>
+                  </linearGradient>
+                  <linearGradient id="forge-person-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#b0fff1"/>
+                    <stop offset="55%" stop-color="#53e6ef"/>
+                    <stop offset="100%" stop-color="#1b7f99"/>
+                  </linearGradient>
+                  <linearGradient id="forge-core-light" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffb776"/>
+                    <stop offset="100%" stop-color="#ff713f"/>
+                  </linearGradient>
+                  <filter id="forge-person-glow" x="-70%" y="-40%" width="240%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <pattern id="forge-person-grid" width="8" height="8" patternUnits="userSpaceOnUse">
+                    <path d="M0 0H8M0 0V8" stroke="#b3faff" stroke-opacity=".08" stroke-width=".6"/>
+                  </pattern>
+                </defs>
+                <g stroke="url(#forge-person-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="url(#forge-person-fill)">
+                  <path d="M109 77 L107 89 Q121 98 133 89 L132 77Z"/>
+                  <path d="M120 18 C100 18 95 33 97 49 Q99 73 116 80 Q121 82 125 79 C142 72 146 48 142 34 C138 22 130 18 120 18Z"/>
+                  <path d="M103 87 Q88 86 73 95 Q62 99 56 117 L66 159 Q72 191 92 212 L103 232 L137 232 L148 212 Q168 191 174 159 L184 117 Q178 99 167 95 Q152 86 137 87 L120 98Z"/>
+                  <path d="M72 96 Q61 96 51 112 Q41 132 38 162 L27 213 L18 251 Q16 263 24 266 L35 256 L48 218 L65 177 L74 145Z"/>
+                  <path d="M168 96 Q179 96 189 112 Q199 132 202 162 L213 213 L222 251 Q224 263 216 266 L205 256 L192 218 L175 177 L166 145Z"/>
+                  <path d="M103 231 L120 235 L121 281 L112 333 Q109 345 99 346 L89 343 L88 334 L89 290 L91 247Z"/>
+                  <path d="M137 231 L120 235 L119 281 L128 333 Q131 345 141 346 L151 343 L152 334 L151 290 L149 247Z"/>
+                </g>
+                <g fill="none" stroke="#75eefa" stroke-opacity=".7" stroke-linecap="round" stroke-width="1.3">
+                  <path d="M120 102V220"/>
+                  <path d="M77 115 Q94 109 115 114 L117 142 Q98 157 77 147"/>
+                  <path d="M163 115 Q146 109 125 114 L123 142 Q142 157 163 147"/>
+                  <path d="M85 161 Q101 167 115 164M155 161 Q139 167 125 164"/>
+                  <path d="M93 175L115 179M147 175L125 179M98 190L115 194M142 190L125 194M100 206L116 208M140 206L124 208"/>
+                  <path d="M56 130L48 177 M184 130L192 177"/>
+                  <path d="M99 249L102 308 M141 249L138 308"/>
+                  <path d="M105 42L110 63 M135 42L130 63"/>
+                </g>
+                <g fill="none" stroke="url(#forge-core-light)" stroke-width="2.4" stroke-linecap="round" filter="url(#forge-person-glow)">
+                  <path d="M120 98L120 149"/>
+                  <path d="M93 121L116 116 M147 121L124 116"/>
+                  <path d="M113 158L127 158"/>
+                  <path d="M116 190L124 190"/>
+                </g>
+                <g fill="#ffae75"><circle cx="120" cy="98" r="4"/><circle cx="120" cy="149" r="3"/></g>
+                <g fill="url(#forge-person-grid)" stroke="none"><path d="M103 87 Q88 86 73 95 Q62 99 56 117 L66 159 Q72 191 92 212 L103 232 L137 232 L148 212 Q168 191 174 159 L184 117 Q178 99 167 95 Q152 86 137 87 L120 98Z"/></g>
+              </svg>
+              <div class="forge-holo-sweep"></div>
+              <div class="forge-holo-node forge-node-top"><span>UPPER</span><b>01</b></div>
+              <div class="forge-holo-node forge-node-side"><span>CORE</span><b>02</b></div>
+              <div class="forge-holo-node forge-node-bottom"><span>LOWER</span><b>03</b></div>
+            </div>
+            <div class="forge-holo-footer"><span>HUMAN SYSTEMS / TRAIN · FUEL · RECOVER</span><span class="forge-pulse-mark">◈</span></div>
+          </div>
         </div>
-        <p id="forge-active-section" class="forge-active-section" role="status" aria-live="polite">Current workspace: Personal intelligence</p>
+        <div class="forge-mission-grid" aria-label="Choose your next action">
+          <button type="button" class="forge-mission-tile" data-forge-go="nutrition"><span class="forge-tile-no">01 / FUEL</span><span class="forge-tile-symbol" aria-hidden="true">◇</span><strong>Nutrition lab</strong><small>Build meals. Hit your targets.</small><span class="forge-tile-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" class="forge-mission-tile" data-forge-go="strength-lab"><span class="forge-tile-no">02 / LIFT</span><span class="forge-tile-symbol" aria-hidden="true">⌁</span><strong>Strength tracker</strong><small>Record sets. See progression.</small><span class="forge-tile-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" class="forge-mission-tile" data-forge-go="recovery"><span class="forge-tile-no">03 / REBUILD</span><span class="forge-tile-symbol" aria-hidden="true">✳</span><strong>Recovery scan</strong><small>Respect the body's signals.</small><span class="forge-tile-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" class="forge-mission-tile" data-forge-go="progress"><span class="forge-tile-no">04 / EVOLVE</span><span class="forge-tile-symbol" aria-hidden="true">⟋</span><strong>Progress intel</strong><small>Read trends. Adjust wisely.</small><span class="forge-tile-arrow" aria-hidden="true">↗</span></button>
+        </div>
+        <p id="forge-active-section" class="forge-active-section" role="status" aria-live="polite">Current workspace: Overview</p>
       </div>
+      <div class="forge-telemetry-head"><div><span class="forge-telemetry-light" aria-hidden="true"></span><strong>SYSTEM READOUT</strong></div><small>Browser-stored profile estimates · not a live sensor feed</small></div>
       <div id="alerts" aria-live="polite"></div>
       <div id="summary" class="summary-strip" aria-live="polite"></div>
       <section id="profile" class="page active" aria-labelledby="profile-title">
@@ -468,7 +556,16 @@
       <footer><span>FORGE · Fitness foundation · v0.8 · UI review</span><span>Educational prototype, not clinical or dietary treatment</span></footer>
     </main>
   </div>
-</div><script type="module">
+</div>
+<div id="forge-drawer-shade" class="forge-drawer-shade" hidden></div>
+<nav id="forge-mobile-dock" class="forge-mobile-dock" aria-label="Quick mobile navigation">
+  <button type="button" class="forge-dock-button" data-forge-go="profile" aria-label="Overview"><span aria-hidden="true">⌂</span><small>Home</small></button>
+  <button type="button" class="forge-dock-button" data-forge-go="nutrition" aria-label="Nutrition"><span aria-hidden="true">◈</span><small>Fuel</small></button>
+  <button type="button" class="forge-dock-button" data-forge-go="strength-lab" aria-label="Strength tracker"><span aria-hidden="true">⌁</span><small>Lift</small></button>
+  <button type="button" class="forge-dock-button" data-forge-go="progress" aria-label="Progress"><span aria-hidden="true">⟋</span><small>Stats</small></button>
+  <button type="button" id="forge-dock-more" class="forge-dock-button" aria-controls="forge-sidebar" aria-expanded="false"><span aria-hidden="true">☷</span><small>More</small></button>
+</nav>
+<script type="module">
 /* Fitness Foundation: offline educational prototype. Illustrative, not medical advice. */
 const FOOD_CATALOG = [
   { id:'beef80', name:'Ground beef, 80% lean (raw)', serving:'4 oz / 113 g', kcal:290, protein:19, carbs:0, fat:23, fiber:0, sodium:75, tags:['beef','burger','meat'] },
