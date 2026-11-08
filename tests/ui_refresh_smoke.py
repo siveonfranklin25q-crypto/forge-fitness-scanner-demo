@@ -89,6 +89,16 @@ with local_site() as url, sync_playwright() as playwright:
                 "(el) => getComputedStyle(el).position"
             ) == "sticky"
 
+        # The anatomy visualization must do actual work, not just animate.
+        page.locator('[data-forge-muscle="abs"]').click()
+        assert page.locator("#movement-lab").is_visible()
+        assert page.locator("#lab-muscle").input_value() == "abs"
+        if width < 781:
+            page.locator('#forge-mobile-dock [data-forge-go="profile"]').click()
+        else:
+            page.locator('#forge-sidebar [data-tab="profile"]').click()
+        assert page.locator("#profile").is_visible()
+
         # Use the same visible mission card that an actual user would tap.
         page.locator('.forge-mission-tile[data-forge-go="strength-lab"]').click()
         assert page.locator("#strength-lab").is_visible()
