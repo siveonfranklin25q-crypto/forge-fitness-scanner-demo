@@ -8,6 +8,8 @@ on:
       - "forge-ui.js"
       - "forge-immersive.css"
       - "forge-immersive.js"
+      - "forge-avatar.js"
+      - "forge-avatar.css"
       - "tests/**"
       - ".github/workflows/forge-ui-checks.yml"
   workflow_dispatch:
@@ -28,6 +30,7 @@ jobs:
         run: |
           node --check forge-ui.js
           node --check forge-immersive.js
+          node --check forge-avatar.js
           python - <<'PY'
           from pathlib import Path
           import re
