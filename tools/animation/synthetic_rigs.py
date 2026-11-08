@@ -89,6 +89,25 @@ def build_glb(name, duration, tracks, unit=1.0, root_scale=1.0):
         accessors.append(acc)
         return len(accessors) - 1
 
+    # A small box on every joint so model-viewer (which rejects mesh-less files) can
+    # render the fixture. Meshes do not affect the skeletal measurements.
+    h = 0.04 * unit
+    corners = [[x, y, z] for x in (-h, h) for y in (-h, h) for z in (-h, h)]
+    pos_acc = add(corners, "VEC3")
+    accessors[pos_acc]["min"], accessors[pos_acc]["max"] = [-h] * 3, [h] * 3
+    quads = [(0, 1, 3, 2), (4, 6, 7, 5), (0, 4, 5, 1), (2, 3, 7, 6), (0, 2, 6, 4), (1, 5, 7, 3)]
+    tri = [i for a, b, c, d in quads for i in (a, b, c, a, c, d)]
+    off = len(blob)
+    blob.extend(struct.pack("<%dH" % len(tri), *tri))
+    blob.extend(b"\x00" * (-len(blob) % 4))
+    views.append({"buffer": 0, "byteOffset": off, "byteLength": 2 * len(tri), "target": 34963})
+    accessors.append({"bufferView": len(views) - 1, "componentType": 5123, "count": len(tri),
+                      "type": "SCALAR", "min": [0], "max": [7]})
+    idx_acc = len(accessors) - 1
+    for node in nodes:
+        if node["name"] != "Root":
+            node["mesh"] = 0
+
     t_acc = add(times, "SCALAR")
     samplers, channels = [], []
     for node_name in sorted(tracks):
@@ -103,6 +122,10 @@ def build_glb(name, duration, tracks, unit=1.0, root_scale=1.0):
     doc = {
         "asset": {"version": "2.0", "generator": "forge synthetic_rigs.py"},
         "scene": 0, "scenes": [{"nodes": [0]}], "nodes": nodes,
+        "meshes": [{"name": "JointBox", "primitives": [{"attributes": {"POSITION": pos_acc},
+                                                        "indices": idx_acc, "material": 0}]}],
+        "materials": [{"name": "Synthetic", "pbrMetallicRoughness": {
+            "baseColorFactor": [0.94, 0.58, 0.26, 1.0], "metallicFactor": 0.0, "roughnessFactor": 0.8}}],
         "animations": [{"name": name, "samplers": samplers, "channels": channels}],
         "buffers": [{"byteLength": len(blob)}], "bufferViews": views, "accessors": accessors,
     }
@@ -162,6 +185,25 @@ def skating_turn(angle, duration, name="TurnInPlace"):
     return build_glb(name, duration, tracks)
 
 
+def stepping_in_place(duration=0.8, lift_deg=35.0, name="TurnInPlace"):
+    """Footwork with NO heading change: right foot steps, then left (like the private clip's
+    reported structure: Hips constant, legs/feet moving)."""
+    def lift(t, a, b):
+        ramp = 0.08 * duration
+        up = smoothstep(window(t, a, a + ramp))
+        down = 1.0 - smoothstep(window(t, b - ramp, b))
+        return lift_deg * min(up, down)
+    r = lambda t: lift(t, 0.05 * duration, 0.45 * duration)
+    l = lambda t: lift(t, 0.55 * duration, 0.95 * duration)
+    tracks = {
+        "RightUpLeg": {"rotation": lambda t: qx(-r(t))},
+        "RightLeg": {"rotation": lambda t: qx(2 * r(t))},
+        "LeftUpLeg": {"rotation": lambda t: qx(-l(t))},
+        "LeftLeg": {"rotation": lambda t: qx(2 * l(t))},
+    }
+    return build_glb(name, duration, tracks)
+
+
 # name -> (builder, expectations)
 FIXTURES = {
     "planted_turn_90": (lambda: planted_turn(90, 1.6), {
@@ -178,6 +220,8 @@ FIXTURES = {
         "net": 90, "classification": "PLANTED_TURN", "pivot": "left", "verdict": "PASS"}),
     "fast_turn_90_0p8s": (lambda: planted_turn(90, 0.8), {
         "net": 90, "classification": "PLANTED_TURN", "pivot": "left"}),
+    "stepping_in_place_0p8s": (lambda: stepping_in_place(0.8), {
+        "net": 0, "classification": "NO_NET_HEADING", "verdict": "FAIL"}),
 }
 
 

@@ -92,13 +92,59 @@ Decide by the private result:
 - **`classification` = TURN_WITH_FOOT_SLIDE**
   - The clip needs re-authoring or foot-lock IK. Speed changes will not fix it.
   - This needs an owner decision (tooling and any cost).
-- **`classification` = NO_NET_HEADING or TURN_AND_RETURN**
-  - The clip is not a turn. Relabel it, or keep it with an honest "Turntable" label and a separate turntable speed control.
-  - Never present the turntable as body motion.
+- **`classification` = NO_NET_HEADING or TURN_AND_RETURN** (ChatGPT's private track inspection found this for the real clip)
+  - The clip is not a turn. Never present the turntable as body motion.
+  - **Owner chose Option A**: derive a planted turn from the footwork. See §7.
 - **In every case**, label the 30–180°/s slider as **turntable speed**, not turn speed.
+
+## 7. Option A — derived planted turn (owner-approved prototype)
+
+`tools/animation/procedural_turn.py` makes a **new** clip from in-place footwork and leaves the original clip untouched (tested):
+
+- The original tracks repeat for N cycles.
+- The armature root gets extra yaw about the **inside pivot foot**. Yaw is applied only while that foot is grounded **and** the other foot is in the air, so the pivot cannot slide and the swing foot lands at its rotated spot.
+- With a 360° total, the clip loops with no visible snap-back, because 360° ≡ 0°. The viewer needs no root-motion support.
+
+**Why not animate `orientation` in model-viewer instead?** The public API only rotates the model about its own origin (`ModelScene.js:323-336`), so the planted foot would slide by its distance from the origin times the angle. Each change also re-runs `applyTransform` + `updateBoundingBox` + `updateShadow` (`scene-graph.js:118-128`). That is per-frame work on a skinned mesh; it was read from the source, not benchmarked.
+
+Results on the synthetic stepping rig (0.8 s cycle; Hips constant, the same structure ChatGPT reported for the real clip):
+
+| Derived clip | Steps | Duration | Net | Mean rate | Peak rate (in-step) | Max foot slide | Verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 360°, 30°/step | 12 | 9.6 s | 360° | 37.0°/s | 201°/s | 10.4 mm | rate FAIL |
+| 360°, 45°/step | 8 | 6.4 s | 360° | 57.6°/s | 302°/s | 10.6 mm | rate FAIL |
+| **360°, 60°/step (default)** | 6 | 4.8 s | 360° | 79.8°/s | 402°/s | 10.1 mm | **PASS** |
+| 360°, 90°/step | 4 | 3.2 s | 360° | 129.9°/s | 603°/s | 14.0 mm | PASS |
+| +90° / −90° | 2 | 1.6 s | ±90° | 86.5°/s | — | 10.0 mm | PASS (inside foot pivots) |
+
+- The pivot ankle moves **< 1 mm** while yaw is applied (tested).
+- The three.js 0.172 cross-check of the derived clip has a largest difference of 0.0001 mm.
+- In **real model-viewer 4.1.0 (Chromium, SwiftShader WebGL)** the derived GLB loads with no errors. It lists `TurnInPlace` and `TurnInPlace (planted +360 deg)` and plays the new 6.4 s clip.
+- The rendered frames at t = 0, 0.8, 1.6, 2.4, 3.2 and 6.4 s show facing 0°, 45°, 90°, 135°, 180° and 0°: [derived-turn-synthetic-render.png](derived-turn-synthetic-render.png) (synthetic joint boxes only).
+
+**Known limitation:** yaw is confined to single-support, so the in-step peak rate is high even when the mean is natural. Spreading the yaw into double-support would make the other grounded foot slide. Whether the result reads as natural on the real character is an **owner visual check**. The private clip's single-support share is unknown, and a longer share lowers the peak. Use `--max-step-deg`, or a lower `timeScale`, to tune it.
+
+Private use (owner device only; the tool **refuses to write inside any git work tree**):
+
+```bash
+python3 tools/animation/gltf_turn_diagnose.py /private/model.glb --clip TurnInPlace --json
+```
+
+```bash
+python3 tools/animation/procedural_turn.py /private/model.glb /private/out/model-planted.glb --clip TurnInPlace --total-deg 360
+```
+
+Load `model-planted.glb` in the private preview and pick `TurnInPlace (planted +360 deg)`.
+
+PR #2 needs only two things:
+1. Turntable auto-rotate **off** while a clip whose name contains `planted` is playing.
+2. No forced `timeScale`.
+
+An in-browser JavaScript port, so derivation happens on load and no second file is needed, is a possible follow-up. The derived copy must never be written to IndexedDB in place of the original without owner approval.
 
 ## 6. Not done / not claimed
 
 - The private GLB has not been analysed here. It is not reachable from this environment.
 - No physical-device test, browser-render visual review of the real character, or owner motion approval.
 - No foot-lock IK or clip re-authoring. That would modify the private asset and needs separate owner approval.
+- Option A has not been run on the real model, and the owner has not reviewed it visually. The in-browser JavaScript port is not written.

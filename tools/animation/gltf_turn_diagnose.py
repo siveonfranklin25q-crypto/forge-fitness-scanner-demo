@@ -509,6 +509,8 @@ def analyse(rig: Rig, clip_index: int, time_scale=1.0, turntable_deg_s=0.0,
         "turntable_deg_per_cycle": r(turntable_deg_s * cycle, 1),
         "seconds_per_360_turntable": r(360.0 / turntable_deg_s, 2) if turntable_deg_s else None,
         "loop_heading_pop_deg": r(-net, 2) if turning else 0.0,
+        # What the eye sees at the loop seam: whole turns (360, 720...) are invisible.
+        "loop_visible_pop_deg": r(abs(wrap180(net)), 2) if turning else 0.0,
         "recommended_time_scale": r(rec_scale, 3),
         "recommended_cycle_s": r(dur / rec_scale, 3) if rec_scale else None,
     }
@@ -546,7 +548,7 @@ def analyse(rig: Rig, clip_index: int, time_scale=1.0, turntable_deg_s=0.0,
     if not turning:
         notes.append("Clip does not change body heading; any on-screen spin comes from the viewer "
                      "turntable auto-rotate (rotation-per-second), not from the skeleton.")
-    if turning:
+    if turning and abs(wrap180(net)) > 1.0:
         notes.append("model-viewer loops with three.js LoopRepeat and does not accumulate root motion: "
                      "the body snaps back %.1f deg every %.3f s unless the integrator adds the net yaw "
                      "(e.g. play({repetitions:1}) + 'finished' -> orientation += net)." % (abs(net), cycle))
@@ -611,9 +613,9 @@ def text_report(rep):
         "Attribution: " + ", ".join("%s=%.1f" % (a["node"], a["net_heading_deg"]) for a in h["attribution"]),
         "Pivot foot: %s; max slide L=%.4f m R=%.4f m (limit %.4f m)" % (
             rep["pivot_foot"], rep["feet"]["left"]["max_slide_m"], rep["feet"]["right"]["max_slide_m"], rep["scale"]["max_slide_m"]),
-        "Playback x%s: cycle %.3f s, body rate %s deg/s, turntable %s deg/s, loop pop %s deg, recommended x%s" % (
+        "Playback x%s: cycle %.3f s, body rate %s deg/s, turntable %s deg/s, loop pop %s deg (visible %s), recommended x%s" % (
             pb["time_scale"], pb["cycle_s"], pb["body_turn_mean_rate_deg_s"], pb["turntable_deg_s"],
-            pb["loop_heading_pop_deg"], pb["recommended_time_scale"]),
+            pb["loop_heading_pop_deg"], pb["loop_visible_pop_deg"], pb["recommended_time_scale"]),
         "Gates: " + ", ".join("%s=%s" % kv for kv in sorted(rep["gates"].items())),
     ]
     lines += ["Note: " + n for n in rep["notes"]]

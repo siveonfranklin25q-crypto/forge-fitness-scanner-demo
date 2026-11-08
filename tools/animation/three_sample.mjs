@@ -8,9 +8,10 @@ const buf = fs.readFileSync(file);
 const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 new GLTFLoader().parse(ab, '', (g) => {
   const mixer = new THREE.AnimationMixer(g.scene);
-  const act = mixer.clipAction(g.animations[0]);
+  const clip = g.animations[Number(process.env.FORGE_CLIP || 0)];
+  const act = mixer.clipAction(clip);
   act.setLoop(THREE.LoopOnce); act.clampWhenFinished = true; act.play();
-  const out = {duration: g.animations[0].duration, frames: []};
+  const out = {duration: clip.duration, frames: []};
   const names = ['LeftUpLeg','RightUpLeg','LeftFoot','RightFoot','LeftToeBase','RightToeBase'];
   for (const t of ts.map(Number)) {
     mixer.setTime(t); g.scene.updateMatrixWorld(true);
