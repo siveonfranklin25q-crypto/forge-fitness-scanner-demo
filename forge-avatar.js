@@ -25,6 +25,10 @@ const nameLabel=$("#forge-avatar-file-name");
 const presence=$("#forge-avatar-presence");
 const motion=$("#forge-motion-toggle");
 const hero=$("#forge-hero");
+const turnPad=$("#forge-avatar-turn-pad");
+const turnButtons=[...document.querySelectorAll("[data-forge-private-turn]")];
+const replayTurn=$("#forge-avatar-replay");
+const backIdle=$("#forge-avatar-idle");
 
 if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selector&&status&&nameLabel&&presence){
   let activeUrl=null,activeBlob=null,activeName="",activeInfo=null;
@@ -105,6 +109,33 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     Turn180Right_PrivateV1:2.58,
   });
   const isAuthoredTurn=name=>Object.prototype.hasOwnProperty.call(AUTHORED_TURNS,name);
+  function syncTurnPad(){
+    const selected=selector.value||"";
+    for(const button of turnButtons){
+      const active=button.dataset.forgePrivateTurn===selected;
+      button.setAttribute("aria-pressed",String(active));
+      button.classList.toggle("is-active",active);
+    }
+    if(replayTurn)replayTurn.disabled=!isAuthoredTurn(selected);
+  }
+  for(const button of turnButtons){
+    button.addEventListener("click",()=>{
+      if(button.hidden)return;
+      selector.value=button.dataset.forgePrivateTurn;
+      selector.dispatchEvent(new Event("change",{bubbles:true}));
+    });
+  }
+  replayTurn?.addEventListener("click",()=>{
+    if(!isAuthoredTurn(selector.value))return;
+    selector.dispatchEvent(new Event("change",{bubbles:true}));
+  });
+  backIdle?.addEventListener("click",()=>{
+    const idle=[...selector.options].find(option=>/idle|stand|rest/i.test(option.value))?.value||
+      selector.options[0]?.value;
+    if(!idle)return;
+    selector.value=idle;
+    selector.dispatchEvent(new Event("change",{bubbles:true}));
+  });
 
   function motionAllowed(){
     return !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
@@ -148,12 +179,20 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
         :animation;
       selector.append(option);
     }
+    let anyTurn=false;
+    for(const button of turnButtons){
+      const found=available.includes(button.dataset.forgePrivateTurn);
+      button.hidden=!found;
+      anyTurn ||=found;
+    }
+    if(turnPad)turnPad.hidden=!anyTurn;
     const idle=available.find(x=>/idle|stand|rest/i.test(x))||available[0];
     if(idle){
       selector.value=idle;
       view.setAttribute("animation-name",idle);
       selector.hidden=false;
       syncMotion();
+      syncTurnPad();
     }else{
       selector.hidden=true;
       view.removeAttribute("animation-name");
@@ -167,10 +206,11 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     view.setAttribute("animation-name",name);
     view.currentTime=0;
     syncMotion();
+    syncTurnPad();
     if(isAuthoredTurn(name)){
       if(motionAllowed())try{view.play({repetitions:1});}catch{}
-      say("Private experimental "+name.replace(/_PrivateV1$/,"")+
-          ": the body turns once with staged footsteps. Check for skating, knee pops and balance before approving.","success");
+      say("Owner-approved "+name.replace(/_PrivateV1$/,"")+
+          " animation playing once. Repeat or return to idle using the controls below.","success");
     }else{
       say(/turn/i.test(name)
         ?"This source clip does not change your character's facing direction. Turntable speed spins the entire model, not a planted-foot turn."
@@ -183,7 +223,7 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     try{view.pause?.();}catch{}
     // Hold close to final pose to avoid a repeat-loop heading snap.
     view.currentTime=Math.max(0,AUTHORED_TURNS[name]-.015);
-    say("Private "+name.replace(/_PrivateV1$/,"")+" complete. Review planted feet, knees and clothing. The motion is not yet owner-approved.","success");
+    say("Turn complete. This motion has your visual approval. Use Replay turn or Back to idle; physical-device testing is still pending.","success");
   });
 
   async function loadModel(file,{saved=false}={}){
@@ -282,6 +322,9 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     presence.textContent="PERSONAL MODEL · NOT LOADED";
     nameLabel.textContent="YOUR DEVICE · NO UPLOAD";
     selector.hidden=true;forget.hidden=true;remember.checked=false;
+    if(turnPad)turnPad.hidden=true;
+    for(const button of turnButtons)button.hidden=true;
+    if(replayTurn)replayTurn.disabled=true;
     if(turnWrap)turnWrap.hidden=true;
     if(turnSpeed)turnSpeed.value="85";
     say("Removed from this browser. Your source GLB file is unchanged.","success");
