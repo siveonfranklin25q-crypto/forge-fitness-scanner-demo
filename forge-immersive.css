@@ -263,6 +263,25 @@ body.forge-drawer-locked{overflow:hidden}
  font-size:8px;letter-spacing:1.4px;font-weight:850;
 }
 .forge-holo-node b{color:#ffb279;font-size:13px;letter-spacing:0}
+
+.forge-holo-node{
+ cursor:pointer;border:1px solid rgba(111,233,238,.19);
+ border-left:2px solid #71e1ea;border-radius:3px;text-align:left;
+ font-family:inherit;line-height:1.3;min-width:54px;
+ transition:background-color .18s ease,border-color .18s ease,transform .18s ease;
+}
+.forge-holo-node:hover,.forge-holo-node:focus-visible{
+ background:rgba(32,102,111,.9);border-color:rgba(255,183,118,.65);
+ transform:translateY(-2px);
+}
+.forge-atlas-body,.forge-holo-sweep,.forge-holo-halo{pointer-events:none}
+.page.active{animation:forge-page-enter .28s ease-out both}
+@keyframes forge-page-enter{
+ from{opacity:.84;transform:translateY(7px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){.page.active{animation:none}}
+
 .forge-node-top{left:5px;top:22%}
 .forge-node-side{right:6px;top:49%}
 .forge-node-bottom{left:8px;bottom:14%}
