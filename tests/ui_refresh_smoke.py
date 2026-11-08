@@ -94,6 +94,7 @@ with local_site() as url,sync_playwright() as playwright:
         assert page.locator("#forge-avatar-viewer").count()==1
         assert page.locator(".forge-mission-tile").count()==4
         assert page.locator(".forge-momentum-day").count()==7
+        assert page.locator("#forge-momentum-title").evaluate("(el) => el.tagName")=="H2", "Avoid skipping heading level after H1"
         assert page.locator("#forge-momentum-percent").inner_text()=="—"
         assert page.locator(".summary-card").count()==4
         assert page.locator(".tabs [data-tab]").count()==8
