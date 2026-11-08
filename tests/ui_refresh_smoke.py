@@ -82,6 +82,8 @@ with local_site() as url,sync_playwright() as playwright:
         page.goto(url,wait_until="domcontentloaded")
 
         assert page.locator(".forge-avatar-panel").is_visible()
+        if width<781:
+            assert page.locator(".forge-avatar-panel").bounding_box()["y"] < page.locator(".forge-story").bounding_box()["y"], "Mobile must open on the character, not a generic text hero."
         assert page.locator("#forge-avatar-empty").is_visible()
         assert page.locator(".forge-atlas-body").count()==0, "The generic mannequin must be gone."
         assert page.locator("#forge-avatar-viewer").count()==1
