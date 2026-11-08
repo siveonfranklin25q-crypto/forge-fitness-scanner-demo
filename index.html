@@ -120,9 +120,11 @@
 <link rel="stylesheet" href="./forge-ui.css"/>
 <link rel="stylesheet" href="./forge-immersive.css"/>
 <link rel="stylesheet" href="./forge-avatar.css"/>
+<link rel="stylesheet" href="./forge-pack.css"/>
 <script defer src="./forge-ui.js"></script>
 <script defer src="./forge-immersive.js"></script>
 <script type="module" src="./forge-avatar.js"></script>
+<script defer src="./forge-pack.js"></script>
 </head><body>
 <a class="forge-skip" href="#profile">Skip to main workspace</a>
 <div class="app-shell">
@@ -261,6 +263,37 @@
       <section id="nutrition" class="page" aria-labelledby="nutrition-title">
         <div class="section-header"><div><span class="eyebrow">ENGINE 02</span><h2 id="nutrition-title">Nutrition & food intelligence</h2><p>Every food is transparent. Compare portions, transform favorite meals, and log what you actually eat.</p></div><span class="counter">NUTRITION</span></div>
         <div class="panel"><h3>Daily macro budget</h3><div id="nutrition-budget"></div></div>
+        <section class="forge-pack panel stack" id="forge-pack" aria-labelledby="forge-pack-title">
+          <div class="forge-pack-top"><div><span class="forge-pack-eyebrow">FUEL SYSTEM / COOKED BATCH INTELLIGENCE</span><h3 id="forge-pack-title">Meal Prep Command</h3><p class="fine">From the pot to your containers. Enter the cooked batch's actual weight and estimated nutrition, then build equal packed meals in grams. Everything remains in this browser.</p></div><span class="forge-pack-symbol" aria-hidden="true">◈</span></div>
+          <form id="forge-pack-form" class="forge-pack-form">
+            <fieldset><legend>01 / Cooked mixture batch</legend>
+              <div class="forge-pack-fields"><label>Cooked batch weight (g)<input id="forge-pack-batch" type="number" min="1" max="100000" step="0.1" required placeholder="Food only, tare the bowl"></label>
+              <label>Batch calories (kcal)<input id="forge-pack-kcal" type="number" min="0" max="200000" step="0.1" required placeholder="Estimated total"></label>
+              <label>Batch protein (g)<input id="forge-pack-protein" type="number" min="0" max="10000" step="0.1" required></label>
+              <label>Batch carbs (g)<input id="forge-pack-carbs" type="number" min="0" max="10000" step="0.1" required></label>
+              <label>Batch fat (g)<input id="forge-pack-fat" type="number" min="0" max="10000" step="0.1" required></label></div>
+            </fieldset>
+            <fieldset><legend>02 / Cooked rice per 100 g</legend>
+              <div class="forge-pack-fields"><label>Calories (kcal)<input id="forge-pack-rice-kcal" type="number" min="0" max="900" step="0.1" required></label>
+              <label>Protein (g)<input id="forge-pack-rice-protein" type="number" min="0" max="100" step="0.1" required></label>
+              <label>Carbs (g)<input id="forge-pack-rice-carbs" type="number" min="0" max="100" step="0.1" required></label>
+              <label>Fat (g)<input id="forge-pack-rice-fat" type="number" min="0" max="100" step="0.1" required></label></div>
+            </fieldset>
+            <fieldset><legend>03 / Packing station</legend>
+              <div class="forge-pack-fields"><label>Containers<input id="forge-pack-count" type="number" min="1" max="12" step="1" required value="2"></label>
+              <label>Mixture per container (g)<input id="forge-pack-mix-serving" type="number" min="1" max="10000" step="0.1" required placeholder="Cooked portion"></label>
+              <label>Rice per container (g)<input id="forge-pack-rice-serving" type="number" min="0" max="10000" step="0.1" required placeholder="Cooked portion"></label></div>
+            </fieldset>
+            <div class="forge-pack-actions">
+              <button type="submit" class="forge-command-btn">Calculate containers</button>
+              <button type="button" id="forge-pack-save" class="forge-command-ghost">Save on this device</button>
+              <button type="button" id="forge-pack-copy" class="forge-command-ghost">Copy packing instructions</button>
+              <button type="button" id="forge-pack-clear" class="forge-pack-reset">Clear</button>
+            </div>
+          </form>
+          <div id="forge-pack-result" class="forge-pack-result" role="status" aria-live="polite">Enter your batch and rice figures above to calculate the packed meals. No demo values are used.</div>
+          <p class="fine">Estimates depend on accurate ingredients, retained cooking oil, draining, labels and cooked weight. This is a packing calculator, not an automatic food log; check food temperatures and storage times separately.</p>
+        </section>
         <div class="panel stack" id="live-food-panel">
           <h3>Look up a real packaged food</h3><p class="notice" id="gallery-tip"><strong>FORGE v0.5 — Ingredient-to-Recipe Builder:</strong> On the HTTPS version, aim the full barcode at the camera; it checks continuously. If it stays blurry, move 6–12 inches away and use another rear camera or supported zoom. You can still type the digits or use a saved photo.</p>
           <p class="fine">Enter a barcode, use the photo scanner, or search by product name. An internet connection is required. Searches go to Open Food Facts; no personal fitness profile is sent. This database is crowd-sourced—always check the actual product label and ingredients.</p>
