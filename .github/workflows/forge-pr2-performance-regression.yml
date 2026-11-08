@@ -52,6 +52,9 @@ jobs:
           console.log('PERF RECEIPT',JSON.stringify({
             model_ok:mobile?.model?.ok,cls:mobile?.cls_total,
             idle_cpu_pct:mobile?.idle_ui?.steady_cpu_pct,
+            idle_cpu_series_pct:mobile?.idle_ui?.cpu_series_pct,
+            seconds_to_quiet:mobile?.idle_ui?.seconds_to_quiet,
+            idle_animations_running:mobile?.idle_ui?.running_animations,
             turn_once:t?.played_once,hold_end_pose:t?.holds_end_pose,
             no_webgl_user_told:w?.user_told,errors:t?.page_errors
           }));
