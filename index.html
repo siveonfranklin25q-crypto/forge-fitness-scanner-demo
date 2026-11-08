@@ -119,8 +119,10 @@
 <script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <link rel="stylesheet" href="./forge-ui.css"/>
 <link rel="stylesheet" href="./forge-immersive.css"/>
+<link rel="stylesheet" href="./forge-avatar.css"/>
 <script defer src="./forge-ui.js"></script>
 <script defer src="./forge-immersive.js"></script>
+<script type="module" src="./forge-avatar.js"></script>
 </head><body>
 <a class="forge-skip" href="#profile">Skip to main workspace</a>
 <div class="app-shell">
@@ -168,72 +170,44 @@
               <button type="button" class="forge-command-ghost" data-forge-go="nutrition">Fuel the mission <span aria-hidden="true">↗</span></button>
             </div>
           </div>
-          <div class="forge-holo-panel" role="group" aria-label="Interactive exercise anatomy map">
-            <div class="forge-holo-id"><span>FORGE / ANATOMY</span><strong>FIGURE 001</strong></div>
-            <div class="forge-holo-stage">
-              <div class="forge-holo-floor"></div>
-              <div class="forge-holo-halo forge-holo-halo-a"></div>
-              <div class="forge-holo-halo forge-holo-halo-b"></div>
-              <div class="forge-holo-halo forge-holo-halo-c"></div>
-              <div class="forge-holo-grid"></div>
-              <svg class="forge-atlas-body" viewBox="0 0 240 355" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
-                <defs>
-                  <linearGradient id="forge-person-fill" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#4be4df" stop-opacity=".24"/>
-                    <stop offset="52%" stop-color="#235a80" stop-opacity=".42"/>
-                    <stop offset="100%" stop-color="#54dcd7" stop-opacity=".12"/>
-                  </linearGradient>
-                  <linearGradient id="forge-person-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#b0fff1"/>
-                    <stop offset="55%" stop-color="#53e6ef"/>
-                    <stop offset="100%" stop-color="#1b7f99"/>
-                  </linearGradient>
-                  <linearGradient id="forge-core-light" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#ffb776"/>
-                    <stop offset="100%" stop-color="#ff713f"/>
-                  </linearGradient>
-                  <filter id="forge-person-glow" x="-70%" y="-40%" width="240%" height="200%">
-                    <feGaussianBlur stdDeviation="3" result="blur"/>
-                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                  </filter>
-                  <pattern id="forge-person-grid" width="8" height="8" patternUnits="userSpaceOnUse">
-                    <path d="M0 0H8M0 0V8" stroke="#b3faff" stroke-opacity=".08" stroke-width=".6"/>
-                  </pattern>
-                </defs>
-                <g stroke="url(#forge-person-stroke)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="url(#forge-person-fill)">
-                  <path d="M109 77 L107 89 Q121 98 133 89 L132 77Z"/>
-                  <path d="M120 18 C100 18 95 33 97 49 Q99 73 116 80 Q121 82 125 79 C142 72 146 48 142 34 C138 22 130 18 120 18Z"/>
-                  <path d="M103 87 Q88 86 73 95 Q62 99 56 117 L66 159 Q72 191 92 212 L103 232 L137 232 L148 212 Q168 191 174 159 L184 117 Q178 99 167 95 Q152 86 137 87 L120 98Z"/>
-                  <path d="M72 96 Q61 96 51 112 Q41 132 38 162 L27 213 L18 251 Q16 263 24 266 L35 256 L48 218 L65 177 L74 145Z"/>
-                  <path d="M168 96 Q179 96 189 112 Q199 132 202 162 L213 213 L222 251 Q224 263 216 266 L205 256 L192 218 L175 177 L166 145Z"/>
-                  <path d="M103 231 L120 235 L121 281 L112 333 Q109 345 99 346 L89 343 L88 334 L89 290 L91 247Z"/>
-                  <path d="M137 231 L120 235 L119 281 L128 333 Q131 345 141 346 L151 343 L152 334 L151 290 L149 247Z"/>
-                </g>
-                <g fill="none" stroke="#75eefa" stroke-opacity=".7" stroke-linecap="round" stroke-width="1.3">
-                  <path d="M120 102V220"/>
-                  <path d="M77 115 Q94 109 115 114 L117 142 Q98 157 77 147"/>
-                  <path d="M163 115 Q146 109 125 114 L123 142 Q142 157 163 147"/>
-                  <path d="M85 161 Q101 167 115 164M155 161 Q139 167 125 164"/>
-                  <path d="M93 175L115 179M147 175L125 179M98 190L115 194M142 190L125 194M100 206L116 208M140 206L124 208"/>
-                  <path d="M56 130L48 177 M184 130L192 177"/>
-                  <path d="M99 249L102 308 M141 249L138 308"/>
-                  <path d="M105 42L110 63 M135 42L130 63"/>
-                </g>
-                <g fill="none" stroke="url(#forge-core-light)" stroke-width="2.4" stroke-linecap="round" filter="url(#forge-person-glow)">
-                  <path d="M120 98L120 149"/>
-                  <path d="M93 121L116 116 M147 121L124 116"/>
-                  <path d="M113 158L127 158"/>
-                  <path d="M116 190L124 190"/>
-                </g>
-                <g fill="#ffae75"><circle cx="120" cy="98" r="4"/><circle cx="120" cy="149" r="3"/></g>
-                <g fill="url(#forge-person-grid)" stroke="none"><path d="M103 87 Q88 86 73 95 Q62 99 56 117 L66 159 Q72 191 92 212 L103 232 L137 232 L148 212 Q168 191 174 159 L184 117 Q178 99 167 95 Q152 86 137 87 L120 98Z"/></g>
-              </svg>
-              <div class="forge-holo-sweep"></div>
-              <button type="button" class="forge-holo-node forge-node-top" data-forge-muscle="chest" aria-label="Explore chest exercises"><span>CHEST</span><b>01 ↗</b></button>
-              <button type="button" class="forge-holo-node forge-node-side" data-forge-muscle="abs" aria-label="Explore abdominal exercises"><span>CORE</span><b>02 ↗</b></button>
-              <button type="button" class="forge-holo-node forge-node-bottom" data-forge-muscle="quadriceps" aria-label="Explore quadriceps exercises"><span>LEGS</span><b>03 ↗</b></button>
+          <div class="forge-holo-panel forge-avatar-panel" role="region" aria-label="Private three-dimensional avatar stage">
+            <div class="forge-holo-id"><span>FORGE / CHARACTER SYSTEM</span><strong id="forge-avatar-presence">PERSONAL MODEL · NOT LOADED</strong></div>
+            <div class="forge-avatar-stage">
+              <div class="forge-holo-halo forge-holo-halo-a" aria-hidden="true"></div>
+              <div class="forge-holo-halo forge-holo-halo-b" aria-hidden="true"></div>
+              <div class="forge-holo-floor" aria-hidden="true"></div>
+              <div class="forge-avatar-light forge-avatar-light-a" aria-hidden="true"></div>
+              <div class="forge-avatar-light forge-avatar-light-b" aria-hidden="true"></div>
+              <model-viewer id="forge-avatar-viewer"
+                alt="Your private animated three-dimensional character, rotatable with touch or mouse"
+                camera-controls touch-action="pan-y" interaction-prompt="none"
+                environment-image="neutral" exposure="1.2" shadow-intensity="0.9"
+                camera-orbit="0deg 75deg auto" field-of-view="29deg"
+                loading="eager" animation-crossfade-duration="350"
+                aria-label="Your three-dimensional avatar" hidden></model-viewer>
+              <div id="forge-avatar-empty" class="forge-avatar-empty">
+                <span class="forge-avatar-mark" aria-hidden="true">◈</span>
+                <span class="forge-avatar-eyebrow">THE MAIN CHARACTER IS YOU</span>
+                <strong>YOUR BODY.<br>YOUR STORY.</strong>
+                <p>Bring your own private 3D likeness into the experience. Rotate it, explore it, make it yours.</p>
+                <button type="button" id="forge-avatar-open" class="forge-avatar-open">LOAD YOUR 3D MODEL <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="forge-avatar-scanlines" aria-hidden="true"></div>
             </div>
-            <div class="forge-holo-footer"><span>SELECT A ZONE TO EXPLORE EXERCISES</span><span class="forge-pulse-mark">◈</span></div>
+            <div class="forge-avatar-deck">
+              <div class="forge-avatar-deck-top">
+                <span><i aria-hidden="true"></i> PRIVATE CHARACTER BAY</span>
+                <span id="forge-avatar-file-name">YOUR DEVICE · NO UPLOAD</span>
+              </div>
+              <div class="forge-avatar-actions">
+                <input id="forge-avatar-file" type="file" accept=".glb,model/gltf-binary" class="forge-avatar-file-input" aria-label="Choose a local GLB file of your likeness" />
+                <button id="forge-avatar-replace" type="button" class="forge-avatar-action" aria-label="Choose or change your 3D model">Choose GLB</button>
+                <label class="forge-avatar-remember"><input id="forge-avatar-remember" type="checkbox" /> <span>Remember on this device</span></label>
+                <select id="forge-avatar-animation" aria-label="Select a model animation" hidden><option value="">Idle</option></select>
+                <button id="forge-avatar-forget" type="button" class="forge-avatar-forget" hidden>Remove model</button>
+              </div>
+              <p id="forge-avatar-status" role="status" aria-live="polite">Your likeness stays in this browser. Choose a GLB once; optional local saving keeps it here for your next visit.</p>
+            </div>
           </div>
         </div>
         <div class="forge-mission-grid" aria-label="Choose your next action">
