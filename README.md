@@ -54,3 +54,19 @@ Open **Strength tracker** from the navigation. This new local-only tracker cover
 ### Remaining work after v0.8
 
 More detailed exercise videos and form analysis, personally adaptive weekly programming, robust muscle-target programming, structured physiotherapy pathways, measured performance changes, secure cross-device accounts, fully reconciled weekly adherence, accessibility/clinical review, end-to-end tests and launch privacy/security controls. This remains an **educational prototype**, not a production medical or fitness service.
+
+## FORGE command interface — review branch (not deployed)
+
+The `design/forge-command-ui-20261108` branch proposes a presentation-layer refresh of the existing v0.8 app. It does **not** switch storage providers or change fitness formulas.
+
+- Dashboard hero with clearly marked local-first status and quick actions for nutrition, strength tracking, recovery and progress.
+- Eight orderly, numbered workspaces; active section announcement; deep-link URLs (e.g. `#strength-lab`) and keyboard-visible focus.
+- Responsive, higher-contrast panels, navigation and form controls with reduced-motion handling and a back-to-top control.
+- Existing barcode, meal planner, strength log and educational content remain intact. No third-party design libraries, analytics, custom fonts or external UI services were added.
+
+**Browser smoke check (when testing a local clone):** `python tests/ui_refresh_smoke.py`.
+It opens the actual local app in Chromium at 320, 390, 768 and 1280 px, blocks external barcode JS, checks quick actions, navigation, deep links, visible sections and unexpected script errors. Existing regression: `python tests/strength_tracker_smoke.py`. These tests do **not** verify camera scanning, clinical guidance, production accessibility or cross-device persistence.
+
+**Privacy:** The repository is public, so don't commit personal measurements, photos, credentials or private food logs. The user profile and logged sessions still live in each browser's local storage, with no account synchronization. Opening a packaged-food lookup sends the lookup request to the existing external provider.
+
+**Release gate:** This is a proposal for owner review; no merge or production deployment is implied by this branch.
