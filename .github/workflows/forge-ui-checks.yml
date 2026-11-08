@@ -6,6 +6,8 @@ on:
       - "index.html"
       - "forge-ui.css"
       - "forge-ui.js"
+      - "forge-immersive.css"
+      - "forge-immersive.js"
       - "tests/**"
       - ".github/workflows/forge-ui-checks.yml"
   workflow_dispatch:
@@ -25,6 +27,7 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check forge-ui.js
+          node --check forge-immersive.js
           python - <<'PY'
           from pathlib import Path
           import re
