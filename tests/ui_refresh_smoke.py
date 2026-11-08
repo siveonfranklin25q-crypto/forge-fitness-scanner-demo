@@ -140,7 +140,7 @@ with local_site() as url,sync_playwright() as playwright:
         # Forget must clear the local DB without changing any source file.
         page.once("dialog",lambda dialog:dialog.accept())
         page.locator("#forge-avatar-forget").click()
-        assert page.locator("#forge-avatar-empty").is_visible()
+        page.locator("#forge-avatar-empty").wait_for(state="visible",timeout=8000)
         assert page.locator("#forge-avatar-forget").is_hidden()
         page.locator("#forge-avatar-file").set_input_files({
             "name":"invalid.glb","mimeType":"model/gltf-binary","buffer":b"not-a-real-model"
