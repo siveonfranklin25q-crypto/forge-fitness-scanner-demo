@@ -173,6 +173,18 @@ input:focus,select:focus{outline:2px solid #b9ee74;outline-offset:2px}
 }
 #forge-back-top:hover{background:#3c5b41}
 footer{border-top-color:rgba(157,199,161,.22)}
+/* Focus mode: after choosing a workspace, put tools above decorative welcome copy. */
+.forge-hero.is-secondary{padding:15px 24px;border-radius:16px;margin-bottom:17px}
+.forge-hero.is-secondary .forge-hero-top,
+.forge-hero.is-secondary h1,
+.forge-hero.is-secondary .lede{display:none}
+.forge-hero.is-secondary .forge-active-section{margin:10px 0 0}
+.forge-hero.is-secondary .forge-quick{min-height:40px;padding:9px 12px}
+@media(max-width:660px){
+ .forge-hero.is-secondary{padding:12px 13px}
+ .forge-hero.is-secondary .forge-quick-actions{gap:7px}
+ .forge-hero.is-secondary .forge-quick{font-size:12px;min-height:40px}
+}
 @media(max-width:1080px){
  .layout{grid-template-columns:212px minmax(0,1fr)}
  .sidebar{padding-inline:11px}
