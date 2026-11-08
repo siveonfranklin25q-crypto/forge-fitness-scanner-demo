@@ -89,7 +89,7 @@
           weighins=Array.isArray(data.weighins)?data.weighins.length:0;
         }
       }catch(_){/* Use neutral copy if browser storage is blocked. */}
-      const isSample=!profile||(Number(profile.weight)===300&&Number(profile.age)===35&&Number(profile.referenceWeight)===220&&profile.goal==="lose");
+      const isSample=!profile||(Number(profile.weight)===300&&Number(profile.age)===35&&Number(profile.referenceWeight)===220&&profile.goal==="lose"&&!weighins&&!workoutsDone);
       if(isSample){
         mission.textContent="Make the foundation yours";
         missionDetail.textContent="A sample profile is showing. Set your real goals before trusting the estimates.";
