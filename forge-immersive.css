@@ -96,6 +96,21 @@ body{
  gap:10px;padding-bottom:13px;margin-bottom:11px;
  border-bottom:1px solid rgba(112,196,216,.16);
 }
+
+.forge-hero-controls{display:flex;align-items:center;gap:10px}
+.forge-motion-toggle{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:30px;padding:6px 10px;
+ font-size:9px;font-weight:850;letter-spacing:.7px;
+ border-radius:100px;color:#add4df;
+ border:1px solid rgba(132,207,216,.32);background:rgba(24,57,71,.46);
+}
+.forge-motion-toggle:hover{color:#e1ffff;border-color:#83e8e8}
+.forge-motion-toggle[aria-pressed="false"]{color:#ffc18c;border-color:rgba(255,170,107,.4)}
+.forge-still *,
+.forge-still *::before,
+.forge-still *::after{animation-play-state:paused!important}
+body.forge-drawer-locked{overflow:hidden}
 .forge-command .forge-kicker{color:#8fe5e0;letter-spacing:2px;font-size:10px;font-weight:900}
 .forge-command .forge-kicker-dot{background:#ff9959;box-shadow:0 0 14px #f78e51;animation:forge-beat 3.4s ease-in-out infinite}
 .forge-command .forge-privacy{
