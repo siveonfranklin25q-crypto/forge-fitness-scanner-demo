@@ -39,4 +39,7 @@ Replace the generic anatomy mannequin with an **actual GLB-based user likeness**
 - Real 3D rendering and the user's actual GLB must be examined in a private preview.
 
 No paid generation, no merge and no production deployment are authorized by this branch.
-\n## Private artifact\n\nAn interactive **self-contained owner-only HTML preview** with the verified rigged GLB embedded was created in the private conversation as a downloadable ZIP, separate from GitHub. It is not an internet-hosted FORGE deployment and must not be shared publicly.\n
+
+## Private artifact
+
+An interactive **self-contained owner-only HTML preview** with the verified rigged GLB embedded was created in the private conversation as a downloadable ZIP, separate from GitHub. It is not an internet-hosted FORGE deployment and must not be shared publicly.
