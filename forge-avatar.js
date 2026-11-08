@@ -102,9 +102,10 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     const speed=Math.max(30,Math.min(180,Number(turnSpeed?.value)||85));
     if(turnWrap)turnWrap.hidden=!turning;
     if(turnOutput)turnOutput.textContent=speed+"°/s";
-    // The turn clip and model rotation are separate. The former runs 1.65x;
-    // slow camera orbit was the main reason the original preview felt sluggish.
-    view.timeScale=turning?1.65:1;
+    // model-viewer auto-rotate rigidly spins its scene pivot (a turntable),
+    // not the skeleton or a planted-foot turn. Keep authored clip speed
+    // unchanged until the owner's private animation has been re-authored.
+    view.timeScale=1;
     view.setAttribute("rotation-per-second",(turning?speed:22)+"deg");
     const on=!window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
              hero && !hero.classList.contains("forge-still");
@@ -141,7 +142,9 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     if(!selector.value)return;
     view.setAttribute("animation-name",selector.value);
     syncMotion();
-    say("Now showing "+selector.value+". Drag or swipe to rotate the model.","success");
+    say(/turn/i.test(selector.value) ?
+      "This clip does not change your character's facing direction. The slider spins the whole display like a turntable, not a planted-foot turn." :
+      "Now showing "+selector.value+". Drag or swipe to rotate the model.","success");
   });
 
   async function loadModel(file,{saved=false}={}){
@@ -167,7 +170,7 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
         activeInfo=info;
         forget.hidden=false;
         renderAnimations();
-        say("Your private 3D character is ready. Drag to orbit, pinch to zoom, and choose a motion.","success");
+        say("Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect.","success");
         if(previous && previous!==url)URL.revokeObjectURL(previous);
       };
       const onerror=()=>{
