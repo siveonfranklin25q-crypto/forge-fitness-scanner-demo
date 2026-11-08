@@ -208,7 +208,9 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     syncMotion();
     syncTurnPad();
     if(isAuthoredTurn(name)){
-      if(motionAllowed())try{view.play({repetitions:1});}catch{}
+      // A deliberate click on a turn plays once even when ambient motion is off.
+      // Reduced-motion preference still suppresses automatic idle rotation.
+      try{view.play({repetitions:1});}catch{}
       say("Owner-approved "+name.replace(/_PrivateV1$/,"")+
           " animation playing once. Repeat or return to idle using the controls below.","success");
     }else{
