@@ -42,3 +42,11 @@ jobs:
         run: python tests/ui_refresh_smoke.py
       - name: Preserve v0.8 strength-tracker behavior
         run: python tests/strength_tracker_smoke.py
+      - name: Save design review screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forge-interface-review
+          path: ui-review-screenshots/*.png
+          if-no-files-found: warn
+          retention-days: 7
