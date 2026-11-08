@@ -1,0 +1,55 @@
+# FORGE private 3D avatar — implementation and release gates
+
+## Purpose
+
+Replace the generic anatomy mannequin with an **actual GLB-based user likeness** in the existing FORGE interface. The user's existing privately held rigged character is the preferred source; do not regenerate or publish it without explicit approval.
+
+## Implemented in this review branch
+
+- Immersive local character bay with a real glTF/GLB 2.0 viewer, camera orbit/pinch controls, optional slow rotation, studio light/shadow settings and animation selection from the actual clips in the model.
+- Opt-in IndexedDB "Remember on this device": select a local file once, then restore it automatically on subsequent visits on the same browser and origin. Browser storage is **not encrypted, secured with login, or synced**; clearing site data removes it.
+- "Remove model" asks for confirmation and deletes the saved copy in the browser; it never deletes the source file.
+- Real seven-day momentum indicator calculated only from dated Strength Tracker working-set logs. Undated cumulative workout counts are excluded.
+- Pinned @google/model-viewer 4.1.0 module, fetched from cdnjs only when a model needs displaying. The library requires network access; model data is loaded through a local blob: URL and is not uploaded.
+- GLB signature, size, version, scene JSON and embedded-image/buffer checks; references to external resources are rejected. The file parser is not a complete security sandbox.
+- Supports reduced-motion preference and an explicit Motion toggle, plus a usable non-model fallback if the renderer is unavailable.
+- No identifying GLB, texture, personal photo, medical data, credentials or API keys are committed.
+
+## First-use procedure
+
+1. Open the private preview on the device holding the existing rigged .glb model.
+2. Choose Load your 3D model / Choose GLB and pick the model file.
+3. Rotate and zoom; check textures, movement and available animation clips. The earlier private walk-rig review did not meet the strict deformation threshold, so do not claim the walk is fully passed.
+4. Optionally enable Remember on this device for future automatic startup in the same browser. This stores an unencrypted model copy locally, not in a user account.
+5. Use Remove model to delete the saved browser copy. Keep the original model separately.
+
+## Before release
+
+- Owner separately approves any public display or distribution of the person's recognizable likeness; approval for private testing is not public-release authorization.
+- Never add personal GLB files to public GitHub history, website assets, pull request artifacts, screenshots or unprotected endpoints.
+- The original rigged likeness GLB was located in the owner’s private ChatGPT Library, checked locally as a self-contained 3D asset, and rendered with a desktop GLTF renderer for owner review. Its SHA-256 was recorded privately. **That actual model has not been committed, distributed through the website, or loaded through the public CI.** Facial likeness and animation-quality approval still rest with the owner.
+- Run physical Android and desktop testing for rendering, animation quality, battery, camera interaction, persistence and offline performance.
+- Audit accessibility, privacy/storage language and network dependencies before release.
+
+## Verification scope
+
+- tests/ui_refresh_smoke.py tests the view, selectors, fake 3D event, load, local caching, removal and desktop/mobile navigation using a **mock model-viewer**. It is not a GPU/WebGL or personal-likeness test.
+- tests/real_3d_smoke.py uses the actual model-viewer WebGL renderer with a self-generated synthetic triangle GLB; it validates real browser 3D loading without the owner’s face or textures.
+- tests/strength_tracker_smoke.py tests existing strength-tracker behavior.
+- Real 3D rendering and the user's actual GLB must be examined in a private preview.
+
+No paid generation, no merge and no production deployment are authorized by this branch.
+
+## Private artifact
+
+An interactive **self-contained owner-only HTML preview** with the verified rigged GLB embedded was created in the private conversation as a downloadable ZIP, separate from GitHub. It is not an internet-hosted FORGE deployment and must not be shared publicly.
+
+## Owner-approved private turning clips (2026-11-08)
+
+The owner reviewed private rendered turn previews and said: **"they are good lets go."** This is **visual approval for continuing integration**, not an instruction to merge, deploy, spend, or publicly distribute the owner's recognizable 3D mesh.
+
+A **private derivative**, distinct from the unchanged original GLB, includes four additional one-shot skeletal animations: `Turn90Left_PrivateV1`, `Turn90Right_PrivateV1` (1.70 s each), and `Turn180Left_PrivateV1`, `Turn180Right_PrivateV1` (2.58 s each). These names, not the private 3D files, are available to the public-source avatar controls.
+
+FORGE's 3D stage discovers these clips only when the owner locally selects a file that includes them. If found, an optional private turn panel presents four buttons, Replay turn, and Back to idle. Each turn plays once at 1×, **disables the viewer's rigid display turntable**, and holds near the final pose after the `finished` event to avoid a looping snap. This is a **private character preview**, not yet locomotion-integrated third-person steering or accumulated heading. Existing models without these clips continue to function without an empty control panel.
+
+The owner may select **Remember on this device** for a browser-local IndexedDB copy; this is opt-in and is not an encrypted vault or cloud backup. **Never commit the GLB, textures, identifiable screenshots or private file details.** Testing with the real private mesh on a physical Chromebook/Android browser, plus performance, controls and accessibility, remains a release gate. Automated CI uses synthetic/mocked geometry only.

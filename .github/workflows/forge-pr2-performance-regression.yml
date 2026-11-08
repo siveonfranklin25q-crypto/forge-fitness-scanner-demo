@@ -1,0 +1,74 @@
+name: FORGE performance regression — PR2 synthetic integration
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'forge-avatar.js'
+      - 'forge-avatar.css'
+      - 'forge-immersive.css'
+      - 'forge-immersive.js'
+      - 'tests/**'
+      - '.github/workflows/forge-pr2-performance-regression.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-browser-regression:
+    if: ${{ github.head_ref == 'design/forge-command-ui-20261108' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out candidate FORGE UI (no private assets)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # pinned v4
+        with:
+          persist-credentials: false
+      - name: Check out Claude's reviewed synthetic performance harness
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # pinned v4
+        with:
+          ref: 6702ad6a5e75abebbd55fcb2af264ecd694d63c7 # PR #7, immutable source
+          path: perf-harness
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # pinned v4
+        with:
+          node-version: '22'
+      - name: Install pinned browser harness, standard public-repository runner
+        run: |
+          npm install --no-save --prefix perf-harness/tools/performance playwright@1.49.1
+          npx --prefix perf-harness/tools/performance playwright install --with-deps chromium
+          bash perf-harness/tools/performance/fetch_vendor.sh "$RUNNER_TEMP/vendor"
+      - name: Real model-viewer one-shot turns, WebGL fallback and mobile CLS
+        run: |
+          mkdir -p perf-report
+          node perf-harness/tools/performance/bench.mjs \
+            --root . --page index.html --vendor "$RUNNER_TEMP/vendor" \
+            --models light --profiles mobile-emu --runs 1 --checks \
+            --label "PR2 synthetic performance regression" \
+            --out perf-report/results.json --md perf-report/results.md
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          const r=JSON.parse(fs.readFileSync('perf-report/results.json','utf8'));
+          const t=r.checks?.turn_controls, w=r.checks?.no_webgl;
+          const mobile=r.cells.find(c=>c.profile==='mobile-emu')?.runs[0];
+          console.log('PERF RECEIPT',JSON.stringify({
+            model_ok:mobile?.model?.ok,cls:mobile?.cls_total,
+            idle_cpu_pct:mobile?.idle_ui?.steady_cpu_pct,
+            idle_cpu_series_pct:mobile?.idle_ui?.cpu_series_pct,
+            seconds_to_quiet:mobile?.idle_ui?.seconds_to_quiet,
+            idle_animations_running:mobile?.idle_ui?.running_animations,
+            turn_once:t?.played_once,hold_end_pose:t?.holds_end_pose,
+            no_webgl_user_told:w?.user_told,errors:t?.page_errors
+          }));
+          if(!mobile?.model?.ok)throw Error('Real model-viewer failed to load synthetic character');
+          if(!t?.present||!t.played_once||!t.holds_end_pose)throw Error('One-tap turn loop or end-pose hold regression');
+          if(w?.user_told!==true||w?.model_marked_loaded===true)throw Error('WebGL unavailable fallback regression');
+          if(mobile.cls_total>0.1)throw Error('Mobile CLS exceeds 0.1 (synthetic emulation)');
+          if(t.page_errors?.length)throw Error('Unhandled browser errors during turning');
+          JS
+      - name: Retain synthetic-only performance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # pinned v4
+        with:
+          name: forge-pr2-synthetic-perf
+          path: perf-report/
+          retention-days: 7
+          if-no-files-found: ignore
