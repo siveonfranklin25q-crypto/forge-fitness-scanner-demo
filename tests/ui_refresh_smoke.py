@@ -147,7 +147,8 @@ with local_site() as url,sync_playwright() as playwright:
         # New private skeletal turns must NOT use a turntable and must play only
         # once; old TurnInPlace remains an honestly labeled rigid display spin.
         page.emulate_media(reduced_motion="no-preference")
-        page.locator("#forge-motion-toggle").click()  # Motion OFF -> ON
+        if page.locator("#forge-hero").evaluate("(el)=>el.classList.contains('forge-still')"):
+            page.locator("#forge-motion-toggle").click()
         page.locator("#forge-avatar-animation").select_option("Turn90Left_PrivateV1")
         assert page.locator("#forge-avatar-turn-wrap").is_hidden()
         assert page.locator("#forge-avatar-viewer").get_attribute("auto-rotate") is None
