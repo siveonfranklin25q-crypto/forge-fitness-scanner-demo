@@ -1,0 +1,31 @@
+name: FORGE animation diagnostics
+
+on:
+  pull_request:
+    paths:
+      - "tools/animation/**"
+      - "tests/animation/**"
+      - ".github/workflows/forge-animation-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  animation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install pinned three.js reference (model-viewer 4.1.0 uses three 0.172)
+        run: npm install --no-save --prefix tools/animation three@0.172.0
+      - name: Synthetic turn diagnostics and three.js cross-check
+        env:
+          FORGE_REQUIRE_THREE: "1"
+        run: python -m unittest discover -s tests/animation -v
