@@ -510,3 +510,78 @@ footer{border-color:#274954;color:#80a7b7}
  .forge-holo-halo,.forge-atlas-body,.forge-holo-sweep,.forge-kicker-dot{animation:none!important}
  .forge-holo-panel,.forge-mission-tile,.sidebar{transition:none!important}
 }
+
+
+/* Verified momentum — visual progress only from dated local workout logs. */
+.forge-momentum{
+ display:grid;grid-template-columns:104px minmax(0,1fr) auto;align-items:center;
+ gap:19px;margin:15px 0 4px;padding:17px 19px;border-radius:15px;
+ border:1px solid rgba(91,191,209,.25);
+ background:linear-gradient(112deg,rgba(16,44,54,.91),rgba(13,29,44,.95) 68%,rgba(30,43,50,.97));
+ box-shadow:inset 3px 0 0 rgba(109,237,227,.58),0 12px 24px rgba(0,0,0,.1);
+}
+.forge-momentum-ring{
+ --momentum:0%;
+ display:grid;place-items:center;width:95px;height:95px;flex:none;
+ border-radius:50%;
+ background:conic-gradient(from -90deg,#ffad72 0 var(--momentum),rgba(80,131,144,.22) var(--momentum) 100%);
+ box-shadow:0 0 25px rgba(255,144,85,.12);
+}
+.forge-momentum-ring>div{
+ display:flex;align-items:center;flex-direction:column;justify-content:center;
+ width:77px;height:77px;border-radius:50%;background:#0b1c2b;
+ border:1px solid rgba(120,224,224,.19);
+}
+.forge-momentum-ring strong{font-size:25px;color:#ffc08f;font-weight:950;letter-spacing:-.9px;line-height:1}
+.forge-momentum-ring span{font-size:8px;color:#8db4c1;font-weight:900;letter-spacing:1px;margin-top:6px}
+.forge-momentum-copy{min-width:0}
+.forge-momentum-copy .forge-label{color:#8fe3dc;font-size:9px}
+.forge-momentum-copy h3{font-size:17px;font-weight:900;color:#f7fcff;line-height:1.2;margin:5px 0}
+.forge-momentum-copy p{font-size:11px;line-height:1.45;color:#a5c3ca;margin:0 0 10px;max-width:560px}
+.forge-momentum-days{display:flex;flex-wrap:wrap;gap:5px}
+.forge-momentum-day{
+ flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ min-width:28px;min-height:30px;border:1px solid rgba(104,191,203,.17);
+ background:#112735;border-radius:7px;font-size:9px;font-weight:750;color:#83afba;
+}
+.forge-momentum-day.logged{
+ border-color:rgba(255,182,123,.6);background:#4a392b;color:#ffceaa;
+ box-shadow:inset 0 -2px 0 #ffb57f;
+}
+.forge-momentum-action{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
+.forge-momentum-action strong{font-size:28px;color:#f8fbff;font-weight:940;line-height:1}
+.forge-momentum-action>span{font-size:8px;color:#8eb7c6;letter-spacing:1px;font-weight:850}
+.forge-momentum-action button{
+ min-height:36px;white-space:nowrap;border-radius:8px;
+ border:1px solid #ffc18c;background:linear-gradient(110deg,#ffbe8b,#ff955d);
+ color:#24141a;font-size:11px;font-weight:900;padding:8px 11px;
+}
+.forge-momentum-action button:hover{background:#ffd2a8}
+.forge-momentum-action button span{padding-left:6px}
+.forge-command.is-secondary .forge-momentum{display:none}
+@media(max-width:1150px){
+ .forge-momentum{gap:12px;padding:13px}
+ .forge-momentum-ring{width:78px;height:78px}
+ .forge-momentum-ring>div{width:63px;height:63px}
+ .forge-momentum-ring strong{font-size:21px}
+}
+@media(max-width:660px){
+ .forge-momentum{grid-template-columns:72px minmax(0,1fr);gap:9px;padding:11px}
+ .forge-momentum-ring{width:68px;height:68px}
+ .forge-momentum-ring>div{width:55px;height:55px}
+ .forge-momentum-ring strong{font-size:17px}
+ .forge-momentum-ring span{font-size:7px;margin-top:3px}
+ .forge-momentum-copy .forge-label{font-size:8px;letter-spacing:1px}
+ .forge-momentum-copy h3{font-size:13px;letter-spacing:-.3px;margin:3px 0}
+ .forge-momentum-copy p{font-size:10px;line-height:1.35;margin-bottom:6px}
+ .forge-momentum-days{gap:3px}
+ .forge-momentum-day{min-width:21px;min-height:24px;font-size:8px;border-radius:5px}
+ .forge-momentum-action{
+  grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;
+  justify-content:start;align-items:center;gap:9px;text-align:left;
+  border-top:1px solid rgba(115,197,212,.14);padding-top:9px;
+ }
+ .forge-momentum-action strong{font-size:19px}
+ .forge-momentum-action>span{font-size:8px;letter-spacing:.3px}
+ .forge-momentum-action button{font-size:10px;min-height:34px}
+}
