@@ -164,6 +164,26 @@ with local_site() as url,sync_playwright() as playwright:
         assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-2.565)<0.001
         page.locator("#forge-avatar-animation").select_option("Idle")
 
+        # Accepted private turn clips get instant buttons; no buttons are
+        # available for the public synthetic test GLB unless it includes them.
+        assert page.locator("#forge-avatar-turn-pad").is_visible()
+        assert page.locator("[data-forge-private-turn]:visible").count()==4
+        page.locator('[data-forge-private-turn="Turn90Left_PrivateV1"]').click()
+        assert page.locator("#forge-avatar-animation").input_value()=="Turn90Left_PrivateV1"
+        assert page.locator('[data-forge-private-turn="Turn90Left_PrivateV1"]').get_attribute("aria-pressed")=="true"
+        assert page.locator("#forge-avatar-viewer").get_attribute("auto-rotate") is None
+        assert page.evaluate("document.getElementById('forge-avatar-viewer').lastPlayOptions.repetitions")==1
+        page.locator("#forge-avatar-viewer").evaluate("(el)=>{el.currentTime=0.93}")
+        page.locator("#forge-avatar-replay").click()
+        assert page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")==0
+        assert page.evaluate("document.getElementById('forge-avatar-viewer').lastPlayOptions.repetitions")==1
+        page.locator('[data-forge-private-turn="Turn180Right_PrivateV1"]').click()
+        assert page.locator("#forge-avatar-animation").input_value()=="Turn180Right_PrivateV1"
+        assert page.locator('[data-forge-private-turn="Turn180Right_PrivateV1"]').get_attribute("aria-pressed")=="true"
+        page.locator("#forge-avatar-idle").click()
+        assert page.locator("#forge-avatar-animation").input_value()=="Idle"
+        assert page.locator("#forge-avatar-replay").is_disabled()
+
         assert page.locator("#forge-avatar-status").is_visible()
         assert page.locator("#forge-avatar-forget").is_visible()
 
