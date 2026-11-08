@@ -156,6 +156,11 @@
  .forge-avatar-deck #forge-avatar-status{font-size:9px}
  .forge-avatar-action,.forge-avatar-forget{font-size:9px}
 }
+/* Narrow 320px phones wrap the four turn buttons into a taller deck.
+   Reserve that height before the remembered private model reappears. */
+@media(max-width:360px){
+ .forge-avatar-deck{min-height:474px}
+}
 @media(prefers-reduced-motion:reduce){
  .forge-avatar-mark{animation:none}
 }
