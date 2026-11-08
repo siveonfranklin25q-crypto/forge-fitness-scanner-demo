@@ -170,3 +170,14 @@
  .forge-command:not(.is-secondary) .forge-story{order:1;min-width:0}
  .forge-command:not(.is-secondary) .forge-story h1{font-size:clamp(39px,9.7vw,53px)}
 }
+
+
+.forge-avatar-turn{
+ display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+ color:#b6d5dc;font-size:10px;font-weight:760;
+}
+.forge-avatar-turn[hidden]{display:none!important}
+.forge-avatar-turn input[type="range"]{
+ width:90px;max-width:25vw;min-height:18px;accent-color:#ffa975;cursor:pointer;
+}
+.forge-avatar-turn output{min-width:37px;color:#ffcb9f;font-variant-numeric:tabular-nums}
