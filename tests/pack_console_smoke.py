@@ -58,6 +58,8 @@ with site() as url,sync_playwright() as p:
         page.locator("#forge-pack-save").click()
         assert page.evaluate("localStorage.getItem('forge-pack-v1')") is not None
         page.reload(wait_until="domcontentloaded")
+        page.locator('[data-tab="nutrition"]').first.evaluate("(el)=>el.click()")
+        assert page.locator("#nutrition").is_visible()
         assert page.locator("#forge-pack-mix-serving").input_value()=="250"
         assert page.locator("#forge-pack-result").get_attribute("data-state")=="ready"
 
