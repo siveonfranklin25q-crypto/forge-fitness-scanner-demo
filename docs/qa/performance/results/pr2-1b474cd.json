@@ -1,0 +1,4029 @@
+{
+  "tool": "forge-bench/1",
+  "label": "PR #2 design/forge-command-ui-20261108@1b474cd",
+  "page": "index.html",
+  "runs": 3,
+  "models": {
+    "light": {
+      "bones": 16,
+      "clips": [
+        "Idle",
+        "Walk",
+        "Turn90Left_PrivateV1",
+        "Turn90Right_PrivateV1",
+        "Turn180Left_PrivateV1",
+        "Turn180Right_PrivateV1"
+      ],
+      "glb_bytes": 669412,
+      "index_type": "uint16",
+      "texture_png_bytes": 226964,
+      "texture_px": 512,
+      "triangles": 11904,
+      "vertices": 6048
+    },
+    "typical": {
+      "bones": 32,
+      "clips": [
+        "Idle",
+        "Walk",
+        "Turn90Left_PrivateV1",
+        "Turn90Right_PrivateV1",
+        "Turn180Left_PrivateV1",
+        "Turn180Right_PrivateV1"
+      ],
+      "glb_bytes": 2915928,
+      "index_type": "uint16",
+      "texture_png_bytes": 816416,
+      "texture_px": 1024,
+      "triangles": 59904,
+      "vertices": 30048
+    },
+    "heavy": {
+      "bones": 64,
+      "clips": [
+        "Idle",
+        "Walk",
+        "Turn90Left_PrivateV1",
+        "Turn90Right_PrivateV1",
+        "Turn180Left_PrivateV1",
+        "Turn180Right_PrivateV1"
+      ],
+      "glb_bytes": 11111848,
+      "index_type": "uint32",
+      "texture_png_bytes": 2996222,
+      "texture_px": 2048,
+      "triangles": 200064,
+      "vertices": 100128
+    }
+  },
+  "environment": {
+    "chromium": "153.0.8010.12",
+    "webgl_renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "node": "v22.23.4",
+    "os": "Linux 6.18.44-fc-v310",
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz x4",
+    "mem_gb": 16,
+    "vendor_sha256": {
+      "model-viewer.min.js": "8367184a607fbe07a78b650c0d359e5ebbd96f7e2b22f95f761f559b63430386",
+      "html5-qrcode.min.js": "660b12437b1d747e3e68b8be0685c08cb728140110ad213f167b14b66f8b1d8e",
+      "axe.min.js": "b511cd9dec01c76f4b2ad1723b66b6db37d4c2eb4ed199076e1829d9ee7b75e3"
+    },
+    "classification": "EMULATION — headless Chromium, software WebGL, CDP CPU throttling; not a physical device"
+  },
+  "first_party_gzip": {
+    "files": {
+      "index.html": {
+        "raw": 205190,
+        "gzip": 61742
+      },
+      "forge-ui.css": {
+        "raw": 10689,
+        "gzip": 3619
+      },
+      "forge-immersive.css": {
+        "raw": 28499,
+        "gzip": 7873
+      },
+      "forge-avatar.css": {
+        "raw": 11560,
+        "gzip": 3509
+      },
+      "forge-pack.css": {
+        "raw": 4153,
+        "gzip": 1475
+      },
+      "forge-ui.js": {
+        "raw": 3471,
+        "gzip": 1301
+      },
+      "forge-immersive.js": {
+        "raw": 9726,
+        "gzip": 3159
+      },
+      "forge-avatar.js": {
+        "raw": 16125,
+        "gzip": 5384
+      },
+      "forge-pack.js": {
+        "raw": 6806,
+        "gzip": 2463
+      }
+    },
+    "total_raw": 296219,
+    "total_gzip": 90525
+  },
+  "cells": [
+    {
+      "profile": "desktop",
+      "model": "light",
+      "summary": {
+        "fcp_ms": {
+          "median": 172,
+          "min": 152,
+          "max": 808,
+          "cv_pct": 80.73,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 172,
+          "min": 152,
+          "max": 808,
+          "cv_pct": 80.73,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 138,
+          "min": 133.1,
+          "max": 192.6,
+          "cv_pct": 17.45,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 145,
+          "min": 136.6,
+          "max": 199.2,
+          "cv_pct": 17.31,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0.04,
+          "min": 0.04,
+          "max": 0.04,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 3554,
+          "min": 2088,
+          "max": 4901,
+          "cv_pct": 32.69,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 1760,
+          "min": 1607,
+          "max": 3252,
+          "cv_pct": 33.63,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 4054.2,
+          "min": 2317.8,
+          "max": 5236.8,
+          "cv_pct": 30.98,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 2284.1,
+          "min": 700.6,
+          "max": 3813.7,
+          "cv_pct": 56.09,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 383.4,
+          "min": 349.5,
+          "max": 389.7,
+          "cv_pct": 4.72,
+          "n": 3
+        },
+        "idle_ui_quiet_s": null,
+        "animating_fps": {
+          "median": 6.4,
+          "min": 2.8,
+          "max": 7,
+          "cv_pct": 34.35,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 750,
+          "min": 500.1,
+          "max": 900,
+          "cv_pct": 23.01,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 387.3,
+          "min": 385.9,
+          "max": 388.8,
+          "cv_pct": 0.31,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 2,
+          "min": 0.8,
+          "max": 2.5,
+          "cv_pct": 40.38,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 5,
+          "min": 4.3,
+          "max": 5.3,
+          "cv_pct": 8.61,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 3,
+          "min": 3,
+          "max": 3,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 9.6,
+          "min": 9,
+          "max": 10.3,
+          "cv_pct": 5.51,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 5,
+          "min": 3,
+          "max": 6,
+          "cv_pct": 26.73,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 9.3,
+          "min": 8.1,
+          "max": 20.5,
+          "cv_pct": 44.2,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 4502,
+          "min": 4502,
+          "max": 4924,
+          "cv_pct": 4.28,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 291.03,
+          "min": 291.03,
+          "max": 291.03,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 409,
+          "css_h": 333,
+          "dpr": 1,
+          "canvas_w": 410,
+          "canvas_h": 333,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "workspace:profile",
+        "stage_out_of_view": true,
+        "idle_running_animations": [
+          "forge-beat",
+          "forge-orbit",
+          "forge-orbit",
+          "forge-avatar-arrive"
+        ],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 206,
+          "dcl_ms": 192.60000000009313,
+          "load_ms": 199.1999999997206,
+          "fcp_ms": 808,
+          "lcp_ms": 808,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 1,
+          "long_task_ms_pre_model": 96,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 6,
+          "long_task_ms_total": 4901,
+          "long_task_max_ms": 3252,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              354.9,
+              381.9,
+              380.1,
+              340.3,
+              333.3,
+              374.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 349.5,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 5236.799999999814,
+            "mv_load_ms": 3796.1999999997206,
+            "mv_visible_ms": 3813.6999999997206,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 7,
+            "frame_ms_p50": 83.3,
+            "frame_ms_p95": 500.1,
+            "main_thread_busy_pct": 2.5,
+            "script_pct": 0.8,
+            "all_process_cpu_pct": 326.9,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 3,
+              "GPU": 323.9,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              375.9,
+              385.2,
+              390.4,
+              386.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 387.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              384.1,
+              33.9,
+              3,
+              5,
+              10,
+              7,
+              4,
+              4
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 5,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              383.5,
+              329.7,
+              9,
+              84.8,
+              8,
+              10,
+              9,
+              8
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 20.5,
+            "dom_nodes": 4924
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 140,
+          "dcl_ms": 133.10000000009313,
+          "load_ms": 136.60000000009313,
+          "fcp_ms": 152,
+          "lcp_ms": 152,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 3554,
+          "long_task_max_ms": 1760,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              350.2,
+              392.2,
+              388.8,
+              385.3,
+              391.8,
+              391.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 389.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 4054.1999999997206,
+            "mv_load_ms": 2263.5,
+            "mv_visible_ms": 2284.100000000093,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 6.4,
+            "frame_ms_p50": 83.3,
+            "frame_ms_p95": 750,
+            "main_thread_busy_pct": 2,
+            "script_pct": 0.9,
+            "all_process_cpu_pct": 350.3,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 2.6,
+              "GPU": 347.7,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              387.8,
+              384.8,
+              388.2,
+              384.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 385.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              390.8,
+              147.6,
+              5,
+              5,
+              5,
+              4,
+              5,
+              7
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 5.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              390,
+              357.3,
+              164.3,
+              79.8,
+              9,
+              11,
+              8.9,
+              9
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 9.6,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 8.1,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 148,
+          "dcl_ms": 138,
+          "load_ms": 145,
+          "fcp_ms": 172,
+          "lcp_ms": 172,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 1,
+          "long_task_ms_pre_model": 52,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 6,
+          "long_task_ms_total": 2088,
+          "long_task_max_ms": 1607,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              357.9,
+              389.1,
+              392.2,
+              386.8,
+              381.9,
+              381.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 383.4,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 2317.7999999998137,
+            "mv_load_ms": 686.5,
+            "mv_visible_ms": 700.5999999996275,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.8,
+            "frame_ms_p50": 166.7,
+            "frame_ms_p95": 900,
+            "main_thread_busy_pct": 0.8,
+            "script_pct": 0.3,
+            "all_process_cpu_pct": 362.4,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 1.1,
+              "GPU": 361.4,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              377.2,
+              392.8,
+              389.8,
+              383.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 388.8,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              385.8,
+              99.7,
+              3,
+              4,
+              6,
+              5,
+              4,
+              4
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 4.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              387.8,
+              364.5,
+              259,
+              25.9,
+              10,
+              9,
+              12,
+              10
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 10.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 9.3,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "desktop",
+      "model": "typical",
+      "summary": {
+        "fcp_ms": {
+          "median": 148,
+          "min": 144,
+          "max": 164,
+          "cv_pct": 5.68,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 148,
+          "min": 144,
+          "max": 164,
+          "cv_pct": 5.68,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 148.6,
+          "min": 145.5,
+          "max": 163.5,
+          "cv_pct": 5.15,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 153.3,
+          "min": 153.3,
+          "max": 168.8,
+          "cv_pct": 4.61,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0.04,
+          "min": 0.04,
+          "max": 0.04,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 4452,
+          "min": 3211,
+          "max": 6017,
+          "cv_pct": 25.18,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 2565,
+          "min": 1500,
+          "max": 3955,
+          "cv_pct": 37.6,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 4784.2,
+          "min": 3609.9,
+          "max": 6298.2,
+          "cv_pct": 22.47,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 3377.3,
+          "min": 2100.1,
+          "max": 5017.2,
+          "cv_pct": 34.13,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 384.4,
+          "min": 382.4,
+          "max": 384.9,
+          "cv_pct": 0.28,
+          "n": 3
+        },
+        "idle_ui_quiet_s": null,
+        "animating_fps": {
+          "median": 5.8,
+          "min": 4.6,
+          "max": 7,
+          "cv_pct": 16.89,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 633.3,
+          "min": 566.7,
+          "max": 749.9,
+          "cv_pct": 11.65,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 387,
+          "min": 382.6,
+          "max": 387.5,
+          "cv_pct": 0.57,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 1.8,
+          "min": 1.6,
+          "max": 2.2,
+          "cv_pct": 13.36,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 6,
+          "min": 5.7,
+          "max": 6.3,
+          "cv_pct": 4.08,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 10,
+          "min": 9,
+          "max": 10.3,
+          "cv_pct": 5.69,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 7,
+          "min": 6,
+          "max": 8,
+          "cv_pct": 11.66,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 14.6,
+          "min": 14.1,
+          "max": 15,
+          "cv_pct": 2.53,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 4514,
+          "min": 4491,
+          "max": 4514,
+          "cv_pct": 0.24,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 291.03,
+          "min": 291.03,
+          "max": 291.03,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 409,
+          "css_h": 333,
+          "dpr": 1,
+          "canvas_w": 410,
+          "canvas_h": 333,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "workspace:profile",
+        "stage_out_of_view": false,
+        "idle_running_animations": [
+          "forge-beat",
+          "forge-orbit",
+          "forge-orbit",
+          "forge-avatar-arrive"
+        ],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 174,
+          "dcl_ms": 163.5,
+          "load_ms": 168.8000000002794,
+          "fcp_ms": 164,
+          "lcp_ms": 164,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 1,
+          "long_task_ms_pre_model": 61,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 7,
+          "long_task_ms_total": 6017,
+          "long_task_max_ms": 3955,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              358.6,
+              380.9,
+              377.9,
+              387.2,
+              383.2,
+              384.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 6298.199999999721,
+            "mv_load_ms": 5001.5,
+            "mv_visible_ms": 5017.199999999721,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 5.8,
+            "frame_ms_p50": 116.7,
+            "frame_ms_p95": 633.3,
+            "main_thread_busy_pct": 1.8,
+            "script_pct": 0.7,
+            "all_process_cpu_pct": 341.9,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 2.2,
+              "GPU": 339.7,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              384.8,
+              388.8,
+              385.8,
+              387.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 387.5,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              376.9,
+              384.8,
+              146.6,
+              5,
+              5,
+              11,
+              5,
+              3
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 6.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              385.5,
+              381.2,
+              370.6,
+              148.7,
+              10,
+              9,
+              9,
+              9
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 14.1,
+            "dom_nodes": 4491
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 155,
+          "dcl_ms": 148.60000000009313,
+          "load_ms": 153.3000000002794,
+          "fcp_ms": 144,
+          "lcp_ms": 144,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 6,
+          "long_task_ms_total": 4452,
+          "long_task_max_ms": 2565,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              358.9,
+              385.7,
+              388.2,
+              389.6,
+              374.9,
+              388.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.4,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 4784.199999999721,
+            "mv_load_ms": 3357.0999999996275,
+            "mv_visible_ms": 3377.2999999998137,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 7,
+            "frame_ms_p50": 116.7,
+            "frame_ms_p95": 566.7,
+            "main_thread_busy_pct": 2.2,
+            "script_pct": 0.8,
+            "all_process_cpu_pct": 349.8,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 2.8,
+              "GPU": 347,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              381.2,
+              388.1,
+              388.1,
+              384.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 387,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              391.4,
+              385.7,
+              285.1,
+              4,
+              4,
+              5,
+              4,
+              8
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 5.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              385.5,
+              381.1,
+              364.3,
+              210.4,
+              11,
+              11,
+              8,
+              11
+            ],
+            "seconds_to_quiet": 7,
+            "steady_cpu_pct": 10,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 15,
+            "dom_nodes": 4514
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 157,
+          "dcl_ms": 145.5,
+          "load_ms": 153.29999999981374,
+          "fcp_ms": 148,
+          "lcp_ms": 148,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 3211,
+          "long_task_max_ms": 1500,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              352.6,
+              386.7,
+              393.2,
+              385.8,
+              382.6,
+              378.7
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 382.4,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3609.899999999907,
+            "mv_load_ms": 2085.7999999998137,
+            "mv_visible_ms": 2100.100000000093,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 4.6,
+            "frame_ms_p50": 133.3,
+            "frame_ms_p95": 749.9,
+            "main_thread_busy_pct": 1.6,
+            "script_pct": 0.6,
+            "all_process_cpu_pct": 360.9,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 2,
+              "GPU": 358.9,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              380.9,
+              381.9,
+              386.8,
+              379.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 382.6,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              380.1,
+              389.6,
+              122.5,
+              4,
+              5,
+              7,
+              6,
+              5
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 6,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              386.8,
+              390.8,
+              373.9,
+              187.4,
+              13,
+              11,
+              11,
+              9
+            ],
+            "seconds_to_quiet": 8,
+            "steady_cpu_pct": 10.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 14.6,
+            "dom_nodes": 4514
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "desktop",
+      "model": "heavy",
+      "summary": {
+        "fcp_ms": {
+          "median": 164,
+          "min": 144,
+          "max": 188,
+          "cv_pct": 10.88,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 164,
+          "min": 144,
+          "max": 188,
+          "cv_pct": 10.88,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 127.7,
+          "min": 120.4,
+          "max": 131,
+          "cv_pct": 3.5,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 133.2,
+          "min": 126.7,
+          "max": 135.1,
+          "cv_pct": 2.73,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0.04,
+          "min": 0.04,
+          "max": 0.04,
+          "cv_pct": 0.64,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 6101,
+          "min": 6070,
+          "max": 8874,
+          "cv_pct": 18.74,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 3350,
+          "min": 3106,
+          "max": 3692,
+          "cv_pct": 7.11,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 6957,
+          "min": 6800.5,
+          "max": 9834.8,
+          "cv_pct": 17.74,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 5554.8,
+          "min": 5523.1,
+          "max": 8537.3,
+          "cv_pct": 21.62,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 389.5,
+          "min": 387,
+          "max": 389.7,
+          "cv_pct": 0.32,
+          "n": 3
+        },
+        "idle_ui_quiet_s": null,
+        "animating_fps": {
+          "median": 3.8,
+          "min": 3.6,
+          "max": 4.4,
+          "cv_pct": 8.64,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 683.4,
+          "min": 633.4,
+          "max": 916.6,
+          "cv_pct": 16.58,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 383,
+          "min": 375.1,
+          "max": 386.5,
+          "cv_pct": 1.25,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 1.3,
+          "min": 1.2,
+          "max": 1.7,
+          "cv_pct": 15.43,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 117.7,
+          "min": 103.1,
+          "max": 119.3,
+          "cv_pct": 6.43,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 7,
+          "min": 7,
+          "max": 7,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 302.4,
+          "min": 251.3,
+          "max": 367.7,
+          "cv_pct": 15.51,
+          "n": 3
+        },
+        "offscreen_quiet_s": null,
+        "js_heap_mb": {
+          "median": 40.3,
+          "min": 37.8,
+          "max": 41,
+          "cv_pct": 3.46,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 4502,
+          "min": 4502,
+          "max": 4502,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 291.03,
+          "min": 291.03,
+          "max": 291.03,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 409,
+          "css_h": 333,
+          "dpr": 1,
+          "canvas_w": 410,
+          "canvas_h": 333,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "workspace:profile",
+        "stage_out_of_view": false,
+        "idle_running_animations": [
+          "forge-beat",
+          "forge-orbit",
+          "forge-orbit",
+          "forge-avatar-arrive"
+        ],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 133,
+          "dcl_ms": 120.39999999990687,
+          "load_ms": 126.6999999997206,
+          "fcp_ms": 144,
+          "lcp_ms": 144,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 7,
+          "long_task_ms_total": 8874,
+          "long_task_max_ms": 3692,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              354.2,
+              386.8,
+              388.2,
+              392.2,
+              388.6,
+              387.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 389.5,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 9834.799999999814,
+            "mv_load_ms": 8513.899999999907,
+            "mv_visible_ms": 8537.299999999814,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 3.6,
+            "frame_ms_p50": 266.7,
+            "frame_ms_p95": 683.4,
+            "main_thread_busy_pct": 1.2,
+            "script_pct": 0.6,
+            "all_process_cpu_pct": 355.2,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 1.5,
+              "GPU": 353.5,
+              "network.mojom.NetworkService": 0.2
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              387.2,
+              386.2,
+              378.7,
+              384.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 383,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              372.9,
+              376.2,
+              377.2,
+              384.5,
+              388.2,
+              346,
+              5,
+              2
+            ],
+            "seconds_to_quiet": 7,
+            "steady_cpu_pct": 117.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              385.2,
+              379.9,
+              374.9,
+              382.2,
+              386.6,
+              385.2,
+              374.9,
+              343
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 367.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 37.8,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 135,
+          "dcl_ms": 127.70000000018626,
+          "load_ms": 133.20000000018626,
+          "fcp_ms": 188,
+          "lcp_ms": 188,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03828953616619111,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 6070,
+          "long_task_max_ms": 3106,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              359.5,
+              379.5,
+              389.6,
+              393.6,
+              390.8,
+              384.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 389.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 6800.5,
+            "mv_load_ms": 5499.600000000093,
+            "mv_visible_ms": 5523.100000000093,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 3.8,
+            "frame_ms_p50": 233.4,
+            "frame_ms_p95": 916.6,
+            "main_thread_busy_pct": 1.3,
+            "script_pct": 0.5,
+            "all_process_cpu_pct": 346.2,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 1.8,
+              "GPU": 344.4,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              381.9,
+              381.9,
+              388.8,
+              388.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 386.5,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              377.2,
+              379.2,
+              370.3,
+              380.2,
+              379.9,
+              351.9,
+              3,
+              3
+            ],
+            "seconds_to_quiet": 7,
+            "steady_cpu_pct": 119.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              382.1,
+              381.9,
+              383.6,
+              379.9,
+              376.2,
+              369.5,
+              366.4,
+              17.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 251.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 41,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 138,
+          "dcl_ms": 131,
+          "load_ms": 135.10000000009313,
+          "fcp_ms": 164,
+          "lcp_ms": 164,
+          "cls_pre_model": 0.0005224639892578125,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.03881200015544892,
+          "long_tasks_total": 6,
+          "long_task_ms_total": 6101,
+          "long_task_max_ms": 3350,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              363.3,
+              388.3,
+              377.9,
+              392.2,
+              380.6,
+              388.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 387,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 6957,
+            "mv_load_ms": 5536.899999999907,
+            "mv_visible_ms": 5554.799999999814,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 409,
+            "css_h": 333,
+            "dpr": 1,
+            "canvas_w": 410,
+            "canvas_h": 333,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 4.4,
+            "frame_ms_p50": 166.7,
+            "frame_ms_p95": 633.4,
+            "main_thread_busy_pct": 1.7,
+            "script_pct": 0.8,
+            "all_process_cpu_pct": 346.6,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 1.6,
+              "GPU": 345,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              376.9,
+              365.9,
+              382.2,
+              377.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 375.1,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              380.6,
+              383.5,
+              375,
+              384.8,
+              378.9,
+              300.4,
+              5,
+              4
+            ],
+            "seconds_to_quiet": 7,
+            "steady_cpu_pct": 103.1,
+            "running_animations": [],
+            "state": {
+              "css_w": 409,
+              "css_h": 333,
+              "dpr": 1,
+              "canvas_w": 410,
+              "canvas_h": 333,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              376,
+              374.9,
+              374.5,
+              379.2,
+              381,
+              375.5,
+              361.3,
+              170.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 302.4,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 40.3,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "mobile-emu",
+      "model": "light",
+      "summary": {
+        "fcp_ms": {
+          "median": 324,
+          "min": 312,
+          "max": 444,
+          "cv_pct": 16.56,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 324,
+          "min": 312,
+          "max": 444,
+          "cv_pct": 16.56,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 563.5,
+          "min": 475.8,
+          "max": 616.1,
+          "cv_pct": 10.49,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 591.3,
+          "min": 495,
+          "max": 642.9,
+          "cv_pct": 10.63,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0.2,
+          "min": 0.2,
+          "max": 0.2,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 1439,
+          "min": 1382,
+          "max": 1631,
+          "cv_pct": 7.18,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 420,
+          "min": 318,
+          "max": 448,
+          "cv_pct": 14.13,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 1887.9,
+          "min": 1735.1,
+          "max": 2132.6,
+          "cv_pct": 8.53,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 1655.2,
+          "min": 1538.9,
+          "max": 1760.5,
+          "cv_pct": 5.48,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 345.6,
+          "min": 342.4,
+          "max": 346.4,
+          "cv_pct": 0.5,
+          "n": 3
+        },
+        "idle_ui_quiet_s": null,
+        "animating_fps": {
+          "median": 8.4,
+          "min": 8.4,
+          "max": 8.8,
+          "cv_pct": 2.21,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 233.3,
+          "min": 216.6,
+          "max": 250,
+          "cv_pct": 5.84,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 364.7,
+          "min": 356.5,
+          "max": 371.6,
+          "cv_pct": 1.69,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 9.9,
+          "min": 8.9,
+          "max": 11.8,
+          "cv_pct": 11.79,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 4,
+          "min": 3.3,
+          "max": 4,
+          "cv_pct": 8.76,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 3,
+          "min": 3,
+          "max": 3,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 9,
+          "min": 8.3,
+          "max": 10.7,
+          "cv_pct": 10.8,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 5,
+          "min": 5,
+          "max": 6,
+          "cv_pct": 8.84,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 12.5,
+          "min": 11.9,
+          "max": 12.9,
+          "cv_pct": 3.31,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 4502,
+          "min": 4502,
+          "max": 4502,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 291.03,
+          "min": 291.03,
+          "max": 291.03,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 336,
+          "css_h": 242,
+          "dpr": 3,
+          "canvas_w": 1008,
+          "canvas_h": 726,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "workspace:profile",
+        "stage_out_of_view": false,
+        "idle_running_animations": [
+          "forge-beat",
+          "forge-orbit",
+          "forge-orbit",
+          "forge-avatar-arrive"
+        ],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 509,
+          "dcl_ms": 475.8000000002794,
+          "load_ms": 495,
+          "fcp_ms": 444,
+          "lcp_ms": 444,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 2,
+          "long_task_ms_pre_model": 288,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 9,
+          "long_task_ms_total": 1439,
+          "long_task_max_ms": 318,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              308.1,
+              317,
+              358.3,
+              366.3,
+              365.5,
+              305.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 345.6,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1735.0999999996275,
+            "mv_load_ms": 1512.6999999997206,
+            "mv_visible_ms": 1538.8999999999069,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 8.4,
+            "frame_ms_p50": 100,
+            "frame_ms_p95": 233.3,
+            "main_thread_busy_pct": 8.9,
+            "script_pct": 3.7,
+            "all_process_cpu_pct": 360,
+            "process_cpu_pct": {
+              "browser": 0.2,
+              "renderer": 71.8,
+              "GPU": 288,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              365.9,
+              365.5,
+              372.9,
+              376.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 371.6,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              364.2,
+              88.7,
+              5,
+              4,
+              4,
+              4,
+              4,
+              2
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 3.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              368.3,
+              353.6,
+              253,
+              20.9,
+              10,
+              8,
+              10,
+              9
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 12.9,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 646,
+          "dcl_ms": 616.1000000000931,
+          "load_ms": 642.8999999999069,
+          "fcp_ms": 312,
+          "lcp_ms": 312,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 3,
+          "long_task_ms_pre_model": 355,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 11,
+          "long_task_ms_total": 1631,
+          "long_task_max_ms": 448,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              323,
+              322,
+              381.9,
+              369.9,
+              327,
+              330.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 342.4,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1887.8999999999069,
+            "mv_load_ms": 1690.3999999999069,
+            "mv_visible_ms": 1760.5,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 8.8,
+            "frame_ms_p50": 100,
+            "frame_ms_p95": 216.6,
+            "main_thread_busy_pct": 11.8,
+            "script_pct": 5.6,
+            "all_process_cpu_pct": 367.4,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 71.2,
+              "GPU": 296.2,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              360.3,
+              365.6,
+              358.6,
+              369.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 364.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              366.9,
+              87.7,
+              6,
+              4,
+              3,
+              4,
+              4,
+              4
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 4,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              377.9,
+              364.9,
+              127.5,
+              55.8,
+              8,
+              10,
+              11,
+              11
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 10.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 12.5,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 594,
+          "dcl_ms": 563.5,
+          "load_ms": 591.2999999998137,
+          "fcp_ms": 324,
+          "lcp_ms": 324,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 2,
+          "long_task_ms_pre_model": 288,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 7,
+          "long_task_ms_total": 1382,
+          "long_task_max_ms": 420,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              315.1,
+              329,
+              325,
+              375.2,
+              350.6,
+              313.4
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 346.4,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 2132.5999999996275,
+            "mv_load_ms": 1605.0999999996275,
+            "mv_visible_ms": 1655.2000000001863,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 8.4,
+            "frame_ms_p50": 100.1,
+            "frame_ms_p95": 250,
+            "main_thread_busy_pct": 9.9,
+            "script_pct": 3.9,
+            "all_process_cpu_pct": 370.5,
+            "process_cpu_pct": {
+              "browser": 0.2,
+              "renderer": 71.1,
+              "GPU": 299.2,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              353.6,
+              356.6,
+              355.9,
+              356.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 356.5,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              366.6,
+              88.8,
+              6,
+              3,
+              3,
+              4,
+              4,
+              4
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 4,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              371.2,
+              362.5,
+              108.8,
+              28.9,
+              8,
+              8,
+              9,
+              8
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 8.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 11.9,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "mobile-emu",
+      "model": "typical",
+      "summary": {
+        "fcp_ms": {
+          "median": 328,
+          "min": 316,
+          "max": 368,
+          "cv_pct": 6.59,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 328,
+          "min": 316,
+          "max": 368,
+          "cv_pct": 6.59,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 503,
+          "min": 443,
+          "max": 559.7,
+          "cv_pct": 9.49,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 535.7,
+          "min": 451.1,
+          "max": 578.3,
+          "cv_pct": 10.13,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0.2,
+          "min": 0.2,
+          "max": 0.2,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 3000,
+          "min": 2778,
+          "max": 3092,
+          "cv_pct": 4.46,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 1661,
+          "min": 1626,
+          "max": 1763,
+          "cv_pct": 3.45,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 3462.9,
+          "min": 3194.4,
+          "max": 3685.1,
+          "cv_pct": 5.82,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 3264.7,
+          "min": 3126.4,
+          "max": 3360.2,
+          "cv_pct": 2.95,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 374.9,
+          "min": 370.9,
+          "max": 379,
+          "cv_pct": 0.88,
+          "n": 3
+        },
+        "idle_ui_quiet_s": null,
+        "animating_fps": {
+          "median": 4,
+          "min": 3.8,
+          "max": 4.8,
+          "cv_pct": 10.29,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 583.2,
+          "min": 466.7,
+          "max": 733.3,
+          "cv_pct": 18.36,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 375.9,
+          "min": 369.1,
+          "max": 376.9,
+          "cv_pct": 0.93,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 5.3,
+          "min": 4.4,
+          "max": 5.6,
+          "cv_pct": 10,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 5.7,
+          "min": 5.7,
+          "max": 6.3,
+          "cv_pct": 4.79,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 5,
+          "min": 4,
+          "max": 5,
+          "cv_pct": 10.1,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 9.3,
+          "min": 8,
+          "max": 9.7,
+          "cv_pct": 8.06,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 6,
+          "min": 5,
+          "max": 6,
+          "cv_pct": 8.32,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 20.8,
+          "min": 20.7,
+          "max": 21.3,
+          "cv_pct": 1.25,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 4502,
+          "min": 4502,
+          "max": 4502,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 291.03,
+          "min": 291.03,
+          "max": 291.03,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 336,
+          "css_h": 242,
+          "dpr": 3,
+          "canvas_w": 1008,
+          "canvas_h": 726,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "workspace:profile",
+        "stage_out_of_view": false,
+        "idle_running_animations": [
+          "forge-beat",
+          "forge-orbit",
+          "forge-orbit",
+          "forge-avatar-arrive"
+        ],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 541,
+          "dcl_ms": 503,
+          "load_ms": 535.7000000001863,
+          "fcp_ms": 328,
+          "lcp_ms": 328,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 2,
+          "long_task_ms_pre_model": 297,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 10,
+          "long_task_ms_total": 3092,
+          "long_task_max_ms": 1661,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              314.1,
+              312.1,
+              328,
+              383.8,
+              384.2,
+              344.6
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 370.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3685.0999999996275,
+            "mv_load_ms": 3166.2999999998137,
+            "mv_visible_ms": 3264.699999999255,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 4,
+            "frame_ms_p50": 233.3,
+            "frame_ms_p95": 733.3,
+            "main_thread_busy_pct": 4.4,
+            "script_pct": 1.9,
+            "all_process_cpu_pct": 370.2,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 72.3,
+              "GPU": 297.9,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              373.9,
+              370.3,
+              380.1,
+              377.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 375.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              356.6,
+              369.9,
+              375.2,
+              164.7,
+              4,
+              3,
+              5,
+              9
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 5.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              384.8,
+              382.5,
+              374.9,
+              363.9,
+              8,
+              8,
+              8,
+              8
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 8,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 20.7,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 453,
+          "dcl_ms": 443,
+          "load_ms": 451.09999999962747,
+          "fcp_ms": 316,
+          "lcp_ms": 316,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 2,
+          "long_task_ms_pre_model": 226,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 8,
+          "long_task_ms_total": 3000,
+          "long_task_max_ms": 1763,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              354.9,
+              362.3,
+              354.9,
+              388.2,
+              368.3,
+              368.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 374.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3462.899999999441,
+            "mv_load_ms": 3320.0999999996275,
+            "mv_visible_ms": 3360.2000000001863,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 3.8,
+            "frame_ms_p50": 250,
+            "frame_ms_p95": 583.2,
+            "main_thread_busy_pct": 5.3,
+            "script_pct": 2.1,
+            "all_process_cpu_pct": 365.9,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 72.9,
+              "GPU": 293,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              373.1,
+              379.9,
+              372.8,
+              377.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 376.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              374.5,
+              380.9,
+              368.9,
+              3,
+              4,
+              4,
+              5,
+              10
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 6.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              369.9,
+              379.9,
+              374.3,
+              368.9,
+              99.7,
+              8,
+              10,
+              10
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 9.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 20.8,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 582,
+          "dcl_ms": 559.7000000001863,
+          "load_ms": 578.3000000007451,
+          "fcp_ms": 368,
+          "lcp_ms": 368,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 3,
+          "long_task_ms_pre_model": 330,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 9,
+          "long_task_ms_total": 2778,
+          "long_task_max_ms": 1626,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              323.4,
+              354.6,
+              378.6,
+              380.5,
+              376.6,
+              379.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 379,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3194.399999999441,
+            "mv_load_ms": 3072.7000000001863,
+            "mv_visible_ms": 3126.399999999441,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 4.8,
+            "frame_ms_p50": 216.6,
+            "frame_ms_p95": 466.7,
+            "main_thread_busy_pct": 5.6,
+            "script_pct": 2.2,
+            "all_process_cpu_pct": 360.3,
+            "process_cpu_pct": {
+              "browser": 0.2,
+              "renderer": 72.1,
+              "GPU": 288,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              379.9,
+              368.9,
+              359.3,
+              379.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 369.1,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              375.1,
+              379.9,
+              375.9,
+              16,
+              4,
+              6,
+              4,
+              7
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 5.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              370.3,
+              384.8,
+              385.6,
+              372.5,
+              62.9,
+              9,
+              9,
+              11
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 9.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 21.3,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "mobile-emu",
+      "model": "heavy",
+      "summary": {
+        "fcp_ms": {
+          "median": 336,
+          "min": 332,
+          "max": 380,
+          "cv_pct": 6.23,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 336,
+          "min": 332,
+          "max": 380,
+          "cv_pct": 6.23,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 608.6,
+          "min": 549.8,
+          "max": 613.4,
+          "cv_pct": 4.9,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 633,
+          "min": 575.9,
+          "max": 647,
+          "cv_pct": 4.97,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0.2,
+          "min": 0.2,
+          "max": 0.2,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 8173,
+          "min": 8030,
+          "max": 9843,
+          "cv_pct": 9.48,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 6117,
+          "min": 5856,
+          "max": 7477,
+          "cv_pct": 10.96,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 9432.6,
+          "min": 9089.5,
+          "max": 10956.8,
+          "cv_pct": 8.26,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 8973.4,
+          "min": 8610.1,
+          "max": 10503.2,
+          "cv_pct": 8.76,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 380.1,
+          "min": 378.2,
+          "max": 383.9,
+          "cv_pct": 0.62,
+          "n": 3
+        },
+        "idle_ui_quiet_s": null,
+        "animating_fps": {
+          "median": 2.4,
+          "min": 1.8,
+          "max": 3.2,
+          "cv_pct": 23.25,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 1083.3,
+          "min": 850.1,
+          "max": 1166.5,
+          "cv_pct": 12.96,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 384.9,
+          "min": 375.7,
+          "max": 385,
+          "cv_pct": 1.14,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 3.8,
+          "min": 2.6,
+          "max": 4,
+          "cv_pct": 17.83,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 256.6,
+          "min": 196.3,
+          "max": 354.6,
+          "cv_pct": 24.24,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 8,
+          "min": 8,
+          "max": 8,
+          "cv_pct": 0,
+          "n": 1
+        },
+        "offscreen_cpu_pct": {
+          "median": 382.3,
+          "min": 375.5,
+          "max": 383,
+          "cv_pct": 0.89,
+          "n": 3
+        },
+        "offscreen_quiet_s": null,
+        "js_heap_mb": {
+          "median": 35.1,
+          "min": 21.1,
+          "max": 35.9,
+          "cv_pct": 22.14,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 4502,
+          "min": 4491,
+          "max": 4502,
+          "cv_pct": 0.12,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 291.03,
+          "min": 291.03,
+          "max": 291.03,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 336,
+          "css_h": 242,
+          "dpr": 3,
+          "canvas_w": 1008,
+          "canvas_h": 726,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "workspace:profile",
+        "stage_out_of_view": false,
+        "idle_running_animations": [
+          "forge-beat",
+          "forge-orbit",
+          "forge-orbit",
+          "forge-avatar-arrive"
+        ],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 579,
+          "dcl_ms": 549.7999999998137,
+          "load_ms": 575.9000000003725,
+          "fcp_ms": 336,
+          "lcp_ms": 336,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 3,
+          "long_task_ms_pre_model": 325,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 11,
+          "long_task_ms_total": 8173,
+          "long_task_max_ms": 6117,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              333,
+              328,
+              368.9,
+              389.2,
+              383.5,
+              378.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 383.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 9432.600000000559,
+            "mv_load_ms": 8917.900000000373,
+            "mv_visible_ms": 8973.400000000373,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.4,
+            "frame_ms_p50": 566.7,
+            "frame_ms_p95": 850.1,
+            "main_thread_busy_pct": 3.8,
+            "script_pct": 1.5,
+            "all_process_cpu_pct": 361.8,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 75,
+              "GPU": 286.8,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              383.6,
+              386.2,
+              384.8,
+              383.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.9,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              379.9,
+              381.2,
+              381.9,
+              375.5,
+              379.1,
+              382.9,
+              369.9,
+              16.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 256.6,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              386.2,
+              379.9,
+              374.5,
+              380.9,
+              385.8,
+              384.8,
+              381.9,
+              382.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 383,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 35.9,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 637,
+          "dcl_ms": 608.6000000005588,
+          "load_ms": 633,
+          "fcp_ms": 332,
+          "lcp_ms": 332,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 3,
+          "long_task_ms_pre_model": 362,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 13,
+          "long_task_ms_total": 9843,
+          "long_task_max_ms": 7477,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              334,
+              333.3,
+              346,
+              385.8,
+              378.6,
+              375.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 380.1,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 10956.799999999814,
+            "mv_load_ms": 10440.700000000186,
+            "mv_visible_ms": 10503.200000000186,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 3.2,
+            "frame_ms_p50": 116.7,
+            "frame_ms_p95": 1166.5,
+            "main_thread_busy_pct": 4,
+            "script_pct": 1.7,
+            "all_process_cpu_pct": 353,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 74,
+              "GPU": 279,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              379.5,
+              372.3,
+              377.6,
+              377.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 375.7,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              372.5,
+              388.2,
+              372.9,
+              380.9,
+              381.9,
+              381.2,
+              386.8,
+              295.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 354.6,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              382.2,
+              373.9,
+              372.3,
+              381.5,
+              377.7,
+              382.9,
+              386.8,
+              377.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 382.3,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 21.1,
+            "dom_nodes": 4491
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 650,
+          "dcl_ms": 613.4000000003725,
+          "load_ms": 647,
+          "fcp_ms": 380,
+          "lcp_ms": 380,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 3,
+          "long_task_ms_pre_model": 383,
+          "running_css_animations": 4,
+          "running_animation_names": [
+            "forge-beat",
+            "forge-orbit",
+            "forge-orbit",
+            "forge-avatar-arrive"
+          ],
+          "cls_total": 0.20139217964484063,
+          "long_tasks_total": 11,
+          "long_task_ms_total": 8030,
+          "long_task_max_ms": 5856,
+          "transfer_bytes": {
+            "first_party": 298011,
+            "viewer": 979237,
+            "qr": 375462,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              316.4,
+              340,
+              386.1,
+              380.6,
+              375.2,
+              378.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 378.2,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo",
+              "forge-avatar-arrive@forge-avatar-mark"
+            ]
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 9089.5,
+            "mv_load_ms": 8563.800000000745,
+            "mv_visible_ms": 8610.100000000559,
+            "status": "Your character is ready. Drag to rotate the view, pinch to zoom, and choose an animation. Turntable rotation is a display effect."
+          },
+          "canvas": {
+            "css_w": 336,
+            "css_h": 242,
+            "dpr": 3,
+            "canvas_w": 1008,
+            "canvas_h": 726,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 1.8,
+            "frame_ms_p50": 633.3,
+            "frame_ms_p95": 1083.3,
+            "main_thread_busy_pct": 2.6,
+            "script_pct": 0.9,
+            "all_process_cpu_pct": 362.6,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 73.5,
+              "GPU": 289,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              387.1,
+              385.5,
+              385.8,
+              383.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 385,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ]
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              379.2,
+              382.9,
+              372.9,
+              375.6,
+              377.6,
+              384.5,
+              201.4,
+              3
+            ],
+            "seconds_to_quiet": 8,
+            "steady_cpu_pct": 196.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 336,
+              "css_h": 242,
+              "dpr": 3,
+              "canvas_w": 1008,
+              "canvas_h": 726,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              377.6,
+              370.9,
+              383.2,
+              379.6,
+              378.9,
+              378.9,
+              378.2,
+              369.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 375.5,
+            "running_animations": [
+              "forge-beat@forge-kicker-dot",
+              "forge-orbit@forge-holo-halo",
+              "forge-orbit@forge-holo-halo"
+            ],
+            "method": "workspace:profile",
+            "stage_out_of_view": false
+          },
+          "heap": {
+            "js_heap_used_mb": 35.1,
+            "dom_nodes": 4502
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "motion_no-preference": {
+      "running_css_animations": 4,
+      "model_ready": true,
+      "viewer": {
+        "css_w": 336,
+        "css_h": 242,
+        "dpr": 1,
+        "canvas_w": 336,
+        "canvas_h": 242,
+        "render_scale": 1,
+        "auto_rotate": true,
+        "animation": "Idle",
+        "paused": false,
+        "touch_action": "pan-y"
+      },
+      "cpu": {
+        "cpu_series_pct": [
+          302.4,
+          360.2,
+          380.9,
+          388.8,
+          378.2,
+          387.2
+        ],
+        "seconds_to_quiet": null,
+        "steady_cpu_pct": 384.7,
+        "running_animations": [
+          "forge-beat@forge-kicker-dot",
+          "forge-orbit@forge-holo-halo",
+          "forge-orbit@forge-holo-halo"
+        ]
+      }
+    },
+    "motion_reduce": {
+      "running_css_animations": 0,
+      "model_ready": true,
+      "viewer": {
+        "css_w": 336,
+        "css_h": 242,
+        "dpr": 1,
+        "canvas_w": 336,
+        "canvas_h": 242,
+        "render_scale": 1,
+        "auto_rotate": false,
+        "animation": "Idle",
+        "paused": true,
+        "touch_action": "pan-y"
+      },
+      "cpu": {
+        "cpu_series_pct": [
+          4,
+          3,
+          4,
+          3,
+          5,
+          3
+        ],
+        "seconds_to_quiet": 1,
+        "steady_cpu_pct": 3.7,
+        "running_animations": []
+      }
+    },
+    "turn_controls": {
+      "present": true,
+      "button_visible": true,
+      "tap_to_state_ms": 9264,
+      "at_tap": {
+        "animation": "Turn90Left_PrivateV1",
+        "paused": false,
+        "t": 0,
+        "auto_rotate": false
+      },
+      "during_turn": {
+        "fps": 10.7,
+        "frame_ms_p50": 100,
+        "frame_ms_p95": 199.9,
+        "main_thread_busy_pct": 2.8,
+        "script_pct": 0.9,
+        "all_process_cpu_pct": 369.4,
+        "process_cpu_pct": {
+          "browser": 0,
+          "renderer": 3.8,
+          "GPU": 365.6,
+          "network.mojom.NetworkService": 0
+        }
+      },
+      "end_pose_hold": {
+        "cpu_series_pct": [
+          344,
+          356.2,
+          359.3,
+          359.2,
+          354.9,
+          360.8
+        ],
+        "seconds_to_quiet": null,
+        "steady_cpu_pct": 358.3,
+        "running_animations": [
+          "forge-beat@forge-kicker-dot",
+          "forge-orbit@forge-holo-halo",
+          "forge-orbit@forge-holo-halo"
+        ]
+      },
+      "after_turn": {
+        "animation": "Turn90Left_PrivateV1",
+        "paused": false,
+        "t": 0.783,
+        "auto_rotate": false
+      },
+      "back_to_idle": {
+        "animation": "Idle",
+        "paused": false,
+        "t": 0.9,
+        "auto_rotate": true
+      },
+      "events": {
+        "loop": 4,
+        "finished": 0
+      },
+      "page_errors": [],
+      "turntable_suppressed": true,
+      "played_once": false,
+      "holds_end_pose": false
+    },
+    "no_webgl": {
+      "webgl_available": false,
+      "model_marked_loaded": false,
+      "status": "Inspecting your local GLB…",
+      "page_errors": [
+        "TypeError: Cannot read properties of undefined (reading 'xr')"
+      ],
+      "user_told": false
+    },
+    "viewer_offline": {
+      "model_marked_loaded": false,
+      "status": "The 3D viewer could not load. Check your connection and try again.",
+      "page_errors": [],
+      "user_told": true
+    },
+    "axe": {
+      "engine": "axe-core 4.10.2",
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "nodes": 1,
+          "help": "Heading levels should only increase by one"
+        }
+      ],
+      "by_impact": {
+        "moderate": 1
+      }
+    },
+    "keyboard": {
+      "focus_stops": 29,
+      "without_visible_ring": [],
+      "off_screen_focus": [],
+      "reaches_file_chooser": true,
+      "reaches_motion_toggle": true
+    }
+  }
+}

@@ -1,0 +1,3594 @@
+{
+  "tool": "forge-bench/1",
+  "label": "baseline: bare model-viewer stage",
+  "page": "stage.html",
+  "runs": 3,
+  "models": {
+    "light": {
+      "bones": 16,
+      "clips": [
+        "Idle",
+        "Walk",
+        "Turn90Left_PrivateV1",
+        "Turn90Right_PrivateV1",
+        "Turn180Left_PrivateV1",
+        "Turn180Right_PrivateV1"
+      ],
+      "glb_bytes": 669412,
+      "index_type": "uint16",
+      "texture_png_bytes": 226964,
+      "texture_px": 512,
+      "triangles": 11904,
+      "vertices": 6048
+    },
+    "typical": {
+      "bones": 32,
+      "clips": [
+        "Idle",
+        "Walk",
+        "Turn90Left_PrivateV1",
+        "Turn90Right_PrivateV1",
+        "Turn180Left_PrivateV1",
+        "Turn180Right_PrivateV1"
+      ],
+      "glb_bytes": 2915928,
+      "index_type": "uint16",
+      "texture_png_bytes": 816416,
+      "texture_px": 1024,
+      "triangles": 59904,
+      "vertices": 30048
+    },
+    "heavy": {
+      "bones": 64,
+      "clips": [
+        "Idle",
+        "Walk",
+        "Turn90Left_PrivateV1",
+        "Turn90Right_PrivateV1",
+        "Turn180Left_PrivateV1",
+        "Turn180Right_PrivateV1"
+      ],
+      "glb_bytes": 11111848,
+      "index_type": "uint32",
+      "texture_png_bytes": 2996222,
+      "texture_px": 2048,
+      "triangles": 200064,
+      "vertices": 100128
+    }
+  },
+  "environment": {
+    "chromium": "153.0.8010.12",
+    "webgl_renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "node": "v22.23.4",
+    "os": "Linux 6.18.44-fc-v310",
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz x4",
+    "mem_gb": 16,
+    "vendor_sha256": {
+      "model-viewer.min.js": "8367184a607fbe07a78b650c0d359e5ebbd96f7e2b22f95f761f559b63430386",
+      "html5-qrcode.min.js": "660b12437b1d747e3e68b8be0685c08cb728140110ad213f167b14b66f8b1d8e",
+      "axe.min.js": "b511cd9dec01c76f4b2ad1723b66b6db37d4c2eb4ed199076e1829d9ee7b75e3"
+    },
+    "classification": "EMULATION — headless Chromium, software WebGL, CDP CPU throttling; not a physical device"
+  },
+  "first_party_gzip": {
+    "files": {
+      "stage.html": {
+        "raw": 3318,
+        "gzip": 1539
+      }
+    },
+    "total_raw": 3318,
+    "total_gzip": 1539
+  },
+  "cells": [
+    {
+      "profile": "desktop",
+      "model": "light",
+      "summary": {
+        "fcp_ms": {
+          "median": 28,
+          "min": 24,
+          "max": 48,
+          "cv_pct": 31.5,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 28,
+          "min": 24,
+          "max": 48,
+          "cv_pct": 31.5,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 15.4,
+          "min": 13.7,
+          "max": 18.5,
+          "cv_pct": 12.52,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 15.9,
+          "min": 14.2,
+          "max": 18.9,
+          "cv_pct": 11.9,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 373,
+          "min": 352,
+          "max": 420,
+          "cv_pct": 7.45,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 173,
+          "min": 137,
+          "max": 206,
+          "cv_pct": 16.38,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 628.2,
+          "min": 617.2,
+          "max": 1087.4,
+          "cv_pct": 28.18,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 517.5,
+          "min": 512.2,
+          "max": 582.9,
+          "cv_pct": 5.98,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "idle_ui_quiet_s": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_fps": {
+          "median": 18.8,
+          "min": 18.8,
+          "max": 20,
+          "cv_pct": 2.95,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 83.3,
+          "min": 66.7,
+          "max": 83.4,
+          "cv_pct": 10.09,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 369.4,
+          "min": 363,
+          "max": 370.5,
+          "cv_pct": 0.9,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 2.8,
+          "min": 2.7,
+          "max": 3.3,
+          "cv_pct": 8.95,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 3.3,
+          "min": 3,
+          "max": 3.7,
+          "cv_pct": 8.6,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 3,
+          "min": 3,
+          "max": 3,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 3,
+          "min": 2.7,
+          "max": 3.3,
+          "cv_pct": 8.16,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 3,
+          "min": 3,
+          "max": 3,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 21,
+          "min": 20.4,
+          "max": 21.1,
+          "cv_pct": 1.48,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 471,
+          "min": 471,
+          "max": 471,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 3.43,
+          "min": 3.43,
+          "max": 3.43,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 1248,
+          "css_h": 480,
+          "dpr": 1,
+          "canvas_w": 1248,
+          "canvas_h": 480,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "scroll",
+        "stage_out_of_view": true,
+        "idle_running_animations": [],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 23,
+          "dcl_ms": 18.5,
+          "load_ms": 18.899999999906868,
+          "fcp_ms": 48,
+          "lcp_ms": 48,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 4,
+          "long_task_ms_total": 420,
+          "long_task_max_ms": 206,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1087.3999999999069,
+            "mv_load_ms": 579.8000000002794,
+            "mv_visible_ms": 582.8999999999069,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 18.8,
+            "frame_ms_p50": 50,
+            "frame_ms_p95": 66.7,
+            "main_thread_busy_pct": 3.3,
+            "script_pct": 2.2,
+            "all_process_cpu_pct": 371.4,
+            "process_cpu_pct": {
+              "browser": 0.2,
+              "renderer": 4.2,
+              "GPU": 367,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              367.9,
+              360.3,
+              359.9,
+              368.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 363,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              369,
+              109.7,
+              4,
+              4,
+              3,
+              3,
+              3,
+              3
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 3,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              374.9,
+              112.8,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 3,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 21.1,
+            "dom_nodes": 471
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 16,
+          "dcl_ms": 13.700000000186265,
+          "load_ms": 14.200000000186265,
+          "fcp_ms": 24,
+          "lcp_ms": 24,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 4,
+          "long_task_ms_total": 352,
+          "long_task_max_ms": 173,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 617.2000000001863,
+            "mv_load_ms": 508.5,
+            "mv_visible_ms": 512.2000000001863,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 18.8,
+            "frame_ms_p50": 50,
+            "frame_ms_p95": 83.3,
+            "main_thread_busy_pct": 2.8,
+            "script_pct": 1.9,
+            "all_process_cpu_pct": 370.1,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 4.2,
+              "GPU": 366,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              363.6,
+              367.3,
+              371.5,
+              369.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 369.4,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              371.9,
+              92.7,
+              3,
+              3,
+              4,
+              3,
+              2,
+              5
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 3.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              364.8,
+              156.5,
+              4,
+              3,
+              4,
+              3,
+              2,
+              3
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 2.7,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 21,
+            "dom_nodes": 471
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 19,
+          "dcl_ms": 15.399999999906868,
+          "load_ms": 15.899999999906868,
+          "fcp_ms": 28,
+          "lcp_ms": 28,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 4,
+          "long_task_ms_total": 373,
+          "long_task_max_ms": 137,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 628.2000000001863,
+            "mv_load_ms": 515,
+            "mv_visible_ms": 517.5,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 20,
+            "frame_ms_p50": 50,
+            "frame_ms_p95": 83.4,
+            "main_thread_busy_pct": 2.7,
+            "script_pct": 1.7,
+            "all_process_cpu_pct": 370.4,
+            "process_cpu_pct": {
+              "browser": 0.2,
+              "renderer": 3.8,
+              "GPU": 366.4,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              360.9,
+              372.9,
+              364.3,
+              374.4
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 370.5,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              373.3,
+              163.5,
+              4,
+              3,
+              4,
+              4,
+              4,
+              3
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 3.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              373.5,
+              142.6,
+              3,
+              3,
+              3,
+              4,
+              2,
+              4
+            ],
+            "seconds_to_quiet": 3,
+            "steady_cpu_pct": 3.3,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 20.4,
+            "dom_nodes": 471
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "desktop",
+      "model": "typical",
+      "summary": {
+        "fcp_ms": {
+          "median": 24,
+          "min": 24,
+          "max": 24,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 24,
+          "min": 24,
+          "max": 24,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 14.8,
+          "min": 13.3,
+          "max": 16.4,
+          "cv_pct": 8.53,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 15.3,
+          "min": 13.7,
+          "max": 17,
+          "cv_pct": 8.79,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 609,
+          "min": 553,
+          "max": 617,
+          "cv_pct": 4.8,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 316,
+          "min": 310,
+          "max": 355,
+          "cv_pct": 6.1,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 1368.7,
+          "min": 963.5,
+          "max": 1401.6,
+          "cv_pct": 16.01,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 858.5,
+          "min": 855,
+          "max": 896,
+          "cv_pct": 2.13,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 0,
+          "min": 0,
+          "max": 0.3,
+          "cv_pct": 141.42,
+          "n": 3
+        },
+        "idle_ui_quiet_s": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_fps": {
+          "median": 8.2,
+          "min": 7.6,
+          "max": 8.4,
+          "cv_pct": 4.21,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 150,
+          "min": 150,
+          "max": 233.3,
+          "cv_pct": 22.09,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 373.6,
+          "min": 372.6,
+          "max": 379.9,
+          "cv_pct": 0.86,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 1.3,
+          "min": 1.2,
+          "max": 1.4,
+          "cv_pct": 6.28,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 3.7,
+          "min": 3.7,
+          "max": 4,
+          "cv_pct": 3.72,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 4,
+          "min": 4,
+          "max": 5,
+          "cv_pct": 10.88,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 3.7,
+          "min": 3.3,
+          "max": 4,
+          "cv_pct": 7.82,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 5,
+          "min": 5,
+          "max": 5,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 54.3,
+          "min": 38.7,
+          "max": 57.8,
+          "cv_pct": 16.52,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 457,
+          "min": 457,
+          "max": 457,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 3.43,
+          "min": 3.43,
+          "max": 3.43,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 1248,
+          "css_h": 480,
+          "dpr": 1,
+          "canvas_w": 1248,
+          "canvas_h": 480,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "scroll",
+        "stage_out_of_view": true,
+        "idle_running_animations": [],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 16,
+          "dcl_ms": 13.299999999813735,
+          "load_ms": 13.700000000186265,
+          "fcp_ms": 24,
+          "lcp_ms": 24,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 3,
+          "long_task_ms_total": 553,
+          "long_task_max_ms": 355,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0.3,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 963.5,
+            "mv_load_ms": 855.7000000001863,
+            "mv_visible_ms": 858.5,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 8.4,
+            "frame_ms_p50": 116.7,
+            "frame_ms_p95": 150,
+            "main_thread_busy_pct": 1.4,
+            "script_pct": 1,
+            "all_process_cpu_pct": 379,
+            "process_cpu_pct": {
+              "browser": 0.4,
+              "renderer": 2,
+              "GPU": 376.6,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              370.9,
+              380.2,
+              381.5,
+              377.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 379.9,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              367.9,
+              377.9,
+              254.2,
+              3,
+              3,
+              5,
+              3,
+              3
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 3.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              379.5,
+              378.2,
+              380.5,
+              77.8,
+              3,
+              4,
+              2,
+              4
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 3.3,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 57.8,
+            "dom_nodes": 457
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 17,
+          "dcl_ms": 14.799999999813735,
+          "load_ms": 15.299999999813735,
+          "fcp_ms": 24,
+          "lcp_ms": 24,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 4,
+          "long_task_ms_total": 609,
+          "long_task_max_ms": 316,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1368.6999999997206,
+            "mv_load_ms": 852,
+            "mv_visible_ms": 855,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 8.2,
+            "frame_ms_p50": 116.7,
+            "frame_ms_p95": 233.3,
+            "main_thread_busy_pct": 1.2,
+            "script_pct": 0.8,
+            "all_process_cpu_pct": 379.7,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 1.8,
+              "GPU": 377.9,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              376.2,
+              376.9,
+              369.9,
+              370.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 372.6,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              375.9,
+              376.9,
+              321,
+              3,
+              4,
+              4,
+              3,
+              4
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 3.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              382.2,
+              377.9,
+              378.9,
+              15,
+              4,
+              3,
+              5,
+              4
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 4,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 38.7,
+            "dom_nodes": 457
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 20,
+          "dcl_ms": 16.399999999906868,
+          "load_ms": 17,
+          "fcp_ms": 24,
+          "lcp_ms": 24,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 4,
+          "long_task_ms_total": 617,
+          "long_task_max_ms": 310,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1401.6000000000931,
+            "mv_load_ms": 889.8000000002794,
+            "mv_visible_ms": 896,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 7.6,
+            "frame_ms_p50": 133.4,
+            "frame_ms_p95": 150,
+            "main_thread_busy_pct": 1.3,
+            "script_pct": 0.8,
+            "all_process_cpu_pct": 382.2,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 1.8,
+              "GPU": 380.4,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              374.5,
+              373.3,
+              376.1,
+              371.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 373.6,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              372.9,
+              369.5,
+              381.9,
+              68.7,
+              5,
+              4,
+              4,
+              4
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 4,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              372.1,
+              382.9,
+              380.2,
+              115.7,
+              3,
+              4,
+              3,
+              4
+            ],
+            "seconds_to_quiet": 5,
+            "steady_cpu_pct": 3.7,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 54.3,
+            "dom_nodes": 457
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "desktop",
+      "model": "heavy",
+      "summary": {
+        "fcp_ms": {
+          "median": 28,
+          "min": 24,
+          "max": 28,
+          "cv_pct": 7.07,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 28,
+          "min": 24,
+          "max": 28,
+          "cv_pct": 7.07,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 15,
+          "min": 13,
+          "max": 20.7,
+          "cv_pct": 20.1,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 15.4,
+          "min": 13.4,
+          "max": 20.7,
+          "cv_pct": 18.67,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 1857,
+          "min": 1644,
+          "max": 1867,
+          "cv_pct": 5.75,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 1355,
+          "min": 1205,
+          "max": 1415,
+          "cv_pct": 6.67,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 2926,
+          "min": 2425.7,
+          "max": 3010.7,
+          "cv_pct": 9.26,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 2430.4,
+          "min": 2202.3,
+          "max": 2505.3,
+          "cv_pct": 5.42,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "idle_ui_quiet_s": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_fps": {
+          "median": 2.6,
+          "min": 2.4,
+          "max": 3.4,
+          "cv_pct": 15.43,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 733.2,
+          "min": 366.7,
+          "max": 783.3,
+          "cv_pct": 29.58,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 385.6,
+          "min": 384.7,
+          "max": 385.8,
+          "cv_pct": 0.12,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 0.7,
+          "min": 0.5,
+          "max": 0.8,
+          "cv_pct": 18.71,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 380.3,
+          "min": 375.9,
+          "max": 381.4,
+          "cv_pct": 0.63,
+          "n": 3
+        },
+        "motion_off_quiet_s": null,
+        "offscreen_cpu_pct": {
+          "median": 380,
+          "min": 379.5,
+          "max": 381.1,
+          "cv_pct": 0.18,
+          "n": 3
+        },
+        "offscreen_quiet_s": null,
+        "js_heap_mb": {
+          "median": 128.6,
+          "min": 22.7,
+          "max": 133.2,
+          "cv_pct": 53.82,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 457,
+          "min": 444,
+          "max": 457,
+          "cv_pct": 1.35,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 3.43,
+          "min": 3.43,
+          "max": 3.43,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 1248,
+          "css_h": 480,
+          "dpr": 1,
+          "canvas_w": 1248,
+          "canvas_h": 480,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "scroll",
+        "stage_out_of_view": true,
+        "idle_running_animations": [],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 16,
+          "dcl_ms": 13,
+          "load_ms": 13.399999999906868,
+          "fcp_ms": 28,
+          "lcp_ms": 28,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 1867,
+          "long_task_max_ms": 1355,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3010.7000000001863,
+            "mv_load_ms": 2502.2000000001863,
+            "mv_visible_ms": 2505.2999999998137,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.6,
+            "frame_ms_p50": 383.3,
+            "frame_ms_p95": 733.2,
+            "main_thread_busy_pct": 0.7,
+            "script_pct": 0.5,
+            "all_process_cpu_pct": 380.4,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 0.8,
+              "GPU": 379.6,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              382.9,
+              384.8,
+              382.9,
+              389.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 385.6,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              380.9,
+              389.8,
+              384.2,
+              384.8,
+              387.2,
+              370.9,
+              373.3,
+              383.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 375.9,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              382.1,
+              374.9,
+              378.9,
+              378.5,
+              382.9,
+              385.2,
+              378.2,
+              376.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 380,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 128.6,
+            "dom_nodes": 457
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 24,
+          "dcl_ms": 20.699999999720603,
+          "load_ms": 20.699999999720603,
+          "fcp_ms": 28,
+          "lcp_ms": 28,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 1644,
+          "long_task_max_ms": 1205,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 2425.6999999997206,
+            "mv_load_ms": 2195.399999999907,
+            "mv_visible_ms": 2202.2999999998137,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 3.4,
+            "frame_ms_p50": 333.3,
+            "frame_ms_p95": 366.7,
+            "main_thread_busy_pct": 0.8,
+            "script_pct": 0.5,
+            "all_process_cpu_pct": 379.7,
+            "process_cpu_pct": {
+              "browser": 0.2,
+              "renderer": 1,
+              "GPU": 378.5,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              383.8,
+              383.2,
+              386.2,
+              384.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.7,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              380.9,
+              380.7,
+              371.9,
+              379.9,
+              384.8,
+              375.2,
+              382.9,
+              386.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 381.4,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              373.3,
+              374.9,
+              377.9,
+              373.9,
+              375.5,
+              384.5,
+              373.9,
+              380.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 379.5,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 22.7,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 19,
+          "dcl_ms": 15,
+          "load_ms": 15.400000000372529,
+          "fcp_ms": 24,
+          "lcp_ms": 24,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 1857,
+          "long_task_max_ms": 1415,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 2926,
+            "mv_load_ms": 2421.7999999998137,
+            "mv_visible_ms": 2430.399999999907,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 1248,
+            "css_h": 480,
+            "dpr": 1,
+            "canvas_w": 1248,
+            "canvas_h": 480,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.4,
+            "frame_ms_p50": 366.7,
+            "frame_ms_p95": 783.3,
+            "main_thread_busy_pct": 0.5,
+            "script_pct": 0.3,
+            "all_process_cpu_pct": 385.9,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 0.8,
+              "GPU": 385.1,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              385.1,
+              386.8,
+              385.5,
+              385.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 385.8,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              386.2,
+              379.5,
+              383.5,
+              386.5,
+              379.2,
+              373.1,
+              380.5,
+              387.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 380.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 1248,
+              "css_h": 480,
+              "dpr": 1,
+              "canvas_w": 1248,
+              "canvas_h": 480,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              380.2,
+              378.5,
+              379.9,
+              374.9,
+              377.9,
+              382.9,
+              379.2,
+              381.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 381.1,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 133.2,
+            "dom_nodes": 457
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "mobile-emu",
+      "model": "light",
+      "summary": {
+        "fcp_ms": {
+          "median": 56,
+          "min": 52,
+          "max": 76,
+          "cv_pct": 17.12,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 56,
+          "min": 52,
+          "max": 76,
+          "cv_pct": 17.12,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 38.3,
+          "min": 34.6,
+          "max": 56.6,
+          "cv_pct": 22.28,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 39.9,
+          "min": 36,
+          "max": 60,
+          "cv_pct": 23.21,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 896,
+          "min": 878,
+          "max": 1120,
+          "cv_pct": 11.41,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 335,
+          "min": 317,
+          "max": 439,
+          "cv_pct": 14.79,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 1729.8,
+          "min": 1665.1,
+          "max": 1907.1,
+          "cv_pct": 5.79,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 1225.2,
+          "min": 1168.1,
+          "max": 1409.2,
+          "cv_pct": 8.12,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 0.3,
+          "min": 0,
+          "max": 0.3,
+          "cv_pct": 70.71,
+          "n": 3
+        },
+        "idle_ui_quiet_s": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_fps": {
+          "median": 4.8,
+          "min": 4.8,
+          "max": 5,
+          "cv_pct": 1.94,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 266.7,
+          "min": 233.3,
+          "max": 449.9,
+          "cv_pct": 30.07,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 361.7,
+          "min": 359.9,
+          "max": 362.8,
+          "cv_pct": 0.33,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 2.8,
+          "min": 2.8,
+          "max": 3.5,
+          "cv_pct": 10.88,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 4,
+          "min": 3.3,
+          "max": 4.3,
+          "cv_pct": 10.84,
+          "n": 3
+        },
+        "motion_off_quiet_s": {
+          "median": 4,
+          "min": 4,
+          "max": 4,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "offscreen_cpu_pct": {
+          "median": 3,
+          "min": 2.7,
+          "max": 3.7,
+          "cv_pct": 13.37,
+          "n": 3
+        },
+        "offscreen_quiet_s": {
+          "median": 6,
+          "min": 6,
+          "max": 6,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "js_heap_mb": {
+          "median": 13,
+          "min": 12.7,
+          "max": 13.2,
+          "cv_pct": 1.58,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 444,
+          "min": 444,
+          "max": 444,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 3.43,
+          "min": 3.43,
+          "max": 3.43,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 358,
+          "css_h": 506,
+          "dpr": 3,
+          "canvas_w": 1074,
+          "canvas_h": 1520,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "scroll",
+        "stage_out_of_view": true,
+        "idle_running_animations": [],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 62,
+          "dcl_ms": 56.60000000009313,
+          "load_ms": 60,
+          "fcp_ms": 76,
+          "lcp_ms": 76,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 896,
+          "long_task_max_ms": 335,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0.3,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1665.1000000000931,
+            "mv_load_ms": 1156.2999999998137,
+            "mv_visible_ms": 1168.1000000000931,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 4.8,
+            "frame_ms_p50": 200,
+            "frame_ms_p95": 449.9,
+            "main_thread_busy_pct": 2.8,
+            "script_pct": 1.8,
+            "all_process_cpu_pct": 378.4,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 59.1,
+              "GPU": 319.3,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              374.5,
+              367.5,
+              360.6,
+              351.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 359.9,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              355.2,
+              357.9,
+              277.7,
+              4,
+              4,
+              3,
+              4,
+              3
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 3.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              373.4,
+              377.2,
+              369.9,
+              374.9,
+              252.2,
+              2,
+              4,
+              3
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 3,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 13,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 38,
+          "dcl_ms": 34.60000000009313,
+          "load_ms": 36,
+          "fcp_ms": 52,
+          "lcp_ms": 52,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 1120,
+          "long_task_max_ms": 439,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0.3,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1907.1000000000931,
+            "mv_load_ms": 1392.8999999999069,
+            "mv_visible_ms": 1409.2000000001863,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 4.8,
+            "frame_ms_p50": 200,
+            "frame_ms_p95": 266.7,
+            "main_thread_busy_pct": 2.8,
+            "script_pct": 1.4,
+            "all_process_cpu_pct": 382.7,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 59,
+              "GPU": 323.7,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              365.9,
+              373.5,
+              355.9,
+              358.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 362.8,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              357.9,
+              356.3,
+              306.1,
+              2,
+              3,
+              5,
+              4,
+              4
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 4.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              371.9,
+              369.9,
+              379.2,
+              373.3,
+              180.5,
+              3,
+              5,
+              3
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 3.7,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 13.2,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 42,
+          "dcl_ms": 38.299999999813735,
+          "load_ms": 39.89999999990687,
+          "fcp_ms": 56,
+          "lcp_ms": 56,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 5,
+          "long_task_ms_total": 878,
+          "long_task_max_ms": 317,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 1729.8000000002794,
+            "mv_load_ms": 1214.3999999999069,
+            "mv_visible_ms": 1225.2000000001863,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 5,
+            "frame_ms_p50": 200,
+            "frame_ms_p95": 233.3,
+            "main_thread_busy_pct": 3.5,
+            "script_pct": 2.3,
+            "all_process_cpu_pct": 377,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 60.3,
+              "GPU": 316.6,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              375.5,
+              372.9,
+              360.9,
+              351.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 361.7,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              361.6,
+              355.6,
+              323,
+              3,
+              3,
+              5,
+              3,
+              4
+            ],
+            "seconds_to_quiet": 4,
+            "steady_cpu_pct": 4,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              379.5,
+              375.7,
+              371.9,
+              376,
+              187.4,
+              2,
+              3,
+              3
+            ],
+            "seconds_to_quiet": 6,
+            "steady_cpu_pct": 2.7,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 12.7,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "mobile-emu",
+      "model": "typical",
+      "summary": {
+        "fcp_ms": {
+          "median": 68,
+          "min": 64,
+          "max": 76,
+          "cv_pct": 7.2,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 68,
+          "min": 64,
+          "max": 76,
+          "cv_pct": 7.2,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 48.7,
+          "min": 44.1,
+          "max": 53.7,
+          "cv_pct": 8.03,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 53,
+          "min": 45.5,
+          "max": 56.2,
+          "cv_pct": 8.7,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 2729,
+          "min": 2602,
+          "max": 2996,
+          "cv_pct": 5.92,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 1852,
+          "min": 1612,
+          "max": 1957,
+          "cv_pct": 7.99,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 3481.2,
+          "min": 3247.9,
+          "max": 3515.7,
+          "cv_pct": 3.48,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 3154.2,
+          "min": 3000.8,
+          "max": 3377.8,
+          "cv_pct": 4.87,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 0.3,
+          "min": 0,
+          "max": 0.3,
+          "cv_pct": 70.71,
+          "n": 3
+        },
+        "idle_ui_quiet_s": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_fps": {
+          "median": 2.4,
+          "min": 2.4,
+          "max": 2.4,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 516.7,
+          "min": 499.9,
+          "max": 1283.4,
+          "cv_pct": 47.67,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 381.7,
+          "min": 379.6,
+          "max": 383.8,
+          "cv_pct": 0.45,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 2.2,
+          "min": 1.6,
+          "max": 2.4,
+          "cv_pct": 16.45,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 339.7,
+          "min": 317.3,
+          "max": 374.3,
+          "cv_pct": 6.82,
+          "n": 3
+        },
+        "motion_off_quiet_s": null,
+        "offscreen_cpu_pct": {
+          "median": 383.4,
+          "min": 325.5,
+          "max": 384.1,
+          "cv_pct": 7.54,
+          "n": 3
+        },
+        "offscreen_quiet_s": null,
+        "js_heap_mb": {
+          "median": 12.9,
+          "min": 12.7,
+          "max": 28.1,
+          "cv_pct": 40.3,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 444,
+          "min": 444,
+          "max": 444,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 3.43,
+          "min": 3.43,
+          "max": 3.43,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 358,
+          "css_h": 506,
+          "dpr": 3,
+          "canvas_w": 1074,
+          "canvas_h": 1520,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "scroll",
+        "stage_out_of_view": true,
+        "idle_running_animations": [],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 55,
+          "dcl_ms": 48.700000000186265,
+          "load_ms": 53,
+          "fcp_ms": 68,
+          "lcp_ms": 68,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 6,
+          "long_task_ms_total": 2602,
+          "long_task_max_ms": 1612,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0.3,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3515.7000000001863,
+            "mv_load_ms": 2979.899999999907,
+            "mv_visible_ms": 3000.8000000002794,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.4,
+            "frame_ms_p50": 400,
+            "frame_ms_p95": 499.9,
+            "main_thread_busy_pct": 1.6,
+            "script_pct": 0.9,
+            "all_process_cpu_pct": 379.5,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 64.9,
+              "GPU": 314.6,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              385.7,
+              373.3,
+              382.6,
+              382.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 379.6,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              377.5,
+              386.2,
+              384.9,
+              384.6,
+              378.9,
+              369.5,
+              368.3,
+              281.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 339.7,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              380.6,
+              385.2,
+              384.2,
+              381.5,
+              377.6,
+              383.2,
+              382.5,
+              384.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 383.4,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 12.9,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 48,
+          "dcl_ms": 44.09999999962747,
+          "load_ms": 45.5,
+          "fcp_ms": 64,
+          "lcp_ms": 64,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 7,
+          "long_task_ms_total": 2996,
+          "long_task_max_ms": 1957,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              1,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0.3,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3481.2000000001863,
+            "mv_load_ms": 3359.8000000002794,
+            "mv_visible_ms": 3377.8000000002794,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.4,
+            "frame_ms_p50": 433.3,
+            "frame_ms_p95": 516.7,
+            "main_thread_busy_pct": 2.2,
+            "script_pct": 1.4,
+            "all_process_cpu_pct": 380.1,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 64.8,
+              "GPU": 315.3,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              382.9,
+              384.8,
+              381.9,
+              384.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 383.8,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              379.3,
+              378.9,
+              382.9,
+              372.4,
+              374.9,
+              373.3,
+              371.1,
+              207.4
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 317.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              382.9,
+              376.2,
+              381.3,
+              379.3,
+              386.8,
+              384.2,
+              385.1,
+              383.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.1,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 28.1,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 59,
+          "dcl_ms": 53.6999999997206,
+          "load_ms": 56.1999999997206,
+          "fcp_ms": 76,
+          "lcp_ms": 76,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 6,
+          "long_task_ms_total": 2729,
+          "long_task_max_ms": 1852,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 3247.899999999907,
+            "mv_load_ms": 3137.2999999998137,
+            "mv_visible_ms": 3154.2000000001863,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 2.4,
+            "frame_ms_p50": 400,
+            "frame_ms_p95": 1283.4,
+            "main_thread_busy_pct": 2.4,
+            "script_pct": 0.9,
+            "all_process_cpu_pct": 379.2,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 64.7,
+              "GPU": 314.5,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              382.9,
+              387.1,
+              376.9,
+              381.2
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 381.7,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              384.5,
+              380.9,
+              387.8,
+              385.8,
+              382.2,
+              378.9,
+              369.9,
+              374.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 374.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              380.9,
+              379.1,
+              385.8,
+              383.8,
+              374.6,
+              385.2,
+              380.9,
+              210.4
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 325.5,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 12.7,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    },
+    {
+      "profile": "mobile-emu",
+      "model": "heavy",
+      "summary": {
+        "fcp_ms": {
+          "median": 72,
+          "min": 60,
+          "max": 72,
+          "cv_pct": 8.32,
+          "n": 3
+        },
+        "lcp_ms": {
+          "median": 72,
+          "min": 60,
+          "max": 72,
+          "cv_pct": 8.32,
+          "n": 3
+        },
+        "dcl_ms": {
+          "median": 49.9,
+          "min": 42.6,
+          "max": 50.6,
+          "cv_pct": 7.58,
+          "n": 3
+        },
+        "load_ms": {
+          "median": 53.6,
+          "min": 44.3,
+          "max": 56.4,
+          "cv_pct": 10.06,
+          "n": 3
+        },
+        "cls_total": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "long_task_ms_total": {
+          "median": 7145,
+          "min": 6974,
+          "max": 7147,
+          "cv_pct": 1.14,
+          "n": 3
+        },
+        "long_task_max_ms": {
+          "median": 5779,
+          "min": 5575,
+          "max": 5882,
+          "cv_pct": 2.22,
+          "n": 3
+        },
+        "model_ready_ms": {
+          "median": 8310.5,
+          "min": 8188.2,
+          "max": 8341.7,
+          "cv_pct": 0.8,
+          "n": 3
+        },
+        "model_visible_ms": {
+          "median": 7810.3,
+          "min": 7681.1,
+          "max": 7845.9,
+          "cv_pct": 0.91,
+          "n": 3
+        },
+        "idle_ui_cpu_pct": {
+          "median": 0,
+          "min": 0,
+          "max": 0,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "idle_ui_quiet_s": {
+          "median": 1,
+          "min": 1,
+          "max": 1,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "animating_fps": {
+          "median": 1.2,
+          "min": 1,
+          "max": 1.4,
+          "cv_pct": 13.61,
+          "n": 3
+        },
+        "animating_frame_p95_ms": {
+          "median": 1950,
+          "min": 1916.6,
+          "max": 2783.2,
+          "cv_pct": 18.09,
+          "n": 3
+        },
+        "animating_cpu_pct": {
+          "median": 389.5,
+          "min": 389,
+          "max": 391,
+          "cv_pct": 0.22,
+          "n": 3
+        },
+        "animating_main_busy_pct": {
+          "median": 1,
+          "min": 0.6,
+          "max": 1.8,
+          "cv_pct": 44.02,
+          "n": 3
+        },
+        "motion_off_cpu_pct": {
+          "median": 387.3,
+          "min": 384.3,
+          "max": 388,
+          "cv_pct": 0.42,
+          "n": 3
+        },
+        "motion_off_quiet_s": null,
+        "offscreen_cpu_pct": {
+          "median": 386.2,
+          "min": 384.8,
+          "max": 386.6,
+          "cv_pct": 0.2,
+          "n": 3
+        },
+        "offscreen_quiet_s": null,
+        "js_heap_mb": {
+          "median": 22.8,
+          "min": 22.7,
+          "max": 23.2,
+          "cv_pct": 0.94,
+          "n": 3
+        },
+        "dom_nodes": {
+          "median": 444,
+          "min": 444,
+          "max": 444,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "first_party_kb": {
+          "median": 3.43,
+          "min": 3.43,
+          "max": 3.43,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "viewer_kb": {
+          "median": 956.29,
+          "min": 956.29,
+          "max": 956.29,
+          "cv_pct": 0,
+          "n": 3
+        },
+        "failures": 0,
+        "canvas": {
+          "css_w": 358,
+          "css_h": 506,
+          "dpr": 3,
+          "canvas_w": 1074,
+          "canvas_h": 1520,
+          "render_scale": 1,
+          "auto_rotate": true,
+          "animation": "Idle",
+          "paused": false,
+          "touch_action": "pan-y"
+        },
+        "offscreen_method": "scroll",
+        "stage_out_of_view": true,
+        "idle_running_animations": [],
+        "blocked_external": [],
+        "page_errors": []
+      },
+      "runs": [
+        {
+          "nav_wall_ms": 59,
+          "dcl_ms": 49.89999999990687,
+          "load_ms": 56.39999999990687,
+          "fcp_ms": 72,
+          "lcp_ms": 72,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 8,
+          "long_task_ms_total": 6974,
+          "long_task_max_ms": 5575,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 8188.200000000186,
+            "mv_load_ms": 7676.600000000093,
+            "mv_visible_ms": 7681.100000000093,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 1.2,
+            "frame_ms_p50": 933.3,
+            "frame_ms_p95": 2783.2,
+            "main_thread_busy_pct": 0.6,
+            "script_pct": 0.4,
+            "all_process_cpu_pct": 381.7,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 67,
+              "GPU": 314.8,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              385.8,
+              392,
+              388.2,
+              388.3
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 389.5,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              388.8,
+              391.2,
+              387.2,
+              391.6,
+              387.2,
+              392.8,
+              387.5,
+              381.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 387.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              386.2,
+              391.8,
+              387.8,
+              391.7,
+              387.8,
+              387.2,
+              384.8,
+              382.5
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.8,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 23.2,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 55,
+          "dcl_ms": 50.60000000009313,
+          "load_ms": 53.60000000009313,
+          "fcp_ms": 72,
+          "lcp_ms": 72,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 7,
+          "long_task_ms_total": 7145,
+          "long_task_max_ms": 5779,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 8341.69999999972,
+            "mv_load_ms": 7833.399999999907,
+            "mv_visible_ms": 7845.899999999907,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 1.4,
+            "frame_ms_p50": 999.9,
+            "frame_ms_p95": 1916.6,
+            "main_thread_busy_pct": 1,
+            "script_pct": 0.7,
+            "all_process_cpu_pct": 379.6,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 65.9,
+              "GPU": 313.7,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              383.9,
+              393.8,
+              387.5,
+              391.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 391,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              387.5,
+              386.2,
+              387.8,
+              388.2,
+              387.2,
+              391,
+              381.9,
+              379.9
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 384.3,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              386.2,
+              386.2,
+              387.6,
+              389.2,
+              385.2,
+              386.8,
+              386.8,
+              385.1
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 386.2,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 22.7,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        },
+        {
+          "nav_wall_ms": 47,
+          "dcl_ms": 42.60000000009313,
+          "load_ms": 44.299999999813735,
+          "fcp_ms": 60,
+          "lcp_ms": 60,
+          "cls_pre_model": 0,
+          "long_tasks_pre_model": 0,
+          "long_task_ms_pre_model": 0,
+          "running_css_animations": 0,
+          "running_animation_names": [],
+          "cls_total": 0,
+          "long_tasks_total": 8,
+          "long_task_ms_total": 7147,
+          "long_task_max_ms": 5882,
+          "transfer_bytes": {
+            "first_party": 3511,
+            "viewer": 979237,
+            "qr": 0,
+            "other": 0
+          },
+          "idle_ui": {
+            "cpu_series_pct": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "seconds_to_quiet": 1,
+            "steady_cpu_pct": 0,
+            "running_animations": []
+          },
+          "model": {
+            "ok": true,
+            "ready_ms": 8310.5,
+            "mv_load_ms": 7800.399999999907,
+            "mv_visible_ms": 7810.299999999814,
+            "status": "Ready"
+          },
+          "canvas": {
+            "css_w": 358,
+            "css_h": 506,
+            "dpr": 3,
+            "canvas_w": 1074,
+            "canvas_h": 1520,
+            "render_scale": 1,
+            "auto_rotate": true,
+            "animation": "Idle",
+            "paused": false,
+            "touch_action": "pan-y"
+          },
+          "animating": {
+            "fps": 1,
+            "frame_ms_p50": 950,
+            "frame_ms_p95": 1950,
+            "main_thread_busy_pct": 1.8,
+            "script_pct": 1.5,
+            "all_process_cpu_pct": 383.6,
+            "process_cpu_pct": {
+              "browser": 0,
+              "renderer": 66.1,
+              "GPU": 317.6,
+              "network.mojom.NetworkService": 0
+            }
+          },
+          "animating_cpu": {
+            "cpu_series_pct": [
+              382.9,
+              390.8,
+              385.5,
+              390.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 389,
+            "running_animations": []
+          },
+          "motion_off": {
+            "cpu_series_pct": [
+              376.9,
+              390.2,
+              387.6,
+              390.3,
+              392.4,
+              384.8,
+              388.8,
+              390.4
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 388,
+            "running_animations": [],
+            "state": {
+              "css_w": 358,
+              "css_h": 506,
+              "dpr": 3,
+              "canvas_w": 1074,
+              "canvas_h": 1520,
+              "render_scale": 1,
+              "auto_rotate": false,
+              "animation": "Idle",
+              "paused": true,
+              "touch_action": "pan-y"
+            }
+          },
+          "offscreen": {
+            "cpu_series_pct": [
+              387.5,
+              382.6,
+              391.8,
+              392.7,
+              386.8,
+              392.8,
+              377.2,
+              389.8
+            ],
+            "seconds_to_quiet": null,
+            "steady_cpu_pct": 386.6,
+            "running_animations": [],
+            "method": "scroll",
+            "stage_out_of_view": true
+          },
+          "heap": {
+            "js_heap_used_mb": 22.8,
+            "dom_nodes": 444
+          },
+          "blocked_external": [],
+          "page_errors": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "motion_no-preference": {
+      "running_css_animations": 0,
+      "model_ready": true,
+      "viewer": {
+        "css_w": 358,
+        "css_h": 506,
+        "dpr": 1,
+        "canvas_w": 358,
+        "canvas_h": 507,
+        "render_scale": 1,
+        "auto_rotate": true,
+        "animation": "Idle",
+        "paused": false,
+        "touch_action": "pan-y"
+      },
+      "cpu": {
+        "cpu_series_pct": [
+          389.2,
+          385.2,
+          373.9,
+          388.4,
+          388.8,
+          393.8
+        ],
+        "seconds_to_quiet": null,
+        "steady_cpu_pct": 390.3,
+        "running_animations": []
+      }
+    },
+    "motion_reduce": {
+      "running_css_animations": 0,
+      "model_ready": true,
+      "viewer": {
+        "css_w": 358,
+        "css_h": 506,
+        "dpr": 1,
+        "canvas_w": 358,
+        "canvas_h": 507,
+        "render_scale": 1,
+        "auto_rotate": false,
+        "animation": "Idle",
+        "paused": true,
+        "touch_action": "pan-y"
+      },
+      "cpu": {
+        "cpu_series_pct": [
+          5,
+          4,
+          4,
+          5,
+          3,
+          4
+        ],
+        "seconds_to_quiet": 1,
+        "steady_cpu_pct": 4,
+        "running_animations": []
+      }
+    },
+    "turn_controls": {
+      "present": false,
+      "note": "no turn buttons on this page (baseline or clip names not recognised)"
+    },
+    "no_webgl": {
+      "webgl_available": false,
+      "model_marked_loaded": false,
+      "status": "",
+      "page_errors": [
+        "TypeError: Cannot read properties of undefined (reading 'xr')",
+        "TypeError: Cannot read properties of undefined (reading 'getFieldOfView')"
+      ],
+      "user_told": false
+    },
+    "viewer_offline": {
+      "model_marked_loaded": false,
+      "status": "The 3D viewer could not load.",
+      "page_errors": [],
+      "user_told": true
+    },
+    "axe": {
+      "engine": "axe-core 4.10.2",
+      "violations": [
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "help": "Page should contain a level-one heading"
+        }
+      ],
+      "by_impact": {
+        "moderate": 1
+      }
+    },
+    "keyboard": {
+      "focus_stops": 2,
+      "without_visible_ring": [],
+      "off_screen_focus": [],
+      "reaches_file_chooser": true,
+      "reaches_motion_toggle": true
+    }
+  }
+}
