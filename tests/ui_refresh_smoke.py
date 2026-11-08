@@ -50,13 +50,13 @@ def sample_glb():
 MOCK_VIEWER=r"""
 class MockModelViewer extends HTMLElement {
   constructor(){ super(); this._url=""; this._paused=true; }
-  get availableAnimations(){return ["Idle","Walk","TurnInPlace"];}
+  get availableAnimations(){return ["Idle","Walk","TurnInPlace","Turn90Left_PrivateV1","Turn90Right_PrivateV1","Turn180Left_PrivateV1","Turn180Right_PrivateV1"];}
   get src(){return this._url;}
   set src(url){
     this._url=url;
     if(url) queueMicrotask(()=>this.dispatchEvent(new Event("load")));
   }
-  play(){this._paused=false;}
+  play(options){this._paused=false;this.lastPlayOptions=options||null;}
   pause(){this._paused=true;}
   get paused(){return this._paused;}
 }
@@ -142,6 +142,25 @@ with local_site() as url,sync_playwright() as playwright:
         page.locator("#forge-avatar-animation").select_option("Walk")
         assert page.locator("#forge-avatar-turn-wrap").is_hidden()
         assert page.locator("#forge-avatar-viewer").get_attribute("rotation-per-second")=="22deg"
+        page.locator("#forge-avatar-animation").select_option("Idle")
+
+        # New private skeletal turns must NOT use a turntable and must play only
+        # once; old TurnInPlace remains an honestly labeled rigid display spin.
+        page.emulate_media(reduced_motion="no-preference")
+        page.locator("#forge-motion-toggle").click()  # Motion OFF -> ON
+        page.locator("#forge-avatar-animation").select_option("Turn90Left_PrivateV1")
+        assert page.locator("#forge-avatar-turn-wrap").is_hidden()
+        assert page.locator("#forge-avatar-viewer").get_attribute("auto-rotate") is None
+        assert page.locator("#forge-avatar-viewer").get_attribute("animation-name")=="Turn90Left_PrivateV1"
+        assert page.evaluate("document.getElementById('forge-avatar-viewer').lastPlayOptions.repetitions")==1
+        page.locator("#forge-avatar-viewer").evaluate("(el)=>el.dispatchEvent(new Event('finished'))")
+        assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-1.685)<0.001
+        assert "complete" in page.locator("#forge-avatar-status").inner_text().lower()
+        page.locator("#forge-avatar-animation").select_option("Turn180Right_PrivateV1")
+        assert page.locator("#forge-avatar-viewer").get_attribute("auto-rotate") is None
+        assert page.evaluate("document.getElementById('forge-avatar-viewer').lastPlayOptions.repetitions")==1
+        page.locator("#forge-avatar-viewer").evaluate("(el)=>el.dispatchEvent(new Event('finished'))")
+        assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-2.565)<0.001
         page.locator("#forge-avatar-animation").select_option("Idle")
 
         assert page.locator("#forge-avatar-status").is_visible()
