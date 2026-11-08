@@ -84,5 +84,32 @@ with serve() as url,sync_playwright() as p:
     out=ROOT/"ui-review-screenshots"
     out.mkdir(exist_ok=True)
     page.screenshot(path=str(out/"forge-real-webgl-390.png"),animations="disabled")
+    # Emulate a browser without WebGL: the app must explain the limitation
+    # before model-viewer is imported, retaining the GLB on this device.
+    blocked=browser.new_page(viewport={"width":390,"height":844})
+    blocked.add_init_script("""(() => {
+      const original = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function(kind, ...args) {
+        if (/^(webgl2?|experimental-webgl)$/.test(kind)) return null;
+        return original.call(this, kind, ...args);
+      };
+    })();""")
+    blocked_errors=[]
+    viewer_requests=[]
+    blocked.on("pageerror",lambda error:blocked_errors.append(str(error)))
+    blocked.on("request",lambda request:viewer_requests.append(request.url) if "model-viewer.min.js" in request.url else None)
+    blocked.route("https://cdn.jsdelivr.net/**",lambda route:route.abort())
+    blocked.goto(url,wait_until="domcontentloaded")
+    blocked.locator("#forge-avatar-file").set_input_files({
+        "name":"synthetic-no-webgl.glb",
+        "mimeType":"model/gltf-binary",
+        "buffer":make_triangle_glb(),
+    })
+    blocked.wait_for_function("document.querySelector('#forge-avatar-status').textContent.includes('WebGL is disabled')",timeout=15000)
+    assert blocked.locator("#forge-avatar-empty").is_visible()
+    assert blocked.locator("#forge-avatar-viewer").is_hidden()
+    assert not viewer_requests, "Unsupported WebGL must fail before fetching the viewer CDN"
+    assert not blocked_errors,blocked_errors
+    blocked.close()
     browser.close()
-print("PASS: real model-viewer WebGL renders synthetic embedded test GLB without uploading personal assets")
+print("PASS: real WebGL loads synthetic GLB; no-WebGL fallback is explicit before CDN fetch")
