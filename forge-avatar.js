@@ -93,7 +93,16 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     }finally{db.close();}
   }
 
+  // Detect unsupported or disabled WebGL *before* importing model-viewer.
+  // The unsupported-browser fallback keeps private GLBs on the device.
+  function supportsWebGL(){
+    try{
+      const canvas=document.createElement("canvas");
+      return !!(canvas.getContext("webgl2")||canvas.getContext("webgl")||canvas.getContext("experimental-webgl"));
+    }catch{return false;}
+  }
   async function ensureEngine(){
+    if(!supportsWebGL())throw new Error("3D preview isn't supported or WebGL is disabled in this browser. Your GLB stays on this device; try Chrome with hardware acceleration enabled.");
     if(customElements.get("model-viewer"))return;
     if(!enginePromise)enginePromise=import(VIEWER_URL).catch(error=>{enginePromise=null;throw new Error("The 3D viewer could not load. Check your connection and try again.");});
     await enginePromise;
@@ -199,7 +208,11 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     }
   }
   turnSpeed?.addEventListener("input",syncMotion);
-  selector.addEventListener("change",()=>{
+  // model-viewer 4.1 processes animation-name asynchronously in Lit.updated().
+  // Calling play() before updateComplete would reset a one-shot to Infinity.
+  let selectionRevision=0;
+  selector.addEventListener("change",async()=>{
+    const revision=++selectionRevision;
     const name=selector.value;
     if(!name)return;
     try{view.pause?.();}catch{}
@@ -208,11 +221,16 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     syncMotion();
     syncTurnPad();
     if(isAuthoredTurn(name)){
-      // A deliberate click on a turn plays once even when ambient motion is off.
-      // Reduced-motion preference still suppresses automatic idle rotation.
-      try{view.play({repetitions:1});}catch{}
-      say("Owner-approved "+name.replace(/_PrivateV1$/,"")+
-          " animation playing once. Repeat or return to idle using the controls below.","success");
+      try{
+        // Wait for the *real* viewer to apply the new clip before play({repetitions:1}).
+        await view.updateComplete;
+        if(revision!==selectionRevision||selector.value!==name||view.hidden)return;
+        view.play({repetitions:1});
+        say("Owner-approved "+name.replace(/_PrivateV1$/,"")+
+            " animation playing once. Repeat or return to idle using the controls below.","success");
+      }catch(error){
+        if(revision===selectionRevision)say("Unable to play this turn. Return to idle and try again.","error");
+      }
     }else{
       say(/turn/i.test(name)
         ?"This source clip does not change your character's facing direction. Turntable speed spins the entire model, not a planted-foot turn."
@@ -222,10 +240,9 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
   view.addEventListener("finished",()=>{
     const name=selector.value;
     if(!isAuthoredTurn(name))return;
-    try{view.pause?.();}catch{}
-    // Hold close to final pose to avoid a repeat-loop heading snap.
-    view.currentTime=Math.max(0,AUTHORED_TURNS[name]-.015);
-    say("Turn complete. This motion has your visual approval. Use Replay turn or Back to idle; physical-device testing is still pending.","success");
+    // model-viewer already sets clampWhenFinished on the one-shot action.
+    // Do not write currentTime: ModelScene.mixer.setTime would snap back to frame 0.
+    say("Turn complete. Final pose held. Use Replay turn or Back to idle; physical-device testing is still pending.","success");
   });
 
   async function loadModel(file,{saved=false}={}){
@@ -333,11 +350,8 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
   });
 
   motion?.addEventListener("click",()=>{
+    // Motion toggle controls ambient motion. Replay turn is the explicit restart.
     syncMotion();
-    if(isAuthoredTurn(selector.value)&&motionAllowed()){
-      view.currentTime=0;
-      try{view.play({repetitions:1});}catch{}
-    }
   });
   window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener?.("change",syncMotion);
   document.addEventListener("visibilitychange",()=>{if(document.hidden){try{view.pause?.();}catch{}}else syncMotion();});
