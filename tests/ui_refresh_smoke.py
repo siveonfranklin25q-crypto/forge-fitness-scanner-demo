@@ -86,6 +86,8 @@ with local_site() as url,sync_playwright() as playwright:
         assert page.locator(".forge-atlas-body").count()==0, "The generic mannequin must be gone."
         assert page.locator("#forge-avatar-viewer").count()==1
         assert page.locator(".forge-mission-tile").count()==4
+        assert page.locator(".forge-momentum-day").count()==7
+        assert page.locator("#forge-momentum-percent").inner_text()=="—"
         assert page.locator(".summary-card").count()==4
         assert page.locator(".tabs [data-tab]").count()==8
         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth"),width
@@ -136,6 +138,27 @@ with local_site() as url,sync_playwright() as playwright:
 
         if width==390:
             page.screenshot(path=str(shots/"forge-strength-390.png"),animations="disabled")
+
+        # Genuine dated sessions drive the momentum ring; an untouched sample
+        # profile never produces a pretend completion percentage.
+        if width==390:
+            page.evaluate("""() => {
+              const state=JSON.parse(localStorage.getItem("forge-demo-v01"));
+              state.profile.weight=180;
+              state.profile.referenceWeight=195;
+              state.profile.goal="gain";
+              state.profile.days=6;
+              localStorage.setItem("forge-demo-v01", JSON.stringify(state));
+              const d=new Date(),iso=[d.getFullYear(),
+                String(d.getMonth()+1).padStart(2,"0"),
+                String(d.getDate()).padStart(2,"0")].join("-");
+              const session={id:"qa-1",date:iso,sets:[{exerciseId:0,reps:10,kg:25,rir:2,type:"working"}],symptoms:"none",counted:true};
+              localStorage.setItem("forge-strength-v08-sessions",JSON.stringify([session]));
+            }""")
+            page.reload(wait_until="domcontentloaded")
+            assert page.locator("#forge-momentum-count").inner_text()=="1 / 6"
+            assert page.locator("#forge-momentum-percent").inner_text()=="17%"
+            assert page.locator(".forge-momentum-day.logged").count()==1
 
         # Forget must clear the local DB without changing any source file.
         page.once("dialog",lambda dialog:dialog.accept())
