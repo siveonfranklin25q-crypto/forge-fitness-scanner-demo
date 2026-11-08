@@ -27,14 +27,16 @@ Replace the generic anatomy mannequin with an **actual GLB-based user likeness**
 
 - Owner separately approves any public display or distribution of the person's recognizable likeness; approval for private testing is not public-release authorization.
 - Never add personal GLB files to public GitHub history, website assets, pull request artifacts, screenshots or unprotected endpoints.
-- Verify the original GLB's hash and appearance against the private handoff. **The actual identifiable model bytes were unavailable to this build**, so no identity or appearance validation has yet been performed.
+- The original rigged likeness GLB was located in the owner’s private ChatGPT Library, checked locally as a self-contained 3D asset, and rendered with a desktop GLTF renderer for owner review. Its SHA-256 was recorded privately. **That actual model has not been committed, distributed through the website, or loaded through the public CI.** Facial likeness and animation-quality approval still rest with the owner.
 - Run physical Android and desktop testing for rendering, animation quality, battery, camera interaction, persistence and offline performance.
 - Audit accessibility, privacy/storage language and network dependencies before release.
 
 ## Verification scope
 
 - tests/ui_refresh_smoke.py tests the view, selectors, fake 3D event, load, local caching, removal and desktop/mobile navigation using a **mock model-viewer**. It is not a GPU/WebGL or personal-likeness test.
+- tests/real_3d_smoke.py uses the actual model-viewer WebGL renderer with a self-generated synthetic triangle GLB; it validates real browser 3D loading without the owner’s face or textures.
 - tests/strength_tracker_smoke.py tests existing strength-tracker behavior.
 - Real 3D rendering and the user's actual GLB must be examined in a private preview.
 
 No paid generation, no merge and no production deployment are authorized by this branch.
+\n## Private artifact\n\nAn interactive **self-contained owner-only HTML preview** with the verified rigged GLB embedded was created in the private conversation as a downloadable ZIP, separate from GitHub. It is not an internet-hosted FORGE deployment and must not be shared publicly.\n
