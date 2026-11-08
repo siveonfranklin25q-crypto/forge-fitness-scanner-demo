@@ -181,3 +181,46 @@
  width:90px;max-width:25vw;min-height:18px;accent-color:#ffa975;cursor:pointer;
 }
 .forge-avatar-turn output{min-width:37px;color:#ffcb9f;font-variant-numeric:tabular-nums}
+
+
+/* One-touch, owner-approved private skeletal turning controls. */
+.forge-avatar-turn-pad{
+  margin:10px 0 0;padding:12px;border:1px solid rgba(127,226,224,.34);
+  border-radius:12px;background:linear-gradient(135deg,rgba(29,72,79,.7),rgba(13,34,51,.8));
+}
+.forge-avatar-turn-pad[hidden]{display:none!important}
+.forge-avatar-turn-pad-title{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px}
+.forge-avatar-turn-pad-title span{font-size:9px;letter-spacing:1.3px;font-weight:900;color:#9cece2}
+.forge-avatar-turn-pad-title small{font-size:9px;color:#c9ad98}
+.forge-avatar-turn-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.forge-avatar-turn-grid button{
+  min-height:42px;min-width:0;padding:9px 6px;color:#d5f3f7;font-size:10px;font-weight:900;
+  border:1px solid rgba(120,201,221,.35);border-radius:9px;
+  background:linear-gradient(130deg,#194351,#142d3d);
+  transition:transform .17s ease,background .17s ease,border-color .17s ease;
+}
+.forge-avatar-turn-grid button:not([hidden]):hover{
+  transform:translateY(-1px);color:#fff;border-color:#ffbc89;
+  background:linear-gradient(120deg,#3b565c,#26445a);
+}
+.forge-avatar-turn-grid button.is-active{
+  color:#201623;border-color:#ffc98f;background:linear-gradient(115deg,#ffd3a5,#ff9c68);
+  box-shadow:0 6px 18px rgba(255,144,79,.17)
+}
+.forge-avatar-turn-grid button[hidden]{display:none!important}
+.forge-avatar-turn-grid button:focus-visible,.forge-avatar-turn-footer button:focus-visible{
+  outline:2px solid #b4fff2;outline-offset:2px
+}
+.forge-avatar-turn-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px}
+.forge-avatar-turn-footer button{
+  padding:7px 10px;min-height:36px;font-size:10px;font-weight:850;
+  border:1px solid #5c9ca3;border-radius:8px;background:#163846;color:#e2ffff;
+}
+.forge-avatar-turn-footer button:hover:not(:disabled){border-color:#ffb783;background:#30505b}
+.forge-avatar-turn-footer button:disabled{opacity:.42;cursor:not-allowed}
+.forge-avatar-turn-footer small{font-size:9px;color:#a3c8d5;line-height:1.4}
+@media(max-width:730px){
+ .forge-avatar-turn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .forge-avatar-turn-grid button{min-height:40px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.forge-avatar-turn-grid button{transition:none}}
