@@ -96,25 +96,44 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     await customElements.whenDefined("model-viewer");
   }
 
+  // Private-model clip names only: durations are for end-frame hold in preview.
+  // No recognizable model is shipped in this public repository.
+  const AUTHORED_TURNS=Object.freeze({
+    Turn90Left_PrivateV1:1.70,
+    Turn90Right_PrivateV1:1.70,
+    Turn180Left_PrivateV1:2.58,
+    Turn180Right_PrivateV1:2.58,
+  });
+  const isAuthoredTurn=name=>Object.prototype.hasOwnProperty.call(AUTHORED_TURNS,name);
+
+  function motionAllowed(){
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+           hero && !hero.classList.contains("forge-still");
+  }
+
   function syncMotion(){
     if(!view || view.hidden)return;
-    const turning=/turn/i.test(selector.value||"");
+    const name=selector.value||"";
+    const authored=isAuthoredTurn(name);
+    const legacyTurn=/turn/i.test(name)&&!authored;
     const speed=Math.max(30,Math.min(180,Number(turnSpeed?.value)||85));
-    if(turnWrap)turnWrap.hidden=!turning;
+    if(turnWrap)turnWrap.hidden=!legacyTurn;
     if(turnOutput)turnOutput.textContent=speed+"°/s";
-    // model-viewer auto-rotate rigidly spins its scene pivot (a turntable),
-    // not the skeleton or a planted-foot turn. Keep authored clip speed
-    // unchanged until the owner's private animation has been re-authored.
     view.timeScale=1;
-    view.setAttribute("rotation-per-second",(turning?speed:22)+"deg");
-    const on=!window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-             hero && !hero.classList.contains("forge-still");
-    if(on){
+    view.setAttribute("rotation-per-second",(legacyTurn?speed:22)+"deg");
+    if(authored){
+      // A staged skeletal turn is already rotating the character. The viewer
+      // turntable would double-rotate him, and looping would snap back.
+      view.removeAttribute("auto-rotate");
+      if(!motionAllowed())try{view.pause?.();}catch{}
+      return;
+    }
+    if(motionAllowed()){
       view.setAttribute("auto-rotate","");
-      try{if(view.availableAnimations?.length && typeof view.play==="function")view.play();}catch{}
+      try{if(view.availableAnimations?.length&&typeof view.play==="function")view.play();}catch{}
     }else{
       view.removeAttribute("auto-rotate");
-      try{if(typeof view.pause==="function")view.pause();}catch{}
+      try{view.pause?.();}catch{}
     }
   }
 
@@ -123,7 +142,10 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     selector.replaceChildren();
     for(const animation of available){
       const option=document.createElement("option");
-      option.value=animation;option.textContent=animation;
+      option.value=animation;
+      option.textContent=isAuthoredTurn(animation)
+        ?animation.replace(/^Turn(90|180)(Left|Right)_PrivateV1$/,(_,deg,dir)=>"Turn "+deg+"° "+dir+" (private test)")
+        :animation;
       selector.append(option);
     }
     const idle=available.find(x=>/idle|stand|rest/i.test(x))||available[0];
@@ -139,12 +161,29 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
   }
   turnSpeed?.addEventListener("input",syncMotion);
   selector.addEventListener("change",()=>{
-    if(!selector.value)return;
-    view.setAttribute("animation-name",selector.value);
+    const name=selector.value;
+    if(!name)return;
+    try{view.pause?.();}catch{}
+    view.setAttribute("animation-name",name);
+    view.currentTime=0;
     syncMotion();
-    say(/turn/i.test(selector.value) ?
-      "This clip does not change your character's facing direction. The slider spins the whole display like a turntable, not a planted-foot turn." :
-      "Now showing "+selector.value+". Drag or swipe to rotate the model.","success");
+    if(isAuthoredTurn(name)){
+      if(motionAllowed())try{view.play({repetitions:1});}catch{}
+      say("Private experimental "+name.replace(/_PrivateV1$/,"")+
+          ": the body turns once with staged footsteps. Check for skating, knee pops and balance before approving.","success");
+    }else{
+      say(/turn/i.test(name)
+        ?"This source clip does not change your character's facing direction. Turntable speed spins the entire model, not a planted-foot turn."
+        :"Now showing "+name+". Drag or swipe to rotate the model.","success");
+    }
+  });
+  view.addEventListener("finished",()=>{
+    const name=selector.value;
+    if(!isAuthoredTurn(name))return;
+    try{view.pause?.();}catch{}
+    // Hold close to final pose to avoid a repeat-loop heading snap.
+    view.currentTime=Math.max(0,AUTHORED_TURNS[name]-.015);
+    say("Private "+name.replace(/_PrivateV1$/,"")+" complete. Review planted feet, knees and clothing. The motion is not yet owner-approved.","success");
   });
 
   async function loadModel(file,{saved=false}={}){
@@ -248,7 +287,13 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     say("Removed from this browser. Your source GLB file is unchanged.","success");
   });
 
-  motion?.addEventListener("click",syncMotion);
+  motion?.addEventListener("click",()=>{
+    syncMotion();
+    if(isAuthoredTurn(selector.value)&&motionAllowed()){
+      view.currentTime=0;
+      try{view.play({repetitions:1});}catch{}
+    }
+  });
   window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener?.("change",syncMotion);
   document.addEventListener("visibilitychange",()=>{if(document.hidden){try{view.pause?.();}catch{}}else syncMotion();});
   window.addEventListener("pagehide",()=>{if(activeUrl)URL.revokeObjectURL(activeUrl);},{once:true});
