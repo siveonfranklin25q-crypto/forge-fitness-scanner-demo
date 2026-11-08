@@ -63,3 +63,21 @@ jobs:
           path: ui-review-screenshots/*.png
           if-no-files-found: warn
           retention-days: 7
+
+      - name: Package public-source UI for private-device QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forge-ui-source-review
+          path: |
+            index.html
+            forge-ui.css
+            forge-ui.js
+            forge-immersive.css
+            forge-immersive.js
+            forge-avatar.css
+            forge-avatar.js
+            forge-pack.css
+            forge-pack.js
+          if-no-files-found: error
+          retention-days: 3
