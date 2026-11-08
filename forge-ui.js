@@ -5,6 +5,7 @@
     const items = [...document.querySelectorAll(".tabs [data-tab]")];
     const sections = new Map(items.map(button => [button.dataset.tab, document.getElementById(button.dataset.tab)]));
     const status = document.getElementById("forge-active-section");
+    const hero = document.getElementById("forge-hero");
     const back = document.getElementById("forge-back-top");
     const prefersLessMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!items.length || !status) return;
@@ -17,6 +18,7 @@
         if (item === button) item.setAttribute("aria-current", "page");
         else item.removeAttribute("aria-current");
       });
+      if (hero) hero.classList.toggle("is-secondary", id !== "profile");
       const heading = section.querySelector(".section-header h2");
       status.textContent = "Current workspace: " + (heading ? heading.textContent.trim() : button.textContent.trim());
       document.title = "FORGE — " + (heading ? heading.textContent.trim() : "Fitness Foundation");
