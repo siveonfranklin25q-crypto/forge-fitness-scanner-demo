@@ -8,7 +8,7 @@
     const more=document.getElementById("forge-dock-more");
     const dock=document.getElementById("forge-mobile-dock");
     const motion=document.getElementById("forge-motion-toggle");
-    const figure=document.querySelector(".forge-holo-panel");
+    const figure=document.querySelector(".forge-holo-panel:not(.forge-avatar-panel)");
     const mission=document.getElementById("forge-mission-headline");
     const missionDetail=document.getElementById("forge-mission-caption");
     const summary=document.getElementById("summary");
@@ -109,19 +109,6 @@
       observer.observe(summary,{childList:true,subtree:true});
     }
     updateMission();
-
-    // Muscle-map zones are actionable shortcuts to the existing exercise finder.
-    document.querySelectorAll("[data-forge-muscle]").forEach(button=>{
-      button.addEventListener("click",()=>{
-        const muscle=document.getElementById("lab-muscle");
-        const group=button.dataset.forgeMuscle;
-        if(!muscle||![...muscle.options].some(opt=>opt.value===group))return;
-        muscle.value=group;
-        muscle.dispatchEvent(new Event("change",{bubbles:true}));
-        const library=sidebar.querySelector('[data-tab="movement-lab"]');
-        if(library)library.click();
-      });
-    });
 
     if(figure&&desktop.matches&&!reduced.matches){
       let frame=null;
