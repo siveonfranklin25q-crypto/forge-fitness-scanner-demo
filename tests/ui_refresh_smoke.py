@@ -154,14 +154,15 @@ with local_site() as url,sync_playwright() as playwright:
         assert page.locator("#forge-avatar-viewer").get_attribute("auto-rotate") is None
         assert page.locator("#forge-avatar-viewer").get_attribute("animation-name")=="Turn90Left_PrivateV1"
         assert page.evaluate("document.getElementById('forge-avatar-viewer').lastPlayOptions.repetitions")==1
-        page.locator("#forge-avatar-viewer").evaluate("(el)=>el.dispatchEvent(new Event('finished'))")
-        assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-1.685)<0.001
+        page.locator("#forge-avatar-viewer").evaluate("(el)=>{el.currentTime=1.70;el.dispatchEvent(new Event('finished'))}")
+        # Mock the real engine's clamped final frame; the UI must NOT set currentTime.
+        assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-1.70)<0.001
         assert "complete" in page.locator("#forge-avatar-status").inner_text().lower()
         page.locator("#forge-avatar-animation").select_option("Turn180Right_PrivateV1")
         assert page.locator("#forge-avatar-viewer").get_attribute("auto-rotate") is None
         assert page.evaluate("document.getElementById('forge-avatar-viewer').lastPlayOptions.repetitions")==1
-        page.locator("#forge-avatar-viewer").evaluate("(el)=>el.dispatchEvent(new Event('finished'))")
-        assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-2.565)<0.001
+        page.locator("#forge-avatar-viewer").evaluate("(el)=>{el.currentTime=2.58;el.dispatchEvent(new Event('finished'))}")
+        assert abs(page.evaluate("document.getElementById('forge-avatar-viewer').currentTime")-2.58)<0.001
         page.locator("#forge-avatar-animation").select_option("Idle")
 
         # Accepted private turn clips get instant buttons; no buttons are
