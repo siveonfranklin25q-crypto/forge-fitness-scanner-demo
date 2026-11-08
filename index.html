@@ -116,7 +116,6 @@
 .strength-msg{padding:10px 12px;border:1px solid #536b53;border-radius:9px;background:#142318;margin:10px 0;font-size:13px}
 @media(max-width:760px){.strength-grid{grid-template-columns:1fr}.strength-table table{min-width:410px}}
 </style>
-<script defer src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <link rel="stylesheet" href="./forge-ui.css"/>
 <link rel="stylesheet" href="./forge-immersive.css"/>
 <link rel="stylesheet" href="./forge-avatar.css"/>
@@ -909,6 +908,26 @@ function bind(){document.querySelectorAll('[data-tab]').forEach(b=>b.addEventLis
 // Live food data is not merged with the illustrative sample catalog. User-initiated queries only.
 let liveMatches=[], selectedLive=null, lastRequests={barcode:0,name:0};
 let liveScanner=null, cameraStarting=false, scanFound=false, activeCameraId=null;
+// Load the camera-only barcode engine on demand, not during every FORGE startup.
+const BARCODE_SCANNER_URL="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js";
+let barcodeScannerPromise=null;
+async function ensureBarcodeScanner(){
+ if(typeof window.Html5Qrcode==="function" && window.Html5QrcodeSupportedFormats)return;
+ if(!barcodeScannerPromise){
+  barcodeScannerPromise=new Promise((resolve,reject)=>{
+   const script=document.createElement("script");
+   script.async=true;
+   script.src=BARCODE_SCANNER_URL;
+   script.onload=()=>{
+    if(typeof window.Html5Qrcode==="function" && window.Html5QrcodeSupportedFormats)resolve();
+    else reject(new Error("The barcode scanner library is unavailable."));
+   };
+   script.onerror=()=>{script.remove();reject(new Error("The barcode scanner library could not be downloaded."));};
+   document.head.appendChild(script);
+  }).catch(err=>{barcodeScannerPromise=null;throw err;});
+ }
+ await barcodeScannerPromise;
+}
 const supportedGroceryFormats=()=>[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_E,Html5QrcodeSupportedFormats.CODE_128,Html5QrcodeSupportedFormats.CODE_39,Html5QrcodeSupportedFormats.ITF];
 function liveStatus(s){$('#live-status').textContent=s;}
 function updateLiveControls(){const mode=$('#lookup-mode').value;$('#live-query-label').firstChild.textContent=mode==='barcode'?'Barcode ':'Product name ';$('#live-query').placeholder=mode==='barcode'?'Enter barcode digits':'e.g. unsweetened oat milk';$('#live-query').inputMode=mode==='barcode'?'numeric':'text';$('#scan-start').disabled=mode!=='barcode';liveMatches=[];selectedLive=null;$('#live-results').hidden=true;liveStatus('Enter a product and press Look up food.');}
@@ -1088,11 +1107,19 @@ async function updateCameraAdjustments(){
 async function startCamera(deviceId=null){
  if(cameraStarting||liveScanner)return;
  if(!window.isSecureContext){liveStatus('Live scanning requires the HTTPS website, not a downloaded HTML file.');return;}
- if(typeof Html5Qrcode==='undefined'||typeof Html5QrcodeSupportedFormats==='undefined'){
-  liveStatus('Barcode scanner library did not load. Check internet access and refresh the page, or enter the printed barcode numbers.');return;
- }
  cameraStarting=true;scanFound=false;
- $('#scan-start').disabled=true;$('#scanner-preview').hidden=false;$('#scan-stop').hidden=false;
+ $('#scan-start').disabled=true;
+ liveStatus('Loading barcode scanner only when needed…');
+ try{
+  await ensureBarcodeScanner();
+ }catch{
+  cameraStarting=false;
+  $('#scan-start').disabled=false;
+  liveStatus('The live barcode scanner is unavailable. Check your connection or enter the printed barcode numbers instead.');
+  return;
+ }
+ if(!cameraStarting)return; // Cancellation during the on-demand download.
+ $('#scanner-preview').hidden=false;$('#scan-stop').hidden=false;
  liveStatus('Starting rear camera and barcode recognition…');
  try{
   const scanner=new Html5Qrcode('barcode-live-reader',{formatsToSupport:supportedGroceryFormats(),useBarCodeDetectorIfSupported:false,verbose:false});
