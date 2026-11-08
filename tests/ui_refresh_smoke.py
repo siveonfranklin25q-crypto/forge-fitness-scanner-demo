@@ -41,6 +41,8 @@ with local_site() as url, sync_playwright() as playwright:
         options["executable_path"] = "/usr/bin/chromium"
     browser = playwright.chromium.launch(**options)
 
+    shots = ROOT / "ui-review-screenshots"
+    shots.mkdir(exist_ok=True)
     for width in (320, 390, 768, 1280):
         page = browser.new_page(viewport={"width": width, "height": 844})
         page.emulate_media(reduced_motion="reduce")
@@ -51,6 +53,8 @@ with local_site() as url, sync_playwright() as playwright:
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(url, wait_until="domcontentloaded")
         assert page.locator(".forge-hero").is_visible()
+        if width in (390, 1280):
+            page.screenshot(path=str(shots / f"forge-dashboard-{width}.png"), animations="disabled")
         assert page.locator(".summary-card").count() == 4
         assert page.locator(".tabs [data-tab]").count() == 8
         assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), width
@@ -62,6 +66,9 @@ with local_site() as url, sync_playwright() as playwright:
 
         page.locator('[data-forge-go="strength-lab"]').click()
         assert page.locator("#strength-lab").is_visible()
+        assert page.locator(".forge-hero").evaluate("(el) => el.classList.contains('is-secondary')")
+        if width == 390:
+            page.screenshot(path=str(shots / "forge-strength-390.png"), animations="disabled")
         assert page.locator('[data-tab="strength-lab"]').get_attribute(
             "aria-current"
         ) == "page"
