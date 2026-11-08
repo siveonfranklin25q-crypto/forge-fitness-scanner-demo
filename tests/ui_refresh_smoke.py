@@ -85,6 +85,11 @@ with local_site() as url,sync_playwright() as playwright:
         if width<781:
             assert page.locator(".forge-avatar-panel").bounding_box()["y"] < page.locator(".forge-story").bounding_box()["y"], "Mobile must open on the character, not a generic text hero."
         assert page.locator("#forge-avatar-empty").is_visible()
+        # Decorative animation must have finite duration/iteration count:
+        # 3D stages should stop drawing once the opening flourish has ended.
+        assert page.evaluate("""() => document.getAnimations({subtree:true})
+            .every(a => Number.isFinite(a.effect.getTiming().iterations))"""), "A never-ending decorative CSS animation would waste idle power."
+        deck_before=page.locator(".forge-avatar-deck").evaluate("(el)=>el.getBoundingClientRect().height") if width<=660 else None
         assert page.locator(".forge-atlas-body").count()==0, "The generic mannequin must be gone."
         assert page.locator("#forge-avatar-viewer").count()==1
         assert page.locator(".forge-mission-tile").count()==4
@@ -125,6 +130,9 @@ with local_site() as url,sync_playwright() as playwright:
             "buffer":sample_glb(),
         })
         page.locator(".forge-avatar-panel.is-loaded").wait_for()
+        if deck_before is not None:
+            deck_after=page.locator(".forge-avatar-deck").evaluate("(el)=>el.getBoundingClientRect().height")
+            assert deck_after<=deck_before+1, f"Avatar controls pushed mobile content by {deck_after-deck_before:.1f}px at {width}px"
         assert page.locator("#forge-avatar-empty").is_hidden()
         assert page.locator("#forge-avatar-animation").input_value()=="Idle"
         assert page.locator("#forge-avatar-turn-wrap").is_hidden()
