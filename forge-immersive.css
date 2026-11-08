@@ -536,7 +536,7 @@ footer{border-color:#274954;color:#80a7b7}
 .forge-momentum-ring span{font-size:8px;color:#8db4c1;font-weight:900;letter-spacing:1px;margin-top:6px}
 .forge-momentum-copy{min-width:0}
 .forge-momentum-copy .forge-label{color:#8fe3dc;font-size:9px}
-.forge-momentum-copy h3{font-size:17px;font-weight:900;color:#f7fcff;line-height:1.2;margin:5px 0}
+.forge-momentum-copy h2{font-size:17px;font-weight:900;color:#f7fcff;line-height:1.2;margin:5px 0}
 .forge-momentum-copy p{font-size:11px;line-height:1.45;color:#a5c3ca;margin:0 0 10px;max-width:560px}
 .forge-momentum-days{display:flex;flex-wrap:wrap;gap:5px}
 .forge-momentum-day{
