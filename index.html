@@ -204,6 +204,7 @@
                 <button id="forge-avatar-replace" type="button" class="forge-avatar-action" aria-label="Choose or change your 3D model">Choose GLB</button>
                 <label class="forge-avatar-remember"><input id="forge-avatar-remember" type="checkbox" /> <span>Remember on this device</span></label>
                 <select id="forge-avatar-animation" aria-label="Select a model animation" hidden><option value="">Idle</option></select>
+                <label id="forge-avatar-turn-wrap" class="forge-avatar-turn" hidden>Turn speed <input id="forge-avatar-turn-speed" type="range" min="30" max="180" step="5" value="85" aria-label="Turn rotation speed in degrees per second"/><output id="forge-avatar-turn-output" for="forge-avatar-turn-speed">85°/s</output></label>
                 <button id="forge-avatar-forget" type="button" class="forge-avatar-forget" hidden>Remove model</button>
               </div>
               <p id="forge-avatar-status" role="status" aria-live="polite">Your likeness stays in this browser. Choose a GLB once; optional local saving keeps it here for your next visit.</p>
