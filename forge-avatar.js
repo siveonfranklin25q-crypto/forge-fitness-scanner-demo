@@ -17,6 +17,9 @@ const replaceButton=$("#forge-avatar-replace");
 const remember=$("#forge-avatar-remember");
 const forget=$("#forge-avatar-forget");
 const selector=$("#forge-avatar-animation");
+const turnWrap=$("#forge-avatar-turn-wrap");
+const turnSpeed=$("#forge-avatar-turn-speed");
+const turnOutput=$("#forge-avatar-turn-output");
 const status=$("#forge-avatar-status");
 const nameLabel=$("#forge-avatar-file-name");
 const presence=$("#forge-avatar-presence");
@@ -95,11 +98,18 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
 
   function syncMotion(){
     if(!view || view.hidden)return;
+    const turning=/turn/i.test(selector.value||"");
+    const speed=Math.max(30,Math.min(180,Number(turnSpeed?.value)||85));
+    if(turnWrap)turnWrap.hidden=!turning;
+    if(turnOutput)turnOutput.textContent=speed+"°/s";
+    // The turn clip and model rotation are separate. The former runs 1.65x;
+    // slow camera orbit was the main reason the original preview felt sluggish.
+    view.timeScale=turning?1.65:1;
+    view.setAttribute("rotation-per-second",(turning?speed:22)+"deg");
     const on=!window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
              hero && !hero.classList.contains("forge-still");
     if(on){
       view.setAttribute("auto-rotate","");
-      view.setAttribute("rotation-per-second","8deg");
       try{if(view.availableAnimations?.length && typeof view.play==="function")view.play();}catch{}
     }else{
       view.removeAttribute("auto-rotate");
@@ -126,6 +136,7 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
       view.removeAttribute("animation-name");
     }
   }
+  turnSpeed?.addEventListener("input",syncMotion);
   selector.addEventListener("change",()=>{
     if(!selector.value)return;
     view.setAttribute("animation-name",selector.value);
@@ -229,6 +240,8 @@ if(view&&panel&&input&&empty&&openButton&&replaceButton&&remember&&forget&&selec
     presence.textContent="PERSONAL MODEL · NOT LOADED";
     nameLabel.textContent="YOUR DEVICE · NO UPLOAD";
     selector.hidden=true;forget.hidden=true;remember.checked=false;
+    if(turnWrap)turnWrap.hidden=true;
+    if(turnSpeed)turnSpeed.value="85";
     say("Removed from this browser. Your source GLB file is unchanged.","success");
   });
 
