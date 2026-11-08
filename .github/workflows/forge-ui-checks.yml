@@ -46,6 +46,8 @@ jobs:
           python -m playwright install chromium --with-deps
       - name: Validate responsive navigation and interactions
         run: python tests/ui_refresh_smoke.py
+      - name: Validate real WebGL GLB rendering without likeness data
+        run: python tests/real_3d_smoke.py
       - name: Preserve v0.8 strength-tracker behavior
         run: python tests/strength_tracker_smoke.py
       - name: Save design review screenshots
