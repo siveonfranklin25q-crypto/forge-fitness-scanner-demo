@@ -94,10 +94,10 @@ Decide by the private result:
   - This needs an owner decision (tooling and any cost).
 - **`classification` = NO_NET_HEADING or TURN_AND_RETURN** (ChatGPT's private track inspection found this for the real clip)
   - The clip is not a turn. Never present the turntable as body motion.
-  - **Owner chose Option A**: derive a planted turn from the footwork. See §7.
+  - **Owner chose Option A**: derive a planted turn from the footwork. See §6.
 - **In every case**, label the 30–180°/s slider as **turntable speed**, not turn speed.
 
-## 7. Option A — derived planted turn (owner-approved prototype)
+## 6. Option A — derived planted turn (owner-approved prototype)
 
 `tools/animation/procedural_turn.py` makes a **new** clip from in-place footwork and leaves the original clip untouched (tested):
 
@@ -142,7 +142,7 @@ PR #2 needs only two things:
 
 An in-browser JavaScript port, so derivation happens on load and no second file is needed, is a possible follow-up. The derived copy must never be written to IndexedDB in place of the original without owner approval.
 
-## 6. Not done / not claimed
+## 7. Not done / not claimed
 
 - The private GLB has not been analysed here. It is not reachable from this environment.
 - No physical-device test, browser-render visual review of the real character, or owner motion approval.
