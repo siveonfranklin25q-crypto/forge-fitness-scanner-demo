@@ -143,7 +143,7 @@ with local_site() as url,sync_playwright() as playwright:
         # profile never produces a pretend completion percentage.
         if width==390:
             page.evaluate("""() => {
-              const state=JSON.parse(localStorage.getItem("forge-demo-v01"));
+              const state=JSON.parse(localStorage.getItem("forge-demo-v01")) || {profile:{age:35,weight:200,height:70,sex:"male",referenceWeight:190,activity:"sedentary",goal:"lose",days:3,equipment:"home"},check:{sleep:7.5,soreness:"low",pain:"none",injury:false,redFlag:false},foodLog:[],weighins:[],workoutsDone:0,recipeKind:"smart",recipeId:"nachos"};
               state.profile.weight=180;
               state.profile.referenceWeight=195;
               state.profile.goal="gain";
