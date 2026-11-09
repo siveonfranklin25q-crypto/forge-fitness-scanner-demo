@@ -1,0 +1,31 @@
+/* FORGE Issue #8 — mobile-first cockpit. No infinite CSS animations or layout jumps. */
+#forge-training-cockpit{margin:0 0 26px;max-width:100%}
+#forge-training-cockpit [hidden]{display:none!important}
+.fc-shell{background:linear-gradient(135deg,#15251d,#17211c);border:1px solid #415e48;border-radius:18px;padding:clamp(15px,2vw,27px);color:#eaf8ed}
+.fc-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.fc-heading h3{font-size:clamp(19px,2.5vw,25px);letter-spacing:-.4px;margin:5px 0 8px}
+.fc-kicker{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#caee97;font-weight:800}
+.fc-beta{font-size:11px;line-height:1.4;background:#322b20;color:#f6dbaa;border:1px solid #846b44;border-radius:7px;padding:7px 10px}
+.fc-help{font-size:12px;line-height:1.65;color:#b8c9bc;margin:8px 0 13px}
+.fc-card{background:#111b16;border:1px solid #35483a;border-radius:13px;padding:clamp(14px,2vw,21px);margin-top:16px;min-width:0}
+.fc-card h4{font-size:clamp(17px,2vw,21px);line-height:1.3;color:#f2ffee;margin:8px 0 12px}
+.fc-card p{line-height:1.55}
+.fc-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:14px 0}
+.fc-form-grid>*{min-width:0}
+.fc-card label{display:flex;flex-direction:column;gap:6px;color:#d9eadd;font-weight:650;font-size:13px}
+.fc-card input,.fc-card select{width:100%;min-width:0;max-width:100%;color:#fff;background:#101a14}
+.fc-card label.fc-check{flex-direction:row;gap:9px;align-items:center;line-height:1.5;margin:10px 0}
+.fc-check input{width:19px;min-width:19px;height:19px;min-height:19px}
+.fc-buttons{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:15px}
+.fc-buttons button{min-height:44px;max-width:100%;white-space:normal;text-align:center}
+.fc-link{color:#bff18d;text-underline-offset:3px;display:inline-block;padding:10px 0}
+.fc-feedback{min-height:0;font-size:13px;line-height:1.5;color:#f8d9a3;margin:9px 0}
+.fc-feedback:empty{display:none}
+.fc-session-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.fc-session-head strong{color:#c8fba4;font-size:12px}
+.fc-secondary-actions{padding-top:12px;border-top:1px solid #344739}
+.fc-danger{background:#44292c;border:1px solid #a9636a;border-radius:10px;padding:10px 13px;color:#ffe1e3;font-size:13px;font-weight:700}
+.fc-danger:focus-visible{outline:2px solid #faf4c5;outline-offset:3px}
+#fc-exercise-target{color:#c3d8c5;font-size:13px}
+@media(max-width:600px){.fc-form-grid{grid-template-columns:1fr}.fc-buttons>*{flex:1 1 100%}.fc-shell{padding:13px}.fc-beta{max-width:100%}}
+@media(prefers-reduced-motion:reduce){.fc-shell *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
