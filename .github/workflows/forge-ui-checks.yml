@@ -12,6 +12,9 @@ on:
       - "forge-pack.css"
       - "forge-pack.js"
       - "forge-avatar.css"
+      - "forge-training-cockpit.js"
+      - "forge-training-cockpit.css"
+      - "src/training-programs/**"
       - "tests/**"
       - ".github/workflows/forge-ui-checks.yml"
   workflow_dispatch:
@@ -34,6 +37,7 @@ jobs:
           node --check forge-immersive.js
           node --check forge-avatar.js
           node --check forge-pack.js
+          node --check forge-training-cockpit.js
           python - <<'PY'
           from pathlib import Path
           import re
@@ -43,12 +47,16 @@ jobs:
           Path("/tmp/forge-inline.mjs").write_text(scripts[-1], encoding="utf-8")
           PY
           node --check /tmp/forge-inline.mjs
+      - name: Validate unchanged training engine from Claude PR 9
+        run: node --test tests/training-programs/*.test.mjs
       - name: Install browser test dependencies
         run: |
           python -m pip install --disable-pip-version-check playwright
           python -m playwright install chromium --with-deps
       - name: Validate responsive navigation and interactions
         run: python tests/ui_refresh_smoke.py
+      - name: Validate real workout cockpit flow, persistence and safety
+        run: python tests/cockpit_smoke.py
       - name: Validate real WebGL GLB rendering without likeness data
         run: python tests/real_3d_smoke.py
       - name: Preserve v0.8 strength-tracker behavior
@@ -79,5 +87,8 @@ jobs:
             forge-avatar.js
             forge-pack.css
             forge-pack.js
+            forge-training-cockpit.js
+            forge-training-cockpit.css
+            src/training-programs/
           if-no-files-found: error
           retention-days: 3
