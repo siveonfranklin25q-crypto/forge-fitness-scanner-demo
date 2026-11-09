@@ -61,7 +61,14 @@ with server() as url, sync_playwright() as pw:
         page.locator('[data-fc-action="warmup-skip"]').click()
         assert page.locator("#fc-exercise").is_visible()
         assert "Bench press" in page.locator("#fc-exercise-name").inner_text()
+        assert page.locator("#fc-reps").input_value() == ""
+        assert page.locator("#fc-load").input_value() == ""
+        page.locator('[data-fc-action="log"]').click()
+        assert "Enter actual completed reps" in page.locator("#fc-feedback").inner_text()
+        assert len(page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1')).active.sets")) == 0
         page.locator("#fc-reps").fill("10")
+        page.locator('[data-fc-action="log"]').click()
+        assert len(page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1')).active.sets")) == 0
         page.locator("#fc-load").fill("40")
         page.locator('[data-fc-action="log"]').click()
         assert page.locator("#fc-rest").is_visible()
@@ -73,6 +80,11 @@ with server() as url, sync_playwright() as pw:
         assert page.locator("#fc-rest").is_visible(), "Session should restore without inventing completion"
         page.locator('[data-fc-action="rest-done"]').click()
         assert page.locator("#fc-exercise").is_visible()
+        assert page.locator("#fc-reps").input_value() == "", "Reps must reset for every new set"
+        assert page.locator("#fc-load").input_value() == "", "Load must reset for every new set"
+        page.locator('[data-fc-action="log"]').click()
+        assert "Enter actual completed reps" in page.locator("#fc-feedback").inner_text()
+        assert len(page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1')).active.sets")) == 1
         page.locator('[data-fc-action="abort"]').click()
         result = page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1'))")
         assert result["active"] is None
@@ -138,6 +150,9 @@ with server() as url, sync_playwright() as pw:
     record = saved["records"][0]
     assert record["status"] == "completed" and record["dayKey"] == "A2"
     assert record["loggedSets"] == 18 and record["plannedSets"] == 18
+    # Fixed-week: completing today's session must NOT expose a second start button.
+    assert page.locator('[data-fc-action="start"]').is_hidden()
+    assert "done today" in page.locator("#fc-mission-title").inner_text()
     timed = [x for x in record["sets"] if x["measure"] == "time"]
     assert len(timed) == 2
     assert all(x["reps"] is None and x["seconds"] == 45 and x["load"] == 0 for x in timed)
@@ -170,6 +185,68 @@ with server() as url, sync_playwright() as pw:
     assert page.evaluate("localStorage.getItem('forge-strength-v08-sessions')") == "[]"
     context.close()
 
+    # Storage quarantine: malformed legacy entries survive the cockpit's first save.
+    context = browser.new_context(viewport={"width": 390, "height": 850})
+    page = context.new_page()
+    page.add_init_script(FIXED_CLOCK)
+    page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+    page.goto(url, wait_until="domcontentloaded")
+    page.evaluate("""() => {
+      const baseline = { version: 1, programId: 'classic-six-day-v2', config: null,
+        records: [
+          { id: 'old1', date: '2026-11-07', status: 'partial', dayKey: 'A1',
+            plannedSets: 2, loggedSets: 1, sets: [
+              { exerciseId: 'bench-press', muscle: 'chest', measure: 'reps', reps: 8, load: 60, unit: 'lb' }] },
+          { id: 'odd1', date: '2026-11-07', status: 'partial', dayKey: 'A1',
+            plannedSets: 2, loggedSets: 1, sets: [
+              { exerciseId: 'bench-press', muscle: 'chest', measure: 'reps', reps: 8, load: '60', unit: 'lb' }] }
+        ], active: null };
+      localStorage.setItem('forge-training-v1', JSON.stringify(baseline));
+    }""")
+    page.reload(wait_until="domcontentloaded")
+    page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+    page.locator('[data-fc-action="configure"]').click()
+    preserved = page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1'))")
+    assert [r["id"] for r in preserved["records"]] == ["old1"]
+    assert any(r.get("id") == "odd1" for r in preserved["quarantine"])
+    context.close()
+
+    # Old unverified *active* workout: never resume it; archive original, uncounted.
+    context = browser.new_context(viewport={"width": 390, "height": 850})
+    page = context.new_page()
+    page.add_init_script(FIXED_CLOCK)
+    page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+    page.goto(url, wait_until="domcontentloaded")
+    page.evaluate("""() => {
+      const legacy = { version: 1, id: 'legacy-active-01', programId: 'classic-six-day-v1',
+        date: '2026-11-09', dayKey: 'A', title: 'Old chest/back', stage: 'exercise',
+        status: 'in_progress', plan: { dayKey: 'A', title: 'Old chest/back', exercises: [
+          { exerciseId: 'bench-press', name: 'Bench Press', targetReps: {min:10,max:15},
+            verification:'pending-source', targetSets:3 }] },
+        sets: [{ exerciseId: 'bench-press', reps: 10, load: 20, unit:'lb' }], skipped: [] };
+      localStorage.setItem('forge-training-v1', JSON.stringify({
+        version: 1, programId: 'classic-six-day-v1',
+        config: { startDate:'2026-11-09', mode:'rolling', rotation:['A','B','C'], restWeekdays:[0], restSec:null },
+        records: [], active: legacy
+      }));
+    }""")
+    page.reload(wait_until="domcontentloaded")
+    page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+    assert page.locator("#fc-legacy").is_visible()
+    assert page.locator("#fc-session").is_hidden()
+    assert page.locator('[data-fc-action="start"]').is_hidden()
+    assert "1 recorded set" in page.locator("#fc-legacy-detail").inner_text()
+    page.locator('[data-fc-action="archive-legacy"]').click()
+    data = page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1'))")
+    assert data["active"] is None and data["records"] == []
+    assert data["quarantine"][-1]["originalSession"]["id"] == "legacy-active-01"
+    assert page.locator("#fc-legacy").is_hidden()
+    assert page.locator('[data-fc-action="start"]').is_visible()
+    page.reload(wait_until="domcontentloaded")
+    data = page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1'))")
+    assert data["quarantine"][-1]["originalSession"]["sets"][0]["reps"] == 10
+    context.close()
+
     # Safety stop produces its own status without attributing sets or rewards.
     context = browser.new_context(viewport={"width": 390, "height": 850})
     page = context.new_page()
@@ -189,4 +266,4 @@ with server() as url, sync_playwright() as pw:
     assert "safety" in page.locator("#fc-latest").inner_text()
     context.close()
     browser.close()
-print("FORGE cockpit: Chromium timed holds, legacy config, persistence, safety, mobile layout PASS")
+print("FORGE cockpit: Chromium real-input validation, duplicate prevention, quarantine, old-session archive, timed holds, safety, mobile layout PASS")
