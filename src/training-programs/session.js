@@ -95,13 +95,20 @@ export function reduce(state, action) {
       if (s.stage !== 'exercise' && s.stage !== 'rest') return err(s, 'Not ready to log a set.');
       const reps = Number(action.reps), load = Number(action.load), rir = action.rir === undefined || action.rir === null ? null : Number(action.rir);
       const unit = action.unit ?? 'kg';
-      if (!Number.isInteger(reps) || reps < 1 || reps > 100) return err(s, 'Reps must be a whole number from 1 to 100.');
-      if (!Number.isFinite(load) || load < 0 || load > 1000) return err(s, 'Load must be 0-1000.');
+      const ex0 = targets(s)[s.cursor.exercise];
+      const timed = ex0.measure === 'time';
+      const seconds = timed ? Number(action.seconds) : null;
+      if (timed) {
+        if (!Number.isInteger(seconds) || seconds < 1 || seconds > 600) return err(s, 'Hold time must be a whole number of seconds from 1 to 600.');
+      } else if (!Number.isInteger(reps) || reps < 1 || reps > 100) return err(s, 'Reps must be a whole number from 1 to 100.');
+      const loadIn = action.load === undefined || action.load === null ? (timed ? 0 : NaN) : load;
+      if (!Number.isFinite(loadIn) || loadIn < 0 || loadIn > 1000) return err(s, 'Load must be 0-1000.');
       if (!UNITS.includes(unit)) return err(s, 'Unit must be kg or lb.');
       if (rir !== null && (!Number.isInteger(rir) || rir < 0 || rir > 5)) return err(s, 'Reps in reserve must be 0-5.');
       if (!Number.isFinite(now)) return err(s, 'now is required.');
       const ex = targets(s)[s.cursor.exercise];
-      const set = { exerciseId: ex.exerciseId, muscle: ex.muscle, setNumber: s.cursor.set, reps, load, unit, rir, at: now };
+      const set = { exerciseId: ex.exerciseId, muscle: ex.muscle, setNumber: s.cursor.set, measure: timed ? 'time' : 'reps',
+        reps: timed ? null : reps, seconds, load: loadIn, unit, rir, at: now };
       return ok(advance({ ...s, stage: 'exercise', rest: null, sets: [...s.sets, set] }, now));
     }
     case 'REST_DONE':

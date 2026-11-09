@@ -6,52 +6,44 @@ A browser-safe, dependency-free engine for a **classic six-day split**, built as
 - It never invents progress or penalises rest.
 - It is a module for ChatGPT's cockpit UI (Issue #8) to integrate. It **does not change** any existing FORGE screen or stored record.
 
-Status labels (per `AGENTS.md`): engine **TESTED** (30 Node tests; four deliberate-bug checks caught). Source template **BLOCKED**: awaiting the full primary-source tables, see §1.
+Status labels (per `AGENTS.md`): engine **TESTED** (31 Node tests; four deliberate-bug checks caught; real-Chromium run of a full A2 session). Source template **TESTED against the posted source tables (44/44)** and **REVIEW_REQUIRED** for owner sign-off.
 
-## 1. Source and verification: **BLOCKED on source data**
+## 1. Source and verification: **source-matched (44/44)**, owner sign-off pending
 
-Source: Steve Shaw, [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), Muscle & Strength (published 2013-09-25, updated 2020-12-22). It is a 12-week split for intermediate lifters with **six distinct sessions**:
+Source: Steve Shaw, [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), Muscle & Strength (published 2013-09-25, updated 2020-12-22). It is a 12-week program for intermediate lifters: 6 days a week, 45–60 min. The author describes it as demanding and not appropriate for everyone.
 
-| Key | Day | Group |
+| Key | Day | Session (source order) |
 | --- | --- | --- |
-| A1 | Mon | Chest & back |
-| B1 | Tue | Shoulders & arms |
-| C1 | Wed | Legs |
-| A2 | Thu | Chest & back (different exercises) |
-| B2 | Fri | Shoulders & arms (different exercises) |
-| C2 | Sat | Legs (different exercises) |
+| A1 | Mon | Bench press 3×8–10 · Incline DB bench press 3×8–12 · Cable crossover 5×10–15 · Low rack pull 3×6–8 · Wide-grip pull-up 5×15 · One-arm DB row 3×10–15 · Barbell ab rollout 3×8–12 · Hanging knee raise 3×12–15 |
+| B1 | Tue | Seated DB press 3×10–12 · Upright row 3×10–15 · Bent-over reverse fly 5×10–15 · Cable triceps extension 4×10–15 · Skullcrusher 4×10–12 · Barbell curl 4×8–12 · One-arm cable curl 4×10–15 |
+| C1 | Wed | Squat 5×6–12 · Hack squat 3×10–12 · Leg extension 3×10–15 · Good morning 3×8–10 · Leg curl 5×10–15 · Seated calf raise 4×12–15 · Standing calf raise 4×12–15 |
+| A2 | Thu | Incline bench press 3×8–10 · Chest dip 3×10–15 · DB fly 5×10–15 · Barbell row 3×8–10 · Lat pulldown 5×8–12 · Seated cable row 3×10–15 · **Plank 3×60 s (timed)** · DB side bend 3×10–12 |
+| B2 | Fri | Military press 3×8–10 · Side lateral raise 5×10–15 · Landmine press 3×10–12 · Seated French press 4×8–10 · One-arm DB triceps extension 4×10–12 · Seated DB curl 4×10–12 · EZ-bar preacher curl 4×10–12 |
+| C2 | Sat | **Leg press 5×20 (fixed)** · Walking barbell lunge 3×10–12 · Bulgarian split squat 3×10–12 · Stiff-leg deadlift 3×8–10 · Single-leg curl 5×10–15 · Floor barbell calf raise 4×12–15 · Leg press calf press 4×12–15 |
 | — | Sun | Rest |
 
-**Correction history.**
-- v1 of this PR repeated three sessions built from secondary summaries, because the primary page blocks automated clients (Cloudflare check; not bypassed).
-- The owner-side primary-source review on PR #9 (2026-11-09) found that model and several targets wrong.
-- v2 restructures to six sessions and keeps **only confirmed values**.
+**How the data was verified.**
+- The tables come from ChatGPT's direct read of the article ([PR #9 comment](https://github.com/siveonfranklin25q-crypto/forge-fitness-scanner-demo/pull/9#issuecomment-6747215464)). The primary page blocks this build environment's automated client, and that block was not bypassed.
+- Each exercise carries `verification: 'primary-source'` and `verifiedBy`.
+- Two independent checks:
+  1. A golden-table unit test with all 44 rows.
+  2. A machine comparison of the posted comment against the program data: 44/44 rows match in order, sets, reps and timed hold.
+- **Owner sign-off** (REVIEW_REQUIRED): glance at the table above against the article.
 
-| Exercise | Day | Source target | Status |
-| --- | --- | --- | --- |
-| Bench press | A1 | 3 × 8–10 | primary-source (reported in PR #9 review) |
-| Cable crossover | A1 | 5 × 10–15 | primary-source (reported) |
-| Wide-grip pull-up | A1 | 5 × 15 | primary-source (reported) |
-| Barbell curl | B1 | 4 × 8–12 | primary-source (reported) |
-| Leg curl | C1 | 5 × 10–15 | primary-source (reported) |
-| Seated calf raise | C1 | 4 × 12–15 | primary-source (reported) |
-| Standing calf raise | C1 | 4 × 12–15 | primary-source (reported) |
-| Incline DB press, low rack pull, one-arm DB row, barbell ab rollout, hanging knee raise | A1 | unknown | **pending-source** |
-| Seated DB press, upright row, reverse fly, cable triceps extension, skullcrusher, one-arm cable curl | B1 | unknown | **pending-source** |
-| Squat, hack squat, leg extension, good morning | C1 | unknown | **pending-source** |
-| Plank, dumbbell side bend (rest of list unknown) | A2 | unknown | **pending-source** |
-| Full exercise lists | B2, C2 | unknown | **pending-source** |
+**Correction history.**
+- v1 repeated three sessions built from secondary summaries.
+- The owner-side review on 2026-11-09 found this wrong.
+- v2 has six distinct sessions and the complete source tables.
 
 **Rule: targets are never guessed.**
-- A pending exercise has `sets: null, reps: null`.
-- A day that isn't fully verified returns `blocked: 'awaiting-source'`, with no exercises. `createSession` refuses it, and `todayMission().canStart` is `false` with honest copy.
-- `allowPendingSource: true` exists **only for UI testing**: it runs just the verified exercises of a day.
-- `isSourceMatched(program)` is `true` only when all six lists are complete and verified.
+- A `pending-source` exercise has `sets: null`, and a day that isn't fully verified returns `blocked: 'awaiting-source'`; `createSession` refuses it. This guard stays for future programs and edits, and is tested.
+- `isSourceMatched(program)` is now `true`.
+- `allowPendingSource: true` is for UI testing only.
 
-Requested on PR #9: the complete Mon–Sat tables (exercise, sets × reps, any table notes).
+**Timed holds.** An exercise with `measure: 'time'` has `targetHoldSec`; its sets log `seconds`, with `reps: null`. Timed holds never count toward load/rep bests and are never auto-progressed.
 
 **Volume** (`config.volume`):
-- `'reduced'` (default) uses 60 % of source sets, rounded up, max 3. This is a `forge-default` rule.
+- `'reduced'` (default) uses 60 % of source sets, rounded up, max 3. This is a `forge-default` rule and **not the author's prescription**.
 - `'source'` gives the full prescription and is opt-in, so the high-volume routine is never applied silently.
 
 Rest timers (90 s isolation / 120 s compound) and the 5-min warm-up are **forge-default**, not source values.
@@ -99,7 +91,7 @@ All imports come from `src/training-programs/index.js`:
 ```
 
 **Planned exercise (`plan.exercises[]`):**
-- `{exerciseId, name, muscle, sourceSets, targetSets, volume, targetReps:{min,max}, restSec, restSource:'forge-default'|'user', verification, verifiedBy, v08ExerciseId, note}`
+- `{exerciseId, name, muscle, sourceSets, targetSets, volume, measure:'reps'|'time', targetReps:{min,max}|null, targetHoldSec:number|null, restSec, restSource:'forge-default'|'user', verification, verifiedBy, v08ExerciseId, note}`
 - The day plan also carries `{sourceComplete, blocked: null | 'awaiting-source' | 'no-verified-exercises', pendingExercises:[{exerciseId,name}]}`. The UI must not offer **Start** when `blocked` is set.
 - Only targets: logging never changes them.
 
@@ -111,7 +103,7 @@ All imports come from `src/training-programs/index.js`:
   startedAt, endedAt, plannedSets, loggedSets, reducedForSafety, warmupDone,
   safety: {level:'go'|'reduce'|'stop', reasons:[], message} | null,
   symptoms: 'none' | 'mild' | 'worse' | null,
-  sets:    [{exerciseId, muscle, setNumber, reps, load, unit:'kg'|'lb', rir:0-5|null, at}],
+  sets:    [{exerciseId, muscle, setNumber, measure:'reps'|'time', reps|null, seconds|null, load, unit:'kg'|'lb', rir:0-5|null, at}],
   skipped: [{exerciseId, setNumber}] }
 ```
 
@@ -126,7 +118,7 @@ All imports come from `src/training-programs/index.js`:
 ## 4. Existing data is protected
 
 - `forge-strength-v08-sessions` and all other FORGE keys are **never written** (tested with a fake storage).
-- Three template exercises map to v0.8 exercise ids: incline DB press → 2, cable triceps extension → 14, leg curl → 22. Only those can be read from, or offered to, v0.8 history.
+- Eight template exercises map to v0.8 exercise ids: incline DB press → 2, seated cable row → 4, lat pulldown → 5, side lateral raise → 7, cable triceps extension → 14, leg press → 18, leg curl → 22, standing calf raise → 26. Only those can be read from, or offered to, v0.8 history.
 - Untrusted stored JSON is validated, and invalid records are **dropped, not repaired** (no fake data).
 
 ## 5. Feedback rules (enforced by tests)

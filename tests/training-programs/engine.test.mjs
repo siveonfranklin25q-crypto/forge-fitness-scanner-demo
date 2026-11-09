@@ -25,60 +25,97 @@ const P = {
   },
 };
 
-// ---------- real template: honesty about the source ----------
-test('real template: six distinct Mon–Sat sessions, Sunday rest, 12 weeks, source cited', () => {
+// ---------- real template: faithful to the source ----------
+// Golden table: transcribed independently from the PR #9 source comment (6747215464), in source order.
+// Format: id sets×min-max   (or  id sets×Ns  for timed holds)
+const GOLDEN = {
+  A1: 'bench-press 3x8-10|incline-db-press 3x8-12|cable-crossover 5x10-15|low-rack-pull 3x6-8|wide-grip-pull-up 5x15-15|one-arm-db-row 3x10-15|barbell-ab-rollout 3x8-12|hanging-knee-raise 3x12-15',
+  B1: 'seated-db-press 3x10-12|upright-row 3x10-15|reverse-fly 5x10-15|cable-triceps-extension 4x10-15|skullcrusher 4x10-12|barbell-curl 4x8-12|one-arm-cable-curl 4x10-15',
+  C1: 'squat 5x6-12|hack-squat 3x10-12|leg-extension 3x10-15|good-morning 3x8-10|leg-curl 5x10-15|seated-calf-raise 4x12-15|standing-calf-raise 4x12-15',
+  A2: 'incline-bench-press 3x8-10|chest-dip 3x10-15|db-fly 5x10-15|barbell-row 3x8-10|lat-pulldown 5x8-12|seated-cable-row 3x10-15|plank 3x60s|db-side-bend 3x10-12',
+  B2: 'military-press 3x8-10|side-lateral-raise 5x10-15|landmine-press 3x10-12|seated-french-press 4x8-10|one-arm-db-triceps-extension 4x10-12|seated-db-curl 4x10-12|ez-bar-preacher-curl 4x10-12',
+  C2: 'leg-press 5x20-20|walking-barbell-lunge 3x10-12|bulgarian-split-squat 3x10-12|stiff-leg-deadlift 3x8-10|single-leg-curl 5x10-15|floor-barbell-calf-raise 4x12-15|leg-press-calf-press 4x12-15',
+};
+
+test('real template: all 44 source rows match the golden table (names, order, sets, reps)', () => {
+  let n = 0;
+  for (const [k, spec] of Object.entries(GOLDEN)) {
+    const got = REAL.days[k].exercises.map(e => e.measure === 'time' ? `${e.id} ${e.sets}x${e.holdSec}s` : `${e.id} ${e.sets}x${e.reps[0]}-${e.reps[1]}`).join('|');
+    assert.equal(got, spec, k);
+    n += REAL.days[k].exercises.length;
+  }
+  assert.equal(n, 44);
+});
+
+test('real template: six distinct Mon–Sat sessions, Sunday rest, 12 weeks, source cited, fully verified', () => {
   assert.deepEqual([...REAL.rotation], ['A1', 'B1', 'C1', 'A2', 'B2', 'C2']);
   assert.deepEqual(Object.values(REAL.defaultWeek), ['rest', 'A1', 'B1', 'C1', 'A2', 'B2', 'C2']);
   assert.equal(REAL.durationWeeks, 12);
   assert.match(REAL.source.url, /^https:\/\/www\.muscleandstrength\.com\//);
   assert.equal(REAL.source.author, 'Steve Shaw');
-});
-
-test('real template: no guessed targets — pending exercises have null sets/reps', () => {
+  const ids = Object.values(REAL.days).flatMap(d => d.exercises.map(e => e.id));
+  assert.equal(new Set(ids).size, ids.length, 'exercise ids unique');
   for (const d of Object.values(REAL.days)) for (const e of d.exercises) {
-    if (e.verification === 'pending-source') assert.ok(e.sets === null && e.reps === null, e.id);
-    else { assert.equal(e.verification, 'primary-source', e.id); assert.ok(e.verifiedBy, e.id); assert.ok(Number.isInteger(e.sets) && e.reps[0] <= e.reps[1], e.id); }
+    assert.equal(e.verification, 'primary-source', e.id);
+    assert.ok(e.verifiedBy, e.id);
   }
+  assert.equal(T.isSourceMatched(REAL), true);
   assert.equal(REAL.defaults.verification, 'forge-default');
 });
 
-test('real template: values confirmed in the PR #9 review are present', () => {
-  const get = (d, id) => REAL.days[d].exercises.find(e => e.id === id);
-  const t = (d, id) => { const e = get(d, id); return [e.sets, ...e.reps]; };
-  assert.deepEqual(t('A1', 'bench-press'), [3, 8, 10]);
-  assert.deepEqual(t('A1', 'cable-crossover'), [5, 10, 15]);
-  assert.deepEqual(t('A1', 'wide-grip-pull-up'), [5, 15, 15]);
-  assert.deepEqual(t('B1', 'barbell-curl'), [4, 8, 12]);
-  assert.deepEqual(t('C1', 'leg-curl'), [5, 10, 15]);
-  assert.deepEqual(t('C1', 'seated-calf-raise'), [4, 12, 15]);
-  assert.deepEqual(t('C1', 'standing-calf-raise'), [4, 12, 15]);
-  for (const id of ['barbell-ab-rollout', 'hanging-knee-raise']) assert.ok(get('A1', id), id);
-  assert.ok(get('B1', 'one-arm-cable-curl'));
-  assert.ok(get('A2', 'plank') && get('A2', 'db-side-bend'));
+test('real template: plank is a 60 s timed hold, leg press is a fixed 20 reps', () => {
+  const c = T.normalizeConfig(REAL, { ...CFG, volume: 'source' });
+  const plank = T.buildDayPlan(REAL, 'A2', c).exercises.find(e => e.exerciseId === 'plank');
+  assert.deepEqual([plank.measure, plank.targetHoldSec, plank.targetReps, plank.targetSets], ['time', 60, null, 3]);
+  const lp = T.buildDayPlan(REAL, 'C2', c).exercises.find(e => e.exerciseId === 'leg-press');
+  assert.deepEqual([lp.measure, lp.targetReps.min, lp.targetReps.max, lp.targetSets], ['reps', 20, 20, 5]);
 });
 
-test('real template: until fully verified every day is blocked and cannot start', () => {
-  assert.equal(T.isSourceMatched(REAL), false);
-  const c = T.normalizeConfig(REAL, CFG);
+test('real template: every day is runnable; reduced volume by default, source opt-in', () => {
   for (const k of REAL.rotation) {
-    const d = T.buildDayPlan(REAL, k, c);
-    assert.equal(d.blocked, 'awaiting-source', k);
-    assert.equal(d.exercises.length, 0, k);
-    assert.throws(() => T.createSession({ id: 'x', date: START, dayPlan: d, now: T0 }), /never guessed/);
+    const r = T.buildDayPlan(REAL, k, T.normalizeConfig(REAL, CFG));
+    const f = T.buildDayPlan(REAL, k, T.normalizeConfig(REAL, { ...CFG, volume: 'source' }));
+    assert.equal(r.blocked, null, k);
+    assert.equal(r.sourceComplete, true, k);
+    assert.ok(r.exercises.every((e, i) => e.targetSets === Math.min(3, Math.ceil(f.exercises[i].targetSets * 0.6))), k);
+    assert.ok(f.exercises.every(e => e.targetSets === e.sourceSets), k);
   }
   const m = T.todayMission(REAL, CFG, START);
-  assert.equal(m.canStart, false);
-  assert.match(m.body, /awaiting verification/);
+  assert.equal(m.canStart, true);
+  assert.match(m.body, /reduced volume/);
 });
 
-test('real template, dev mode: only verified exercises run, reduced volume by default', () => {
-  const d = T.buildDayPlan(REAL, 'A1', T.normalizeConfig(REAL, { ...CFG, allowPendingSource: true }));
-  assert.equal(d.blocked, null);
-  assert.equal(d.sourceComplete, false);
-  assert.deepEqual(d.exercises.map(e => [e.exerciseId, e.sourceSets, e.targetSets]), [['bench-press', 3, 2], ['cable-crossover', 5, 3], ['wide-grip-pull-up', 5, 3]]);
-  assert.ok(d.pendingExercises.some(e => e.exerciseId === 'incline-db-press'));
-  const b2 = T.buildDayPlan(REAL, 'B2', T.normalizeConfig(REAL, { ...CFG, allowPendingSource: true }));
-  assert.equal(b2.blocked, 'no-verified-exercises');
+test('never-guess guard: a pending exercise or incomplete list blocks the day', () => {
+  const pend = { ...REAL, days: { ...REAL.days, A1: { ...REAL.days.A1, exercises: [...REAL.days.A1.exercises.slice(0, 7),
+    { ...REAL.days.A1.exercises[7], verification: 'pending-source', sets: null, reps: null }] } } };
+  const d = T.buildDayPlan(pend, 'A1', T.normalizeConfig(pend, CFG));
+  assert.equal(d.blocked, 'awaiting-source');
+  assert.equal(d.exercises.length, 0);
+  assert.deepEqual(d.pendingExercises.map(e => e.exerciseId), ['hanging-knee-raise']);
+  assert.throws(() => T.createSession({ id: 'x', date: START, dayPlan: d, now: T0 }), /never guessed/);
+  assert.equal(T.isSourceMatched(pend), false);
+  const dev = T.buildDayPlan(pend, 'A1', T.normalizeConfig(pend, { ...CFG, allowPendingSource: true }));
+  assert.equal(dev.blocked, null);
+  assert.equal(dev.exercises.length, 7);
+  const partial = { ...REAL, days: { ...REAL.days, B2: { ...REAL.days.B2, listComplete: false } } };
+  assert.equal(T.buildDayPlan(partial, 'B2', T.normalizeConfig(partial, CFG)).blocked, 'awaiting-source');
+});
+
+test('timed hold: logs seconds (not reps), validates, stores, and is never auto-progressed', () => {
+  const plan = T.buildDayPlan(REAL, 'A2', T.normalizeConfig(REAL, CFG));
+  let s = T.createSession({ id: 'p1', date: START, programId: REAL.id, dayPlan: plan, now: T0 });
+  s = T.reduce(T.reduce(s, { type: 'SAFETY_CHECK', answers: {}, now: T0 }), { type: 'SKIP_WARMUP', now: T0 });
+  while (T.currentStep(s).exercise.exerciseId !== 'plank') s = T.reduce(s, { type: 'SKIP_EXERCISE', now: T0 });
+  assert.match(T.reduce(s, { type: 'LOG_SET', reps: 60, load: 0, unit: 'kg', now: T0 }).error, /Hold time/);
+  assert.match(T.reduce(s, { type: 'LOG_SET', seconds: 0, unit: 'kg', now: T0 }).error, /Hold time/);
+  s = T.reduce(s, { type: 'LOG_SET', seconds: 45, unit: 'kg', now: T0 + 1 });
+  assert.equal(s.error, null);
+  assert.deepEqual([s.sets[0].measure, s.sets[0].seconds, s.sets[0].reps, s.sets[0].load], ['time', 45, null, 0]);
+  const rec = T.toRecord(T.reduce(s, { type: 'FINISH', symptoms: 'none', now: T0 + 2 }));
+  const store = T.addRecord(T.emptyStore(), rec);
+  assert.equal(T.parseStore(T.serializeStore(store)).store.records.length, 1);
+  assert.deepEqual(T.personalBests([rec]), {});
+  assert.equal(T.recommendNext([rec, { ...rec, id: 'p2', date: '2026-11-12' }], 'plank', null).action, 'repeat');
 });
 
 // ---------- schedule (synthetic program) ----------

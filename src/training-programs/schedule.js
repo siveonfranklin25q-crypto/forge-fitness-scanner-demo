@@ -5,6 +5,7 @@
 //                  so a missed day never skips a workout and never "breaks" anything.
 
 import { isISODate, weekday, daysBetween } from './dates.js';
+import { hasTargets } from './programs/classic-six-day.js';
 
 // A session that actually happened (fully or partly) moves the rotation on; skipped,
 // aborted and safety-stopped sessions leave the same workout waiting.
@@ -50,7 +51,7 @@ export function buildDayPlan(program, dayKey, config) {
   const d = program.days[dayKey];
   if (!d) throw new RangeError(`Unknown day ${dayKey}`);
   const D = program.defaults;
-  const ready = d.exercises.filter(e => e.verification === 'primary-source' && e.sets && e.reps);
+  const ready = d.exercises.filter(e => e.verification === 'primary-source' && hasTargets(e));
   const pending = d.exercises.filter(e => !ready.includes(e));
   const sourceComplete = d.listComplete && d.exercises.length > 0 && pending.length === 0;
   const exercises = ready.map(e => {
@@ -62,7 +63,9 @@ export function buildDayPlan(program, dayKey, config) {
       sourceSets: e.sets,
       targetSets: config.volume === 'source' ? e.sets : reduced,
       volume: config.volume,
-      targetReps: { min: e.reps[0], max: e.reps[1] },
+      measure: e.measure,
+      targetReps: e.measure === 'time' ? null : { min: e.reps[0], max: e.reps[1] },
+      targetHoldSec: e.measure === 'time' ? e.holdSec : null,
       restSec: config.restSec ?? (e.compound ? D.restSecCompound : D.restSec),
       restSource: config.restSec === null ? 'forge-default' : 'user',
       verification: e.verification,
