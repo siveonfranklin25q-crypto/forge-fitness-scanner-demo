@@ -9,8 +9,10 @@ export const STORE_VERSION = 1;
 export const MAX_RECORDS = 500;
 const STATUSES = new Set(['completed', 'partial', 'skipped', 'aborted', 'stopped_safety']);
 
+export const MAX_QUARANTINE = 200;
+
 export function emptyStore() {
-  return { version: STORE_VERSION, programId: null, config: null, records: [], active: null };
+  return { version: STORE_VERSION, programId: null, config: null, records: [], active: null, quarantine: [] };
 }
 
 function validRecord(r) {
@@ -19,7 +21,11 @@ function validRecord(r) {
       && (Number.isInteger(s.reps) || (s.reps === null && Number.isInteger(s.seconds) && s.seconds > 0)));
 }
 
-/** Parse untrusted JSON; invalid records are dropped, never "repaired" into fake data. */
+/**
+ * Parse untrusted JSON. Invalid records are never "repaired" into fake data and never used for
+ * schedule or progress — but they are QUARANTINED and written back on save, so a later write by
+ * any UI cannot silently delete data this version doesn't understand.
+ */
 export function parseStore(json) {
   let x;
   try { x = JSON.parse(json); } catch { return { store: emptyStore(), dropped: 0, error: 'unreadable' }; }
@@ -28,12 +34,17 @@ export function parseStore(json) {
   const kept = records.filter(validRecord).slice(-MAX_RECORDS);
   const ids = new Set();
   const unique = kept.filter(r => (ids.has(r.id) ? false : (ids.add(r.id), true)));
+  const invalid = records.filter(r => !validRecord(r));
+  const prior = Array.isArray(x.quarantine) ? x.quarantine : [];
+  const quarantine = [...prior, ...invalid].slice(-MAX_QUARANTINE);
   return { store: { version: STORE_VERSION, programId: x.programId ?? null, config: x.config ?? null, records: unique,
-    active: x.active && x.active.version === 1 ? x.active : null }, dropped: records.length - unique.length, error: null };
+    active: x.active && x.active.version === 1 ? x.active : null, quarantine },
+  dropped: records.length - unique.length, quarantined: invalid.length, error: null };
 }
 
 export function serializeStore(store) {
-  return JSON.stringify({ ...store, records: store.records.slice(-MAX_RECORDS) });
+  return JSON.stringify({ ...store, records: store.records.slice(-MAX_RECORDS),
+    quarantine: (store.quarantine ?? []).slice(-MAX_QUARANTINE) });
 }
 
 /** Add a finished record (idempotent by id). Returns a new store. */

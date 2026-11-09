@@ -105,6 +105,13 @@ export function planForDate(program, config, date, completedSessions = []) {
   if (c.restWeekdays.includes(weekday(date))) {
     return { ...base, kind: 'rest', reason: 'Scheduled recovery day. Rest is part of the program.' };
   }
+  // Both modes: a session that already happened today is shown as done, never offered again
+  // (prevents duplicate counted completions).
+  const sameDay = completedSessions.find(s => s && ADVANCES.has(s.status) && s.date === date);
+  if (sameDay) {
+    const k = migrateDayKey(program, sameDay.dayKey);
+    if (program.days[k]) return { ...base, kind: 'training', dayKey: k, plan: buildDayPlan(program, k, c), alreadyCompleted: true, reason: 'Session completed today.' };
+  }
   let dayKey;
   if (c.mode === 'fixed-week') {
     // Count training weekdays since start to index the rotation, so custom rest days still rotate A->B->C.
@@ -123,11 +130,6 @@ export function planForDate(program, config, date, completedSessions = []) {
     const last = done.at(-1);
     // Continue after the last completed day; a missed day simply waits.
     dayKey = last ? c.rotation[(c.rotation.indexOf(last.dayKey) + 1) % c.rotation.length] : c.rotation[0];
-    const sameDay = completedSessions.find(s => s && ADVANCES.has(s.status) && s.date === date);
-    if (sameDay) {
-      const k = migrateDayKey(program, sameDay.dayKey);
-      if (program.days[k]) return { ...base, kind: 'training', dayKey: k, plan: buildDayPlan(program, k, c), alreadyCompleted: true, reason: 'Session completed today.' };
-    }
   }
   return { ...base, kind: 'training', dayKey, plan: buildDayPlan(program, dayKey, c), alreadyCompleted: false,
     reason: c.mode === 'rolling' ? 'Next session in your rotation.' : 'Scheduled for this weekday.' };
