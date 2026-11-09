@@ -151,6 +151,19 @@ test('migration: legacy v1 day keys A/B/C are read as A1/B1/C1', () => {
   assert.equal(today.alreadyCompleted, true);
 });
 
+test('no duplicate completion: a session already done today is never offered again, in BOTH modes', () => {
+  const done = [{ date: '2026-11-12', dayKey: 'A2', status: 'partial' }];
+  for (const mode of ['rolling', 'fixed-week']) {
+    const p = T.planForDate(P, { ...CFG, mode }, '2026-11-12', done);
+    assert.equal(p.alreadyCompleted, true, mode);
+    assert.equal(p.dayKey, 'A2', mode);
+    assert.equal(T.todayMission(P, { ...CFG, mode }, '2026-11-12', done).canStart, false, mode);
+  }
+  // A safety stop today does not count as done: the user may come back later.
+  const stopped = [{ date: '2026-11-12', dayKey: 'A2', status: 'stopped_safety' }];
+  assert.equal(T.todayMission(P, { ...CFG, mode: 'fixed-week' }, '2026-11-12', stopped).canStart, true);
+});
+
 test('before start, program week and completion flags', () => {
   assert.equal(T.planForDate(P, CFG, '2026-11-08').kind, 'before-start');
   assert.equal(T.planForDate(P, CFG, '2026-11-16').programWeek, 2);
@@ -385,6 +398,18 @@ test('storage: new key only, round-trip, idempotent add, junk dropped not repair
   const parsed = T.parseStore(junk);
   assert.equal(parsed.store.records.length, 1);
   assert.equal(parsed.dropped, 2);
+  assert.equal(parsed.quarantined, 1);
+  // Quarantined records are excluded from logic but survive load -> add -> save.
+  const st2 = fakeStorage();
+  st2.setItem(T.STORAGE_KEY, junk);
+  let s2 = T.load(st2).store;
+  assert.equal(s2.quarantine.length, 1);
+  s2 = T.addRecord(s2, record('b', '2026-11-10', [set('bench-press', 8, 60)]));
+  assert.ok(T.save(st2, s2));
+  const raw = JSON.parse(st2.getItem(T.STORAGE_KEY));
+  assert.deepEqual(raw.records.map(r => r.id), ['a', 'b']);
+  assert.deepEqual(raw.quarantine.map(r => r.id), ['z']);
+  assert.equal(T.load(st2).store.quarantine.length, 1, 'not duplicated on re-load');
   assert.equal(T.parseStore('{oops').error, 'unreadable');
   assert.equal(T.parseStore('{"version":99}').error, 'unknown-version');
   assert.equal(T.load({ getItem() { throw new Error('denied'); } }).error, 'storage-unavailable');
