@@ -31,9 +31,21 @@ function initCockpit() {
     store = { ...store, config: c };
   }
   let blocked = Boolean(loaded.error && loaded.error !== 'empty');
-  let active = store.active && typeof store.active === 'object' && Array.isArray(store.active.sets) &&
-    Array.isArray(store.active.plan?.exercises) &&
-    ['safety','warmup','exercise','rest','review'].includes(store.active.stage) ? store.active : null;
+  // Never resume an old-version or unverified plan as if its targets were current.
+  // Preserve it until the owner explicitly archives or discards it.
+  const prior = store.active;
+  const canResume = prior && typeof prior === 'object' && prior.version === 1 &&
+    prior.programId === program.id && program.days[prior.dayKey] &&
+    ['safety', 'warmup', 'exercise', 'rest', 'review'].includes(prior.stage) &&
+    Array.isArray(prior.sets) && Array.isArray(prior.skipped) &&
+    Array.isArray(prior.plan?.exercises) && prior.plan?.sourceComplete === true &&
+    prior.plan?.dayKey === prior.dayKey && !prior.plan?.blocked &&
+    ['reduced','source'].includes(prior.plan?.volume) &&
+    prior.plan.exercises.length > 0 &&
+    prior.plan.exercises.every(e => e.verification === 'primary-source' &&
+      ['reduced','source'].includes(e.volume));
+  let staleActive = prior && !canResume ? prior : null;
+  let active = canResume ? prior : null;
   let feedback = '';
   let tick = null;
 
@@ -44,6 +56,18 @@ function initCockpit() {
       <p class="fc-help">The six distinct workout tables now match the cited Muscle &amp; Strength article. Reduced-volume training is a FORGE default, not the author's full prescription.
         This demanding intermediate routine is awaiting owner review and isn't personalized medical clearance. Logs remain in this browser.</p>
       <p id="fc-feedback" class="fc-feedback" role="status" aria-live="polite"></p>
+      <div id="fc-legacy" class="fc-card" hidden>
+        <h4>Previous workout needs review</h4>
+        <p class="fc-help">Your device has an unfinished workout from an earlier or unverified template.
+          FORGE will not resume it with the wrong exercise targets or count it as completed.</p>
+        <p id="fc-legacy-detail" class="fc-help"></p>
+        <div class="fc-buttons">
+          <button class="secondary-btn" type="button" data-fc-action="archive-legacy">Preserve old workout in local archive</button>
+          <button class="fc-danger" type="button" data-fc-action="discard-legacy">Discard unfinished workout</button>
+        </div>
+        <p class="fc-help">Archiving retains the full original snapshot in this browser's private data but excludes it from
+          the verified program's progress calculations. Discarding requires confirmation and cannot be undone.</p>
+      </div>
       <div id="fc-setup" class="fc-card">
         <h4>Choose your program start</h4>
         <div class="fc-form-grid"><label>Start date <input id="fc-start-date" type="date"></label>
@@ -81,11 +105,11 @@ function initCockpit() {
           <p class="fc-kicker" id="fc-exercise-index"></p><h4 id="fc-exercise-name"></h4>
           <p id="fc-exercise-target"></p>
           <div class="fc-form-grid">
-            <label id="fc-reps-wrap">Actual reps <input id="fc-reps" type="number" min="1" max="100" step="1" value="8"></label>
+            <label id="fc-reps-wrap">Actual reps completed <input id="fc-reps" type="number" min="1" max="100" step="1" placeholder="Enter actual reps" required></label>
             <label id="fc-hold-wrap" hidden>Actual seconds held <input id="fc-seconds" type="number" min="1" max="600" step="1" placeholder="Enter actual seconds held"></label>
-            <label id="fc-load-wrap">External load <input id="fc-load" type="number" min="0" max="1000" step="0.5" value="0"></label>
+            <label id="fc-load-wrap">External load (enter 0 only if actually unweighted) <input id="fc-load" type="number" min="0" max="1000" step="0.5" placeholder="Enter actual load" required></label>
             <label id="fc-unit-wrap">Unit <select id="fc-unit"><option value="lb">lb</option><option value="kg">kg</option></select></label>
-            <label id="fc-rir-wrap">Reps in reserve <select id="fc-rir"><option value="">Not measured</option><option value="3">3</option><option value="2" selected>2</option><option value="1">1</option><option value="0">0</option><option value="4">4</option><option value="5">5</option></select></label>
+            <label id="fc-rir-wrap">Reps in reserve <select id="fc-rir"><option value="" selected>Not measured</option><option value="3">3</option><option value="2">2</option><option value="1">1</option><option value="0">0</option><option value="4">4</option><option value="5">5</option></select></label>
           </div><div class="fc-buttons"><button class="primary" type="button" data-fc-action="log">Log completed set</button>
             <button class="secondary-btn" type="button" data-fc-action="skip-set">Skip set</button>
             <button class="secondary-btn" type="button" data-fc-action="skip-exercise">Skip exercise</button></div>
@@ -139,8 +163,30 @@ function initCockpit() {
     }
     render();
   }
+  function resolveLegacy(action) {
+    if (blocked || !staleActive) return;
+    if (action === 'discard-legacy' &&
+        !window.confirm('Discard this unfinished workout? Its original entries will not be recoverable.')) return;
+    if (action === 'archive-legacy' && (store.quarantine?.length ?? 0) >= 200) {
+      notify('The private archive is full. No data was changed. Save a separate backup before clearing old records.');
+      return;
+    }
+    const next = { ...store, active: null };
+    if (action === 'archive-legacy') {
+      next.quarantine = [...(store.quarantine ?? []),
+        { kind: 'legacy-active-session', archivedAt: new Date().toISOString(),
+          reason: 'Older or unverified exercise template; not counted toward verified progress',
+          originalSession: staleActive }];
+    }
+    if (!persist(next)) return;
+    staleActive = null;
+    notify(action === 'archive-legacy'
+      ? 'Old workout preserved in this browser\'s private archive. It has NOT been counted as a completed session.'
+      : 'You explicitly discarded the unfinished old workout. Your completed records were left unchanged.');
+    render();
+  }
   function configure() {
-    if (blocked || active) return;
+    if (blocked || active || staleActive) return;
     try {
       const config = T.normalizeConfig(program, {
         startDate: $('fc-start-date').value, mode: $('fc-mode').value,
@@ -153,7 +199,7 @@ function initCockpit() {
     } catch (err) { notify(err.message); }
   }
   function start() {
-    if (blocked || active || !store.config) return;
+    if (blocked || active || staleActive || !store.config) return;
     const mission = T.todayMission(program, store.config, today(), store.records);
     if (!mission.canStart || mission.programComplete) return;
     const id = 'session-' + (globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36) + '-' + Math.random().toString(36).slice(2));
@@ -165,6 +211,8 @@ function initCockpit() {
   function runAction(name) {
     if (blocked) return;
     switch (name) {
+      case 'archive-legacy':
+      case 'discard-legacy': return resolveLegacy(name);
       case 'configure': return configure();
       case 'start': return start();
       case 'skip-session': return call({ type: 'SKIP_SESSION' });
@@ -190,8 +238,12 @@ function initCockpit() {
           if (!$('fc-feedback').textContent) $('fc-seconds').value = '';
           return;
         }
-        if (!$('fc-reps').value || !$('fc-load').value) return notify('Enter actual reps and load before logging.');
-        return call({ type: 'LOG_SET', reps: Number($('fc-reps').value), load: Number($('fc-load').value),
+        const rawReps = $('fc-reps').value.trim(), rawLoad = $('fc-load').value.trim();
+        const reps = Number(rawReps), load = Number(rawLoad);
+        if (!rawReps || !Number.isInteger(reps) || reps < 1 || reps > 100 ||
+            !rawLoad || !Number.isFinite(load) || load < 0 || load > 1000)
+          return notify('Enter actual completed reps (1–100) and external load (0–1000); an unweighted set requires typing 0.');
+        return call({ type: 'LOG_SET', reps, load,
           unit: $('fc-unit').value, rir: $('fc-rir').value === '' ? null : Number($('fc-rir').value) });
       }
       case 'skip-set': return call({ type: 'SKIP_SET' });
@@ -218,13 +270,18 @@ function initCockpit() {
   }
   function render() {
     $('fc-feedback').textContent = feedback || (blocked ? 'Training storage could not be read safely. This cockpit will not overwrite it.' : '');
+    $('fc-legacy').hidden = !staleActive;
+    if (staleActive) {
+      $('fc-legacy-detail').textContent = 'Saved on ' + (staleActive.date || 'unknown date') + ' · ' +
+        (Array.isArray(staleActive.sets) ? staleActive.sets.length : 0) + ' recorded set(s).';
+    }
     $('fc-setup').hidden = Boolean(store.config);
     $('fc-mission').hidden = !store.config;
     $('fc-progress').hidden = !store.config;
     $('fc-session').hidden = !active;
     if (tick) { clearInterval(tick); tick = null; }
     if (!store.config) {
-      $('fc-setup').querySelector('button').disabled = blocked;
+      $('fc-setup').querySelector('button').disabled = blocked || Boolean(staleActive);
       return;
     }
     let mission, summary;
@@ -238,7 +295,7 @@ function initCockpit() {
     $('fc-mission-meta').textContent = (mission.programComplete ? '12-week window reached · review before extending. ' : '') +
       (mission.next ? 'Next planned session: ' + mission.next.date + ' · ' + mission.next.title : 'No upcoming training session in the next seven days.');
     const btn = $('fc-mission').querySelector('button[data-fc-action="start"]');
-    btn.hidden = Boolean(active) || !mission.canStart || mission.programComplete;
+    btn.hidden = Boolean(active) || Boolean(staleActive) || !mission.canStart || mission.programComplete;
     btn.disabled = blocked;
     $('fc-progress-count').textContent = summary.sessionsDone + ' logged training sessions this week · ' +
       summary.loggedSets + ' working sets recorded.';
@@ -254,6 +311,13 @@ function initCockpit() {
     $('fc-live-count').textContent = active.sets.length + ' actual sets logged';
     $('fc-stage-note').textContent = active.safety?.message ?? 'Only sets you explicitly record will count.';
     for (const stage of ['safety','warmup','exercise','rest','review']) $('fc-' + stage).hidden = active.stage !== stage;
+    if (active.stage === 'exercise') {
+      // Each new working set starts blank; never borrow a prior value without consent.
+      $('fc-reps').value = '';
+      $('fc-load').value = '';
+      $('fc-rir').value = '';
+      $('fc-seconds').value = '';
+    }
     if (active.stage === 'exercise' || active.stage === 'rest') {
       const step = T.currentStep(active);
       if (step) {
