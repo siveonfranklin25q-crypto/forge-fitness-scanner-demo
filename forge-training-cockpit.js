@@ -17,6 +17,19 @@ function initCockpit() {
   try { storage = window.localStorage; } catch { /* blocked browser storage */ }
   const loaded = storage ? T.load(storage) : { store: T.emptyStore(), error: 'storage-unavailable' };
   let store = loaded.store;
+  // Migrate old v1 A/B/C scheduling in memory; do not rewrite historic workouts.
+  if (store.config) {
+    const c = { ...store.config };
+    if (Array.isArray(c.rotation)) {
+      c.rotation = c.rotation.join(',') === 'A,B,C'
+        ? [...program.rotation] : c.rotation.map(k => T.migrateDayKey(program, k));
+    }
+    c.volume = ['reduced', 'source'].includes(c.volume) ? c.volume : 'reduced';
+    c.allowPendingSource = false;
+    delete c.includeOptional;
+    delete c.setsChoice;
+    store = { ...store, config: c };
+  }
   let blocked = Boolean(loaded.error && loaded.error !== 'empty');
   let active = store.active && typeof store.active === 'object' && Array.isArray(store.active.sets) &&
     Array.isArray(store.active.plan?.exercises) &&
@@ -27,17 +40,17 @@ function initCockpit() {
   root.innerHTML = `
     <section class="fc-shell" aria-labelledby="fc-title">
       <div class="fc-heading"><div><span class="fc-kicker">TRAINING COCKPIT · PRIVATE DRAFT</span>
-        <h3 id="fc-title">Today's training mission</h3></div><span class="fc-beta">Template differs from source · QA only</span></div>
-      <p class="fc-help">Engineering review only: exercise choices and targets in this draft differ from the original Muscle & Strength routine.
-        Do not use this as a verified training prescription. Plans never count as completed; logs stay in this browser.</p>
+        <h3 id="fc-title">Today's training mission</h3></div><span class="fc-beta">44 exercise targets checked · owner review pending</span></div>
+      <p class="fc-help">The six distinct workout tables now match the cited Muscle &amp; Strength article. Reduced-volume training is a FORGE default, not the author's full prescription.
+        This demanding intermediate routine is awaiting owner review and isn't personalized medical clearance. Logs remain in this browser.</p>
       <p id="fc-feedback" class="fc-feedback" role="status" aria-live="polite"></p>
       <div id="fc-setup" class="fc-card">
         <h4>Choose your program start</h4>
         <div class="fc-form-grid"><label>Start date <input id="fc-start-date" type="date"></label>
           <label>Schedule <select id="fc-mode"><option value="rolling">Rolling: continue after last logged workout</option><option value="fixed-week">Fixed weekdays</option></select></label>
-          <label class="fc-check"><input type="checkbox" id="fc-optional"> Include optional unverified exercise</label>
+          <label>Training volume <select id="fc-volume"><option value="reduced" selected>Reduced (FORGE starting default)</option><option value="source">Full source volume — demanding, opt-in</option></select></label>
         </div>
-        <p class="fc-help">Sunday is a recovery day by default. Start with the minimum set ranges; adjust only after reviewing the program.</p>
+        <p class="fc-help">Sunday is a recovery day by default. The original routine is demanding; use the full source volume only after reviewing its workload.</p>
         <button class="primary" type="button" data-fc-action="configure">Set training plan</button>
       </div>
       <div id="fc-mission" class="fc-card" hidden>
@@ -68,10 +81,11 @@ function initCockpit() {
           <p class="fc-kicker" id="fc-exercise-index"></p><h4 id="fc-exercise-name"></h4>
           <p id="fc-exercise-target"></p>
           <div class="fc-form-grid">
-            <label>Actual reps <input id="fc-reps" type="number" min="1" max="100" step="1" value="8"></label>
-            <label>Actual load <input id="fc-load" type="number" min="0" max="1000" step="0.5" value="0"></label>
-            <label>Unit <select id="fc-unit"><option value="lb">lb</option><option value="kg">kg</option></select></label>
-            <label>Reps in reserve <select id="fc-rir"><option value="">Not measured</option><option value="3">3</option><option value="2" selected>2</option><option value="1">1</option><option value="0">0</option><option value="4">4</option><option value="5">5</option></select></label>
+            <label id="fc-reps-wrap">Actual reps <input id="fc-reps" type="number" min="1" max="100" step="1" value="8"></label>
+            <label id="fc-hold-wrap" hidden>Actual seconds held <input id="fc-seconds" type="number" min="1" max="600" step="1" placeholder="Enter actual seconds held"></label>
+            <label id="fc-load-wrap">External load <input id="fc-load" type="number" min="0" max="1000" step="0.5" value="0"></label>
+            <label id="fc-unit-wrap">Unit <select id="fc-unit"><option value="lb">lb</option><option value="kg">kg</option></select></label>
+            <label id="fc-rir-wrap">Reps in reserve <select id="fc-rir"><option value="">Not measured</option><option value="3">3</option><option value="2" selected>2</option><option value="1">1</option><option value="0">0</option><option value="4">4</option><option value="5">5</option></select></label>
           </div><div class="fc-buttons"><button class="primary" type="button" data-fc-action="log">Log completed set</button>
             <button class="secondary-btn" type="button" data-fc-action="skip-set">Skip set</button>
             <button class="secondary-btn" type="button" data-fc-action="skip-exercise">Skip exercise</button></div>
@@ -130,7 +144,7 @@ function initCockpit() {
     try {
       const config = T.normalizeConfig(program, {
         startDate: $('fc-start-date').value, mode: $('fc-mode').value,
-        includeOptional: $('fc-optional').checked, setsChoice: 'min', restWeekdays: [0]
+        volume: $('fc-volume').value, allowPendingSource: false, restWeekdays: [0]
       });
       if (persist({ ...store, config, programId: program.id })) {
         notify('Training schedule saved locally. No workouts have been assumed completed.');
@@ -141,9 +155,11 @@ function initCockpit() {
   function start() {
     if (blocked || active || !store.config) return;
     const mission = T.todayMission(program, store.config, today(), store.records);
-    if (mission.kind !== 'training' || mission.alreadyCompleted || mission.programComplete) return;
+    if (!mission.canStart || mission.programComplete) return;
     const id = 'session-' + (globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36) + '-' + Math.random().toString(36).slice(2));
-    const state = T.createSession({ id, date: today(), programId: program.id, dayPlan: mission.plan, now: Date.now() });
+    let state;
+    try { state = T.createSession({ id, date: today(), programId: program.id, dayPlan: mission.plan, now: Date.now() }); }
+    catch (error) { notify('Cannot start session: ' + error.message); return; }
     if (persist({ ...store, active: state })) { active = state; feedback = ''; render(); }
   }
   function runAction(name) {
@@ -163,6 +179,17 @@ function initCockpit() {
       case 'warmup-done': return call({ type: 'WARMUP_DONE' });
       case 'warmup-skip': return call({ type: 'SKIP_WARMUP' });
       case 'log': {
+        if (!active || active.stage !== 'exercise') return notify('Start a live exercise before logging.');
+        const step = T.currentStep(active);
+        if (!step) return notify('No current exercise.');
+        if (step.exercise.measure === 'time') {
+          const raw = $('fc-seconds').value.trim(), seconds = Number(raw);
+          if (!raw || !Number.isInteger(seconds) || seconds < 1 || seconds > 600)
+            return notify('Enter the actual hold time, 1–600 whole seconds. The target is not assumed complete.');
+          call({ type: 'LOG_SET', seconds, load: 0, unit: 'kg', rir: null });
+          if (!$('fc-feedback').textContent) $('fc-seconds').value = '';
+          return;
+        }
         if (!$('fc-reps').value || !$('fc-load').value) return notify('Enter actual reps and load before logging.');
         return call({ type: 'LOG_SET', reps: Number($('fc-reps').value), load: Number($('fc-load').value),
           unit: $('fc-unit').value, rir: $('fc-rir').value === '' ? null : Number($('fc-rir').value) });
@@ -211,7 +238,7 @@ function initCockpit() {
     $('fc-mission-meta').textContent = (mission.programComplete ? '12-week window reached · review before extending. ' : '') +
       (mission.next ? 'Next planned session: ' + mission.next.date + ' · ' + mission.next.title : 'No upcoming training session in the next seven days.');
     const btn = $('fc-mission').querySelector('button[data-fc-action="start"]');
-    btn.hidden = Boolean(active) || mission.kind !== 'training' || mission.alreadyCompleted || mission.programComplete;
+    btn.hidden = Boolean(active) || !mission.canStart || mission.programComplete;
     btn.disabled = blocked;
     $('fc-progress-count').textContent = summary.sessionsDone + ' logged training sessions this week · ' +
       summary.loggedSets + ' working sets recorded.';
@@ -233,9 +260,17 @@ function initCockpit() {
         $('fc-exercise-index').textContent = 'Exercise ' + step.exerciseNumber + ' of ' + step.ofExercises +
           ' · set ' + step.setNumber + ' of ' + step.ofSets;
         $('fc-exercise-name').textContent = step.exercise.name;
-        $('fc-exercise-target').textContent = 'Target: ' + step.exercise.targetReps.min + '–' +
-          step.exercise.targetReps.max + ' reps · ' + step.exercise.restSec + ' sec suggested rest · ' +
-          step.exercise.verification;
+        const timed = step.exercise.measure === 'time';
+        $('fc-reps-wrap').hidden = timed;
+        $('fc-hold-wrap').hidden = !timed;
+        $('fc-load-wrap').hidden = timed;
+        $('fc-unit-wrap').hidden = timed;
+        $('fc-rir-wrap').hidden = timed;
+        const target = timed ? 'Target hold: ' + step.exercise.targetHoldSec + ' seconds · enter actual time held'
+          : 'Target: ' + step.exercise.targetReps.min + '–' + step.exercise.targetReps.max + ' reps';
+        $('fc-exercise-target').textContent = target + ' · ' + step.exercise.restSec +
+          ' sec suggested rest · ' + step.exercise.verification +
+          ' · ' + (step.exercise.volume === 'reduced' ? 'reduced FORGE volume' : 'full source volume');
       }
     }
     if (active.stage === 'rest') { updateTimer(); tick = setInterval(updateTimer, 1000); }
