@@ -27,9 +27,9 @@ function initCockpit() {
   root.innerHTML = `
     <section class="fc-shell" aria-labelledby="fc-title">
       <div class="fc-heading"><div><span class="fc-kicker">TRAINING COCKPIT · PRIVATE DRAFT</span>
-        <h3 id="fc-title">Today's training mission</h3></div><span class="fc-beta">Source verification pending</span></div>
-      <p class="fc-help">A 12-week intermediate six-day split. Exercise details come from secondary summaries pending source review.
-        Planned work is not a completed workout. Logs stay in this browser under a separate key.</p>
+        <h3 id="fc-title">Today's training mission</h3></div><span class="fc-beta">Template differs from source · QA only</span></div>
+      <p class="fc-help">Engineering review only: exercise choices and targets in this draft differ from the original Muscle & Strength routine.
+        Do not use this as a verified training prescription. Plans never count as completed; logs stay in this browser.</p>
       <p id="fc-feedback" class="fc-feedback" role="status" aria-live="polite"></p>
       <div id="fc-setup" class="fc-card">
         <h4>Choose your program start</h4>
