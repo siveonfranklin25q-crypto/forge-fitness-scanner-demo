@@ -1,6 +1,6 @@
 // Planning: which session (or rest) is due on a date, and what the targets are.
 // Two schedule modes, both user-adjustable:
-//   'fixed-week' — the weekday layout decides (source-style: Mon A, Tue B, ... Sun rest).
+//   'fixed-week' — the weekday layout decides (source-style: Mon A1, Tue B1 ... Sat C2, Sun rest).
 //   'rolling'    — the next training day continues the rotation from the last COMPLETED session,
 //                  so a missed day never skips a workout and never "breaks" anything.
 
@@ -14,14 +14,20 @@ export const DEFAULT_CONFIG = Object.freeze({
   mode: 'rolling',
   startDate: null,            // required: YYYY-MM-DD the program starts
   restWeekdays: [0],          // Sunday rest by default; owner may choose others
-  rotation: ['A', 'B', 'C'],
+  rotation: null,             // null = program.rotation (A1 B1 C1 A2 B2 C2)
   restSec: null,              // null = program default (forge-default)
-  includeOptional: true,      // include `unverified`/optional exercises
-  setsChoice: 'min',          // 'min' (conservative start) or 'max' of each source set range
+  volume: 'reduced',          // 'reduced' (default, forge-default rule) | 'source' (full prescription, opt-in)
+  allowPendingSource: false,  // true only for UI/dev testing: run the verified part of an unverified day
 });
+
+/** Map legacy v1 day keys (A/B/C) to current ones; unknown keys pass through. */
+export function migrateDayKey(program, key) {
+  return program.legacyDayKeys?.[key] ?? key;
+}
 
 export function normalizeConfig(program, config = {}) {
   const c = { ...DEFAULT_CONFIG, ...config };
+  if (c.rotation === null) c.rotation = [...program.rotation];
   const errors = [];
   if (!isISODate(c.startDate)) errors.push('startDate must be YYYY-MM-DD');
   if (!['rolling', 'fixed-week'].includes(c.mode)) errors.push('mode must be rolling or fixed-week');
@@ -29,31 +35,53 @@ export function normalizeConfig(program, config = {}) {
   else if (new Set(c.restWeekdays).size >= 7) errors.push('at least one training weekday is required');
   if (!Array.isArray(c.rotation) || !c.rotation.length || c.rotation.some(k => !program.days[k])) errors.push('rotation must list program day keys');
   if (c.restSec !== null && (!Number.isInteger(c.restSec) || c.restSec < 15 || c.restSec > 600)) errors.push('restSec must be 15-600 seconds or null');
-  if (!['min', 'max'].includes(c.setsChoice)) errors.push('setsChoice must be min or max');
+  if (!['reduced', 'source'].includes(c.volume)) errors.push('volume must be reduced or source');
+  if (typeof c.allowPendingSource !== 'boolean') errors.push('allowPendingSource must be boolean');
   if (errors.length) throw new RangeError('Invalid training config: ' + errors.join('; '));
   return { ...c, restWeekdays: [...new Set(c.restWeekdays)].sort() };
 }
 
-/** Targets for one program day. Pure: same inputs -> same object. */
+/**
+ * Targets for one program day. Pure: same inputs -> same object.
+ * Exercises without primary-source targets are NEVER given guessed numbers: they are listed in
+ * `pendingExercises`, and the day is `blocked: 'awaiting-source'` unless allowPendingSource is set.
+ */
 export function buildDayPlan(program, dayKey, config) {
   const d = program.days[dayKey];
   if (!d) throw new RangeError(`Unknown day ${dayKey}`);
-  const exercises = d.exercises
-    .filter(e => config.includeOptional || !e.optional)
-    .map(e => ({
+  const D = program.defaults;
+  const ready = d.exercises.filter(e => e.verification === 'primary-source' && e.sets && e.reps);
+  const pending = d.exercises.filter(e => !ready.includes(e));
+  const sourceComplete = d.listComplete && d.exercises.length > 0 && pending.length === 0;
+  const exercises = ready.map(e => {
+    const reduced = Math.min(D.reducedSetsCap, Math.ceil(e.sets * D.reducedSetsFactor));
+    return {
       exerciseId: e.id,
       name: e.name,
       muscle: e.muscle,
-      targetSets: config.setsChoice === 'max' ? e.sets[1] : e.sets[0],
+      sourceSets: e.sets,
+      targetSets: config.volume === 'source' ? e.sets : reduced,
+      volume: config.volume,
       targetReps: { min: e.reps[0], max: e.reps[1] },
-      restSec: config.restSec ?? (e.compound ? program.defaults.restSecCompound : program.defaults.restSec),
+      restSec: config.restSec ?? (e.compound ? D.restSecCompound : D.restSec),
       restSource: config.restSec === null ? 'forge-default' : 'user',
       verification: e.verification,
-      optional: e.optional,
+      verifiedBy: e.verifiedBy,
       v08ExerciseId: e.v08ExerciseId,
       note: e.note,
-    }));
-  return { dayKey, title: d.title, muscles: [...d.muscles], warmupMinutes: program.defaults.warmupMinutes, exercises };
+    };
+  });
+  let blocked = null;
+  if (!sourceComplete && !config.allowPendingSource) blocked = 'awaiting-source';
+  else if (!exercises.length) blocked = 'no-verified-exercises';
+  return {
+    dayKey, title: d.title, weekdayName: d.weekdayName,
+    muscles: [...new Set(d.exercises.map(e => e.muscle))],
+    warmupMinutes: D.warmupMinutes, volume: config.volume,
+    sourceComplete, blocked,
+    pendingExercises: pending.map(e => ({ exerciseId: e.id, name: e.name })),
+    exercises: blocked === 'awaiting-source' ? [] : exercises,
+  };
 }
 
 /**
@@ -85,13 +113,18 @@ export function planForDate(program, config, date, completedSessions = []) {
     dayKey = c.rotation[n % c.rotation.length];
   } else {
     const done = completedSessions
-      .filter(s => s && ADVANCES.has(s.status) && isISODate(s.date) && s.date < date && c.rotation.includes(s.dayKey))
+      .filter(s => s && ADVANCES.has(s.status) && isISODate(s.date) && s.date < date)
+      .map(s => ({ ...s, dayKey: migrateDayKey(program, s.dayKey) }))
+      .filter(s => c.rotation.includes(s.dayKey))
       .sort((a, b) => a.date.localeCompare(b.date));
     const last = done.at(-1);
     // Continue after the last completed day; a missed day simply waits.
     dayKey = last ? c.rotation[(c.rotation.indexOf(last.dayKey) + 1) % c.rotation.length] : c.rotation[0];
     const sameDay = completedSessions.find(s => s && ADVANCES.has(s.status) && s.date === date);
-    if (sameDay) return { ...base, kind: 'training', dayKey: sameDay.dayKey, plan: buildDayPlan(program, sameDay.dayKey, c), alreadyCompleted: true, reason: 'Session completed today.' };
+    if (sameDay) {
+      const k = migrateDayKey(program, sameDay.dayKey);
+      if (program.days[k]) return { ...base, kind: 'training', dayKey: k, plan: buildDayPlan(program, k, c), alreadyCompleted: true, reason: 'Session completed today.' };
+    }
   }
   return { ...base, kind: 'training', dayKey, plan: buildDayPlan(program, dayKey, c), alreadyCompleted: false,
     reason: c.mode === 'rolling' ? 'Next session in your rotation.' : 'Scheduled for this weekday.' };

@@ -6,28 +6,55 @@ A browser-safe, dependency-free engine for a **classic six-day split**, built as
 - It never invents progress or penalises rest.
 - It is a module for ChatGPT's cockpit UI (Issue #8) to integrate. It **does not change** any existing FORGE screen or stored record.
 
-Status labels (per `AGENTS.md`): engine **TESTED**: 26 Node tests, two deliberate-bug checks caught, and a real-Chromium smoke run. Source template **REVIEW_REQUIRED**: see §1.
+Status labels (per `AGENTS.md`): engine **TESTED** (30 Node tests; four deliberate-bug checks caught). Source template **BLOCKED**: awaiting the full primary-source tables, see §1.
 
-## 1. Source and verification
+## 1. Source and verification: **BLOCKED on source data**
 
-The template follows Muscle & Strength's [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), first published 2013 and updated 2020:
-- a 12-week, six-day split for intermediate lifters;
-- Mon/Thu **chest & back**, Tue/Fri **shoulders & arms**, Wed/Sat **legs**, Sun rest.
+Source: Steve Shaw, [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), Muscle & Strength (published 2013-09-25, updated 2020-12-22). It is a 12-week split for intermediate lifters with **six distinct sessions**:
 
-**The primary page could not be read from the build environment** (the site's bot protection blocks automated clients; it was not bypassed). Every exercise name and set/rep range therefore comes from consistent **secondary summaries** of that article, and each one carries `verification: 'secondary-summary'`.
+| Key | Day | Group |
+| --- | --- | --- |
+| A1 | Mon | Chest & back |
+| B1 | Tue | Shoulders & arms |
+| C1 | Wed | Legs |
+| A2 | Thu | Chest & back (different exercises) |
+| B2 | Fri | Shoulders & arms (different exercises) |
+| C2 | Sat | Legs (different exercises) |
+| — | Sun | Rest |
 
-| Item | Status |
-| --- | --- |
-| Weekly layout, 12 weeks, intermediate | secondary-summary (consistent across copies) |
-| Day A: bench press, incline DB press, cable crossover (3–5 × 8–15); low rack pull, wide-grip pull-up, one-arm DB row (3–5 × 6–15) | secondary-summary. One copy lists deadlifts instead of rack pulls (noted in data). |
-| Day B: seated DB press, upright row, reverse fly, cable triceps extension, skullcrusher (3–5 × 10–15) | secondary-summary |
-| Day B: barbell curl | **unverified**: only some copies list it, so it is `optional: true` and filterable |
-| Day C: squat 5 × 6–12; hack squat, leg extension, good morning, leg curl, seated calf raise (3–5 × 6–15) | secondary-summary |
-| Rest timers (90 s isolation / 120 s compound), 5-min warm-up | **forge-default**, never attributed to the source |
+**Correction history.**
+- v1 of this PR repeated three sessions built from secondary summaries, because the primary page blocks automated clients (Cloudflare check; not bypassed).
+- The owner-side primary-source review on PR #9 (2026-11-09) found that model and several targets wrong.
+- v2 restructures to six sessions and keeps **only confirmed values**.
 
-**Owner check (2 minutes, in your own browser):** open the source page and confirm or correct each row above. Edits go only in `src/training-programs/programs/classic-six-day.js`. Only facts (names, numbers, layout) are used; no instructional prose is copied.
+| Exercise | Day | Source target | Status |
+| --- | --- | --- | --- |
+| Bench press | A1 | 3 × 8–10 | primary-source (reported in PR #9 review) |
+| Cable crossover | A1 | 5 × 10–15 | primary-source (reported) |
+| Wide-grip pull-up | A1 | 5 × 15 | primary-source (reported) |
+| Barbell curl | B1 | 4 × 8–12 | primary-source (reported) |
+| Leg curl | C1 | 5 × 10–15 | primary-source (reported) |
+| Seated calf raise | C1 | 4 × 12–15 | primary-source (reported) |
+| Standing calf raise | C1 | 4 × 12–15 | primary-source (reported) |
+| Incline DB press, low rack pull, one-arm DB row, barbell ab rollout, hanging knee raise | A1 | unknown | **pending-source** |
+| Seated DB press, upright row, reverse fly, cable triceps extension, skullcrusher, one-arm cable curl | B1 | unknown | **pending-source** |
+| Squat, hack squat, leg extension, good morning | C1 | unknown | **pending-source** |
+| Plank, dumbbell side bend (rest of list unknown) | A2 | unknown | **pending-source** |
+| Full exercise lists | B2, C2 | unknown | **pending-source** |
 
-The engine starts conservatively at the **minimum** of each set range (`setsChoice: 'min'`). The source describes intermediate-level volume.
+**Rule: targets are never guessed.**
+- A pending exercise has `sets: null, reps: null`.
+- A day that isn't fully verified returns `blocked: 'awaiting-source'`, with no exercises. `createSession` refuses it, and `todayMission().canStart` is `false` with honest copy.
+- `allowPendingSource: true` exists **only for UI testing**: it runs just the verified exercises of a day.
+- `isSourceMatched(program)` is `true` only when all six lists are complete and verified.
+
+Requested on PR #9: the complete Mon–Sat tables (exercise, sets × reps, any table notes).
+
+**Volume** (`config.volume`):
+- `'reduced'` (default) uses 60 % of source sets, rounded up, max 3. This is a `forge-default` rule.
+- `'source'` gives the full prescription and is opt-in, so the high-volume routine is never applied silently.
+
+Rest timers (90 s isolation / 120 s compound) and the 5-min warm-up are **forge-default**, not source values.
 
 ## 2. Flow (pure reducer `reduce(state, action)`)
 
@@ -54,7 +81,7 @@ All imports come from `src/training-programs/index.js`:
 
 | Need | Function | Returns |
 | --- | --- | --- |
-| Today's mission | `todayMission(program, config, today, records)` | `{kind:'training'|'rest'|'before-start', dayKey, plan, alreadyCompleted, programWeek, programComplete, headline, body, next}` |
+| Today's mission | `todayMission(program, config, today, records)` | `{kind:'training'|'rest'|'before-start', dayKey, plan, alreadyCompleted, canStart, programWeek, programComplete, headline, body, next}` |
 | Schedule / preview | `planForDate(...)`, `preview(program, config, from, days, records)` | per-day `{date, kind, dayKey, title}` |
 | Start / run session | `createSession({id, date, programId, dayPlan, now})`, `reduce(state, action)`, `currentStep(state)`, `restRemainingSec(state, now)` | session state (below) |
 | Save | `toRecord(state)`, then `addRecord(store, record)` and `save(localStorage, store)` | session record |
@@ -67,11 +94,13 @@ All imports come from `src/training-programs/index.js`:
 { startDate: 'YYYY-MM-DD',          // required
   mode: 'rolling' | 'fixed-week',   // rolling (default): a missed day never skips a workout
   restWeekdays: [0],                 // 0=Sun..6=Sat, any set leaving ≥1 training day
-  rotation: ['A','B','C'], restSec: null | 15..600, includeOptional: true, setsChoice: 'min' | 'max' }
+  rotation: null /* = A1 B1 C1 A2 B2 C2 */, restSec: null | 15..600,
+  volume: 'reduced' | 'source', allowPendingSource: false /* UI testing only */ }
 ```
 
 **Planned exercise (`plan.exercises[]`):**
-- `{exerciseId, name, muscle, targetSets, targetReps:{min,max}, restSec, restSource:'forge-default'|'user', verification, optional, v08ExerciseId, note}`
+- `{exerciseId, name, muscle, sourceSets, targetSets, volume, targetReps:{min,max}, restSec, restSource:'forge-default'|'user', verification, verifiedBy, v08ExerciseId, note}`
+- The day plan also carries `{sourceComplete, blocked: null | 'awaiting-source' | 'no-verified-exercises', pendingExercises:[{exerciseId,name}]}`. The UI must not offer **Start** when `blocked` is set.
 - Only targets: logging never changes them.
 
 **Session record** (stored under the **new** key `forge-training-v1`, version 1, max 500, deduplicated by `id`):
@@ -87,6 +116,7 @@ All imports come from `src/training-programs/index.js`:
 ```
 
 - Only `completed` and `partial` advance the rolling rotation or count as training.
+- **Migration:** records saved with v1 day keys `A/B/C` are read as `A1/B1/C1` (`migrateDayKey`). Stored data is never rewritten or dropped for this.
 - `stopped_safety` is reported separately and is never framed as a miss.
 
 **Progression** (`recommendNext`):

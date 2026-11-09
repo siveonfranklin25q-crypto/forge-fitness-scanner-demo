@@ -32,6 +32,9 @@ export function assessSafety(answers = {}) {
 
 export function createSession({ id, date, programId, dayPlan, now }) {
   if (!id || !date || !dayPlan || !Number.isFinite(now)) throw new TypeError('createSession needs id, date, dayPlan, now');
+  if (dayPlan.blocked || !dayPlan.exercises?.length) {
+    throw new RangeError(`Day ${dayPlan.dayKey} cannot start: ${dayPlan.blocked ?? 'no exercises'} (targets are never guessed).`);
+  }
   return {
     version: 1, id: String(id), programId: programId ?? null, date, dayKey: dayPlan.dayKey, title: dayPlan.title,
     status: 'in_progress', stage: 'safety', createdAt: now, startedAt: null, endedAt: null,
