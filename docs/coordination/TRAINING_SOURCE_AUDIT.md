@@ -1,27 +1,22 @@
-# FORGE training template verification — review gate (2026-11-09)
+# FORGE training-source audit — 2026-11-09
 
-**Status: BLOCKED for source-accurate training release.** The interactive cockpit's technical/browser tests are green; the exercise prescriptions in Claude's Draft PR #9 are not faithful to the named primary source. The current integration PR #10 is **QA only**, not an approved exercise program.
+**Exercise-table parity: PASS against ChatGPT's direct read of the original source. Owner acceptance is STILL PENDING.**
 
-Primary source (read directly on 2026-11-09): Steve Shaw, [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), published Sept 25, 2013, updated Dec 22, 2020.
+Primary source: Steve Shaw, [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), updated December 2020.
 
-## Independently checked discrepancies
+## Resolution of earlier blocking discrepancies
 
-- **Different routines on the second weekly round:** Thursday, Friday and Saturday have their *own* exercises, not copies of Monday, Tuesday and Wednesday. Current code represents only A/B/C repeated.
-- **Monday (chest/back):** bench 3 sets of 8–10 rather than a flexible 3–5 sets of 8–15; cable crossover 5 sets of 10–15; pullups 5 sets of 15; two abdominal exercises are absent from the draft.
-- **Tuesday (shoulders/arms):** barbell curls are expressly present at 4 sets of 8–12 and one-arm cable curls are part of the table. Draft mislabels the former optional/unverified and omits the latter.
-- **Wednesday (legs):** leg curls are 5 sets of 10–15; seated calf raise 4 sets of 12–15; standing calf raise 4 sets of 12–15 is omitted.
-- The entire Thursday/Friday/Saturday exercise tables (and Thursday abdominal work) still need representation. Every movement needs exact source sets and reps plus an explicit source mapping.
-- Rest intervals and warm-up guidance in the engine are labelled FORGE defaults, which is correct. A trainer response in the article comments mentions other rest targets; that does not automatically supersede the application default.
+- The earlier A/B/C template was inaccurate. Claude restructured it into six distinct source sessions: **A1/B1/C1/A2/B2/C2**, with Sunday recovery.
+- ChatGPT's [complete 44-row primary-source handoff](https://github.com/siveonfranklin25q-crypto/forge-fitness-scanner-demo/pull/9#issuecomment-6747215464) lists exact exercises, sets and reps. Claude independently parsed the posted comment and found 44/44 matches in the corrected program.
+- Special cases: **plank 3 × 60 seconds, not reps**, and **leg press 5 × 20**, exact fixed reps.
+- Engine source in [Claude draft PR #9](https://github.com/siveonfranklin25q-crypto/forge-fitness-scanner-demo/pull/9) at `e2af478` was imported **unchanged** into draft integration PR #10. Engine checks: 31/31 passed upstream; the integration branch reruns these in CI.
+- The cockpit now selects the verified training days, defaults to **reduced FORGE volume** (different from the author's high-volume routine), logs actual hold seconds, and preserves local historic sessions. `todayMission().canStart` blocks a session if targets are unverified.
 
-## Next ownership action
+## Remaining release gates
 
-Claude owns `src/training-programs/` and source-content corrections in PR #9. See review comment https://github.com/siveonfranklin25q-crypto/forge-fitness-scanner-demo/pull/9#issuecomment-6744860120. Ask Claude to add six distinct day templates or a two-variant per body-part schema, correct exact exercise targets, update schedule/rolling rotation and existing deterministic tests. Keep existing saved session records intact, and plan for backwards-compatible schema migration if exercise IDs/day keys change.
+1. The **owner** must review the 44 exercise rows and accept the intended training plan; matching article data is not personalized medical clearance.
+2. New combined CI must pass, including real Chromium and no private likeness data.
+3. Hands-on mobile/Chromebook evaluation and independent cross-PR review remain.
+4. No merges, releases, deployments, spending, or private model publication without separate authorization.
 
-ChatGPT owns only the cockpit UI. Once Claude's reviewed correction is ready, copy the verified engine files to the integration branch unchanged, rerun the session smoke, test legacy-data migration and avoid treating this technical green check as a clinical or source-content signoff.
-
-## Evidence and release rules
-
-- PR #10 reviewed integration: native module import, real set logging, safety/recovery, browser persistence, original v0.8 tracker untouched.
-- Source parity is **not** passing; mark this as a product-release blocker.
-- Device-level battery/thermal, private GLB, owner acceptance and separate merge/deployment authorization are still outstanding.
-- No private character asset, client profile or personal measurements are part of this repository branch.
+There is **no user GLB or personally identifiable workout record** committed to this branch.
