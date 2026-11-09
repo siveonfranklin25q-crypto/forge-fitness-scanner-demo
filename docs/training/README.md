@@ -6,28 +6,47 @@ A browser-safe, dependency-free engine for a **classic six-day split**, built as
 - It never invents progress or penalises rest.
 - It is a module for ChatGPT's cockpit UI (Issue #8) to integrate. It **does not change** any existing FORGE screen or stored record.
 
-Status labels (per `AGENTS.md`): engine **TESTED**: 26 Node tests, two deliberate-bug checks caught, and a real-Chromium smoke run. Source template **REVIEW_REQUIRED**: see §1.
+Status labels (per `AGENTS.md`): engine **TESTED** (31 Node tests; four deliberate-bug checks caught; real-Chromium run of a full A2 session). Source template **TESTED against the posted source tables (44/44)** and **REVIEW_REQUIRED** for owner sign-off.
 
-## 1. Source and verification
+## 1. Source and verification: **source-matched (44/44)**, owner sign-off pending
 
-The template follows Muscle & Strength's [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), first published 2013 and updated 2020:
-- a 12-week, six-day split for intermediate lifters;
-- Mon/Thu **chest & back**, Tue/Fri **shoulders & arms**, Wed/Sat **legs**, Sun rest.
+Source: Steve Shaw, [Old School Series: 1970s Bodybuilding Routine](https://www.muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine), Muscle & Strength (published 2013-09-25, updated 2020-12-22). It is a 12-week program for intermediate lifters: 6 days a week, 45–60 min. The author describes it as demanding and not appropriate for everyone.
 
-**The primary page could not be read from the build environment** (the site's bot protection blocks automated clients; it was not bypassed). Every exercise name and set/rep range therefore comes from consistent **secondary summaries** of that article, and each one carries `verification: 'secondary-summary'`.
+| Key | Day | Session (source order) |
+| --- | --- | --- |
+| A1 | Mon | Bench press 3×8–10 · Incline DB bench press 3×8–12 · Cable crossover 5×10–15 · Low rack pull 3×6–8 · Wide-grip pull-up 5×15 · One-arm DB row 3×10–15 · Barbell ab rollout 3×8–12 · Hanging knee raise 3×12–15 |
+| B1 | Tue | Seated DB press 3×10–12 · Upright row 3×10–15 · Bent-over reverse fly 5×10–15 · Cable triceps extension 4×10–15 · Skullcrusher 4×10–12 · Barbell curl 4×8–12 · One-arm cable curl 4×10–15 |
+| C1 | Wed | Squat 5×6–12 · Hack squat 3×10–12 · Leg extension 3×10–15 · Good morning 3×8–10 · Leg curl 5×10–15 · Seated calf raise 4×12–15 · Standing calf raise 4×12–15 |
+| A2 | Thu | Incline bench press 3×8–10 · Chest dip 3×10–15 · DB fly 5×10–15 · Barbell row 3×8–10 · Lat pulldown 5×8–12 · Seated cable row 3×10–15 · **Plank 3×60 s (timed)** · DB side bend 3×10–12 |
+| B2 | Fri | Military press 3×8–10 · Side lateral raise 5×10–15 · Landmine press 3×10–12 · Seated French press 4×8–10 · One-arm DB triceps extension 4×10–12 · Seated DB curl 4×10–12 · EZ-bar preacher curl 4×10–12 |
+| C2 | Sat | **Leg press 5×20 (fixed)** · Walking barbell lunge 3×10–12 · Bulgarian split squat 3×10–12 · Stiff-leg deadlift 3×8–10 · Single-leg curl 5×10–15 · Floor barbell calf raise 4×12–15 · Leg press calf press 4×12–15 |
+| — | Sun | Rest |
 
-| Item | Status |
-| --- | --- |
-| Weekly layout, 12 weeks, intermediate | secondary-summary (consistent across copies) |
-| Day A: bench press, incline DB press, cable crossover (3–5 × 8–15); low rack pull, wide-grip pull-up, one-arm DB row (3–5 × 6–15) | secondary-summary. One copy lists deadlifts instead of rack pulls (noted in data). |
-| Day B: seated DB press, upright row, reverse fly, cable triceps extension, skullcrusher (3–5 × 10–15) | secondary-summary |
-| Day B: barbell curl | **unverified**: only some copies list it, so it is `optional: true` and filterable |
-| Day C: squat 5 × 6–12; hack squat, leg extension, good morning, leg curl, seated calf raise (3–5 × 6–15) | secondary-summary |
-| Rest timers (90 s isolation / 120 s compound), 5-min warm-up | **forge-default**, never attributed to the source |
+**How the data was verified.**
+- The tables come from ChatGPT's direct read of the article ([PR #9 comment](https://github.com/siveonfranklin25q-crypto/forge-fitness-scanner-demo/pull/9#issuecomment-6747215464)). The primary page blocks this build environment's automated client, and that block was not bypassed.
+- Each exercise carries `verification: 'primary-source'` and `verifiedBy`.
+- Two independent checks:
+  1. A golden-table unit test with all 44 rows.
+  2. A machine comparison of the posted comment against the program data: 44/44 rows match in order, sets, reps and timed hold.
+- **Owner sign-off** (REVIEW_REQUIRED): glance at the table above against the article.
 
-**Owner check (2 minutes, in your own browser):** open the source page and confirm or correct each row above. Edits go only in `src/training-programs/programs/classic-six-day.js`. Only facts (names, numbers, layout) are used; no instructional prose is copied.
+**Correction history.**
+- v1 repeated three sessions built from secondary summaries.
+- The owner-side review on 2026-11-09 found this wrong.
+- v2 has six distinct sessions and the complete source tables.
 
-The engine starts conservatively at the **minimum** of each set range (`setsChoice: 'min'`). The source describes intermediate-level volume.
+**Rule: targets are never guessed.**
+- A `pending-source` exercise has `sets: null`, and a day that isn't fully verified returns `blocked: 'awaiting-source'`; `createSession` refuses it. This guard stays for future programs and edits, and is tested.
+- `isSourceMatched(program)` is now `true`.
+- `allowPendingSource: true` is for UI testing only.
+
+**Timed holds.** An exercise with `measure: 'time'` has `targetHoldSec`; its sets log `seconds`, with `reps: null`. Timed holds never count toward load/rep bests and are never auto-progressed.
+
+**Volume** (`config.volume`):
+- `'reduced'` (default) uses 60 % of source sets, rounded up, max 3. This is a `forge-default` rule and **not the author's prescription**.
+- `'source'` gives the full prescription and is opt-in, so the high-volume routine is never applied silently.
+
+Rest timers (90 s isolation / 120 s compound) and the 5-min warm-up are **forge-default**, not source values.
 
 ## 2. Flow (pure reducer `reduce(state, action)`)
 
@@ -54,7 +73,7 @@ All imports come from `src/training-programs/index.js`:
 
 | Need | Function | Returns |
 | --- | --- | --- |
-| Today's mission | `todayMission(program, config, today, records)` | `{kind:'training'|'rest'|'before-start', dayKey, plan, alreadyCompleted, programWeek, programComplete, headline, body, next}` |
+| Today's mission | `todayMission(program, config, today, records)` | `{kind:'training'|'rest'|'before-start', dayKey, plan, alreadyCompleted, canStart, programWeek, programComplete, headline, body, next}` |
 | Schedule / preview | `planForDate(...)`, `preview(program, config, from, days, records)` | per-day `{date, kind, dayKey, title}` |
 | Start / run session | `createSession({id, date, programId, dayPlan, now})`, `reduce(state, action)`, `currentStep(state)`, `restRemainingSec(state, now)` | session state (below) |
 | Save | `toRecord(state)`, then `addRecord(store, record)` and `save(localStorage, store)` | session record |
@@ -67,11 +86,13 @@ All imports come from `src/training-programs/index.js`:
 { startDate: 'YYYY-MM-DD',          // required
   mode: 'rolling' | 'fixed-week',   // rolling (default): a missed day never skips a workout
   restWeekdays: [0],                 // 0=Sun..6=Sat, any set leaving ≥1 training day
-  rotation: ['A','B','C'], restSec: null | 15..600, includeOptional: true, setsChoice: 'min' | 'max' }
+  rotation: null /* = A1 B1 C1 A2 B2 C2 */, restSec: null | 15..600,
+  volume: 'reduced' | 'source', allowPendingSource: false /* UI testing only */ }
 ```
 
 **Planned exercise (`plan.exercises[]`):**
-- `{exerciseId, name, muscle, targetSets, targetReps:{min,max}, restSec, restSource:'forge-default'|'user', verification, optional, v08ExerciseId, note}`
+- `{exerciseId, name, muscle, sourceSets, targetSets, volume, measure:'reps'|'time', targetReps:{min,max}|null, targetHoldSec:number|null, restSec, restSource:'forge-default'|'user', verification, verifiedBy, v08ExerciseId, note}`
+- The day plan also carries `{sourceComplete, blocked: null | 'awaiting-source' | 'no-verified-exercises', pendingExercises:[{exerciseId,name}]}`. The UI must not offer **Start** when `blocked` is set.
 - Only targets: logging never changes them.
 
 **Session record** (stored under the **new** key `forge-training-v1`, version 1, max 500, deduplicated by `id`):
@@ -82,11 +103,12 @@ All imports come from `src/training-programs/index.js`:
   startedAt, endedAt, plannedSets, loggedSets, reducedForSafety, warmupDone,
   safety: {level:'go'|'reduce'|'stop', reasons:[], message} | null,
   symptoms: 'none' | 'mild' | 'worse' | null,
-  sets:    [{exerciseId, muscle, setNumber, reps, load, unit:'kg'|'lb', rir:0-5|null, at}],
+  sets:    [{exerciseId, muscle, setNumber, measure:'reps'|'time', reps|null, seconds|null, load, unit:'kg'|'lb', rir:0-5|null, at}],
   skipped: [{exerciseId, setNumber}] }
 ```
 
 - Only `completed` and `partial` advance the rolling rotation or count as training.
+- **Migration:** records saved with v1 day keys `A/B/C` are read as `A1/B1/C1` (`migrateDayKey`). Stored data is never rewritten or dropped for this.
 - `stopped_safety` is reported separately and is never framed as a miss.
 
 **Progression** (`recommendNext`):
@@ -96,7 +118,7 @@ All imports come from `src/training-programs/index.js`:
 ## 4. Existing data is protected
 
 - `forge-strength-v08-sessions` and all other FORGE keys are **never written** (tested with a fake storage).
-- Three template exercises map to v0.8 exercise ids: incline DB press → 2, cable triceps extension → 14, leg curl → 22. Only those can be read from, or offered to, v0.8 history.
+- Eight template exercises map to v0.8 exercise ids: incline DB press → 2, seated cable row → 4, lat pulldown → 5, side lateral raise → 7, cable triceps extension → 14, leg press → 18, leg curl → 22, standing calf raise → 26. Only those can be read from, or offered to, v0.8 history.
 - Untrusted stored JSON is validated, and invalid records are **dropped, not repaired** (no fake data).
 
 ## 5. Feedback rules (enforced by tests)

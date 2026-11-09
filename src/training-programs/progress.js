@@ -36,6 +36,7 @@ export function personalBests(records) {
   const best = {};
   for (const r of [...records].filter(r => r && HAPPENED.has(r.status)).sort((a, b) => a.date.localeCompare(b.date))) {
     for (const s of r.sets) {
+      if (!Number.isInteger(s.reps)) continue; // timed holds are not load/rep bests
       const kg = toKg(s.load, s.unit);
       const b = best[s.exerciseId];
       if (!b || kg > b.kg + 1e-9 || (Math.abs(kg - b.kg) < 1e-9 && s.reps > b.reps)) {
@@ -88,6 +89,9 @@ export function recommendNext(records, exerciseId, targetReps, opts = {}) {
   if (last.symptoms === 'mild' || last.reducedForSafety) return { action: 'hold', basis, reason: 'The last session had mild symptoms or reduced volume. Keep the same load.' };
   const work = r => r.sets.filter(s => s.exerciseId === exerciseId);
   const lastSets = work(last);
+  if (!targetReps || lastSets.every(s => !Number.isInteger(s.reps))) {
+    return { action: 'repeat', basis, reason: 'Timed holds are not auto-progressed. Hold the target time with good form; stop if form or breathing breaks down.' };
+  }
   if (lastSets.some(s => s.rir !== null && s.rir <= 1)) return { action: 'hold', basis, reason: 'A set was at 0–1 reps in reserve. Keep the load and own the reps first.' };
   if (sessions.length < 2) return { action: 'repeat', basis, reason: 'One session logged. Repeat the load on another day before judging progress.' };
   const prev = sessions.at(-2);

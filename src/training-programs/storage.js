@@ -15,7 +15,8 @@ export function emptyStore() {
 
 function validRecord(r) {
   return r && typeof r.id === 'string' && isISODate(r.date) && STATUSES.has(r.status) && Array.isArray(r.sets)
-    && r.sets.every(s => s && typeof s.exerciseId === 'string' && Number.isInteger(s.reps) && Number.isFinite(s.load) && ['kg', 'lb'].includes(s.unit));
+    && r.sets.every(s => s && typeof s.exerciseId === 'string' && Number.isFinite(s.load) && ['kg', 'lb'].includes(s.unit)
+      && (Number.isInteger(s.reps) || (s.reps === null && Number.isInteger(s.seconds) && s.seconds > 0)));
 }
 
 /** Parse untrusted JSON; invalid records are dropped, never "repaired" into fake data. */
