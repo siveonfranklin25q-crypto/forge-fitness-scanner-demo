@@ -383,7 +383,7 @@ test('v0.8 bridge: reads mapped exercises only, never writes, round-trips mapped
 // ---------- storage ----------
 function fakeStorage() { const m = new Map(); return { getItem: k => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), m }; }
 
-test('storage: new key only, round-trip, idempotent add, junk dropped not repaired', () => {
+test('storage: new key only, round-trip, idempotent add; junk and duplicates quarantined, never dropped or repaired', () => {
   const st = fakeStorage();
   st.setItem('forge-strength-v08-sessions', '[1,2,3]');
   let store = T.emptyStore();
@@ -394,25 +394,113 @@ test('storage: new key only, round-trip, idempotent add, junk dropped not repair
   assert.equal(st.getItem('forge-strength-v08-sessions'), '[1,2,3]');
   assert.deepEqual([...st.m.keys()].sort(), ['forge-strength-v08-sessions', T.STORAGE_KEY].sort());
   assert.deepEqual(T.load(st).store.records, [r]);
-  const junk = JSON.stringify({ version: 1, records: [r, { id: 'z', date: 'nope', status: 'completed', sets: [] }, { ...r }] });
+  const bad = { id: 'z', date: 'nope', status: 'completed', sets: [] };
+  const dup = { ...r, title: 'second copy with the same id' };
+  const junk = JSON.stringify({ version: 1, records: [r, bad, dup] });
   const parsed = T.parseStore(junk);
   assert.equal(parsed.store.records.length, 1);
-  assert.equal(parsed.dropped, 2);
-  assert.equal(parsed.quarantined, 1);
-  // Quarantined records are excluded from logic but survive load -> add -> save.
+  assert.equal(parsed.dropped, 0);
+  assert.equal(parsed.quarantined, 2);
+  assert.deepEqual(parsed.store.quarantine, [bad, dup]);
+  // Quarantined records are excluded from logic but survive load -> add -> save, without duplication.
   const st2 = fakeStorage();
   st2.setItem(T.STORAGE_KEY, junk);
   let s2 = T.load(st2).store;
-  assert.equal(s2.quarantine.length, 1);
   s2 = T.addRecord(s2, record('b', '2026-11-10', [set('bench-press', 8, 60)]));
   assert.ok(T.save(st2, s2));
   const raw = JSON.parse(st2.getItem(T.STORAGE_KEY));
-  assert.deepEqual(raw.records.map(r => r.id), ['a', 'b']);
-  assert.deepEqual(raw.quarantine.map(r => r.id), ['z']);
-  assert.equal(T.load(st2).store.quarantine.length, 1, 'not duplicated on re-load');
-  assert.equal(T.parseStore('{oops').error, 'unreadable');
-  assert.equal(T.parseStore('{"version":99}').error, 'unknown-version');
-  assert.equal(T.load({ getItem() { throw new Error('denied'); } }).error, 'storage-unavailable');
+  assert.deepEqual(raw.records.map(x => x.id), ['a', 'b']);
+  assert.deepEqual(raw.quarantine, [bad, dup]);
+  assert.equal(T.load(st2).store.quarantine.length, 2, 'not duplicated on re-load');
+});
+
+const rec = i => record('r' + String(i).padStart(4, '0'), '2026-11-09', [set('bench-press', 8, 60)]);
+const junkRec = i => ({ id: 'junk' + i, note: 'unsupported shape ' + i });
+const seeded = obj => { const st = fakeStorage(); const raw = JSON.stringify(obj); st.setItem(T.STORAGE_KEY, raw); return { st, raw }; };
+
+test('quarantine cap: 199 and 200 stay writable; 201 fails closed with nothing lost or changed', () => {
+  for (const [prior, invalid, expectError] of [[198, 1, null], [199, 1, null], [200, 0, null], [200, 1, 'quarantine-overflow'], [150, 75, 'quarantine-overflow'], [0, 260, 'quarantine-overflow'], [230, 0, 'quarantine-overflow']]) {
+    const original = { version: 1, records: [rec(1), ...Array.from({ length: invalid }, (_, i) => junkRec(i))],
+      quarantine: Array.from({ length: prior }, (_, i) => ({ kind: 'old', n: i })), active: null };
+    const { st, raw } = seeded(original);
+    const res = T.load(st);
+    const label = `${prior}+${invalid}`;
+    assert.equal(res.error, expectError, label);
+    // Every original entry is still present, in order, untrimmed.
+    assert.equal(res.store.quarantine.length, prior + invalid, label);
+    assert.deepEqual(res.store.quarantine, [...original.quarantine, ...original.records.slice(1)], label);
+    assert.equal(res.store.records.length, 1, label);
+    const next = T.addRecord(res.store, rec(2));
+    const out = T.trySave(st, next);
+    if (expectError) {
+      assert.deepEqual(out, { ok: false, error: 'quarantine-overflow' }, label);
+      assert.equal(T.save(st, next), false, label);
+      assert.throws(() => T.serializeStore(next), /quarantine-overflow/, label);
+      assert.equal(st.getItem(T.STORAGE_KEY), raw, label + ': original bytes untouched');
+      assert.equal(T.exportRaw(st), raw, label);
+    } else {
+      assert.deepEqual(out, { ok: true, error: null }, label);
+      const back = JSON.parse(st.getItem(T.STORAGE_KEY));
+      assert.equal(back.quarantine.length, prior + invalid, label);
+      assert.deepEqual(back.records.map(x => x.id), ['r0001', 'r0002'], label);
+    }
+  }
+});
+
+test('record cap: 500 saved workouts stay; the 501st is refused, not traded for the oldest', () => {
+  const full = { version: 1, records: Array.from({ length: 500 }, (_, i) => rec(i)), quarantine: [], active: null };
+  const { st, raw } = seeded(full);
+  const res = T.load(st);
+  assert.equal(res.error, null);
+  assert.ok(T.save(st, res.store), 'exactly at the cap is writable');
+  const over = T.addRecord(res.store, rec(9999));
+  assert.equal(over.records.length, 501);
+  assert.deepEqual(T.trySave(st, over), { ok: false, error: 'records-overflow' });
+  assert.equal(JSON.parse(st.getItem(T.STORAGE_KEY)).records[0].id, 'r0000', 'oldest workout still stored');
+  const already = seeded({ ...full, records: [...full.records, rec(9999)] });
+  const res2 = T.load(already.st);
+  assert.equal(res2.error, 'records-overflow');
+  assert.equal(res2.store.records.length, 501);
+  assert.equal(T.save(already.st, res2.store), false);
+  assert.equal(already.st.getItem(T.STORAGE_KEY), already.raw);
+  assert.equal(raw.length > 0, true);
+});
+
+test('unreadable, unknown-version and unavailable storage are read-only: a later save cannot overwrite them', () => {
+  for (const [raw, error] of [['{oops', 'unreadable'], ['{"version":99,"records":[{"id":"future"}]}', 'unknown-version'], ['[1,2]', 'unknown-version']]) {
+    const st = fakeStorage();
+    st.setItem(T.STORAGE_KEY, raw);
+    const res = T.load(st);
+    assert.equal(res.error, error);
+    const attempt = T.addRecord({ ...res.store, config: { startDate: START } }, rec(1));
+    assert.deepEqual(T.trySave(st, attempt), { ok: false, error });
+    assert.equal(st.getItem(T.STORAGE_KEY), raw, error + ': bytes untouched');
+    assert.equal(T.exportRaw(st), raw);
+  }
+  const denied = T.load({ getItem() { throw new Error('denied'); } });
+  assert.equal(denied.error, 'storage-unavailable');
+  assert.equal(T.save(fakeStorage(), denied.store), false);
+  assert.equal(T.exportRaw({ getItem() { throw new Error('denied'); } }), null);
+  // A genuinely empty browser is writable.
+  const fresh = fakeStorage();
+  assert.equal(T.load(fresh).error, 'empty');
+  assert.ok(T.save(fresh, T.load(fresh).store));
+  assert.deepEqual(T.trySave({ setItem() { throw new Error('quota'); } }, T.emptyStore()), { ok: false, error: 'storage-write-failed' });
+});
+
+test('nothing else is lost on a read-then-save: unreadable active session and unknown fields are kept', () => {
+  const original = { version: 1, programId: 'p', config: { startDate: START }, records: [rec(1)], quarantine: [{ kind: 'old' }],
+    active: { version: 7, stage: 'exercise', sets: [{ reps: 5 }] }, futureField: { keep: ['me'] } };
+  const { st } = seeded(original);
+  const res = T.load(st);
+  assert.equal(res.store.active, null);
+  assert.equal(res.quarantined, 1);
+  assert.ok(T.save(st, res.store));
+  const back = JSON.parse(st.getItem(T.STORAGE_KEY));
+  assert.deepEqual(back.futureField, original.futureField);
+  assert.deepEqual(back.quarantine, [{ kind: 'old' }, { kind: 'unreadable-active', original: original.active }]);
+  assert.deepEqual(back.records, original.records);
+  assert.equal('readOnly' in back, false);
 });
 
 test('determinism: same inputs give identical outputs', () => {

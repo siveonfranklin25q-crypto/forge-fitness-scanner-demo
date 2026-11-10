@@ -5,7 +5,7 @@ export { DEFAULT_CONFIG, ADVANCES, migrateDayKey, normalizeConfig, buildDayPlan,
 export { STAGES, STATUSES, assessSafety, createSession, reduce, restRemainingSec, currentStep, plannedSetCount, toRecord, toKg } from './session.js';
 export { weeklySummary, personalBests, sessionHighlights, recommendNext } from './progress.js';
 export { v08Map, fromV08Sessions, toV08Session } from './adapters/v08.js';
-export { STORAGE_KEY, STORE_VERSION, emptyStore, parseStore, serializeStore, addRecord, load, save } from './storage.js';
+export { STORAGE_KEY, STORE_VERSION, MAX_RECORDS, MAX_QUARANTINE, emptyStore, parseStore, serializeStore, capacityError, addRecord, load, save, trySave, exportRaw } from './storage.js';
 export { isISODate, addDays, daysBetween, weekStart, weekday } from './dates.js';
 
 /** Today's mission for the cockpit: plan, preview and honest copy. `today` is passed in. */
