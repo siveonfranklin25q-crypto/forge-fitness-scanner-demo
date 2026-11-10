@@ -51,6 +51,12 @@ function initCockpit() {
       case 'quarantine-full':
         return 'The private archive already has ' + counts.quarantine +
           ' entries. The old workout cannot be archived without exceeding the ' + counts.maxQuarantine + '-entry limit.';
+      case 'malformed-store': {
+        const fields = (loaded.malformedFields ?? []).filter(f => f === 'records' || f === 'quarantine');
+        return 'Part of your saved training data has an unexpected format' +
+          (fields.length ? ' (' + fields.join(' and ') + ')' : '') +
+          '. FORGE has blocked changes to protect your original workout history. Download the original data before attempting recovery.';
+      }
       case 'unreadable':
         return 'Your saved training data is unreadable. FORGE will not overwrite it. Download the original data for recovery.';
       case 'unknown-version':
