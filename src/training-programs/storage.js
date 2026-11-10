@@ -37,7 +37,8 @@ const KNOWN_KEYS = new Set(['version', 'programId', 'config', 'records', 'active
  *  - invalid or duplicate-id records -> store.quarantine (kept verbatim, never used in logic)
  *  - an unreadable `active` session  -> store.quarantine as {kind:'unreadable-active', original}
  *  - unknown top-level fields        -> kept and written back unchanged
- * If the result exceeds a cap, or the data is unreadable / from an unknown version, the store is
+ * If the result exceeds a cap, or the data is unreadable / from an unknown version / has a
+ * `records` or `quarantine` field that is present but not a list ('malformed-store'), the store is
  * marked `readOnly` and `error` is set: serializeStore/save then REFUSE to write (fail closed),
  * so the original browser data stays exactly as it was until the owner decides (see exportRaw).
  */
@@ -47,6 +48,13 @@ export function parseStore(json) {
   if (x === null || x === undefined) return { store: emptyStore(), dropped: 0, quarantined: 0, error: 'empty' };
   if (typeof x !== 'object' || x.version !== STORE_VERSION) {
     return { store: { ...emptyStore(), readOnly: 'unknown-version' }, dropped: 0, quarantined: 0, error: 'unknown-version' };
+  }
+  // A missing (or null) list is simply empty. A PRESENT field of the wrong shape is damaged data
+  // we must not reinterpret as empty and later overwrite: fail closed instead.
+  const wrongShape = v => v !== undefined && v !== null && !Array.isArray(v);
+  if (wrongShape(x.records) || wrongShape(x.quarantine)) {
+    return { store: { ...emptyStore(), readOnly: 'malformed-store' }, dropped: 0, quarantined: 0, error: 'malformed-store',
+      malformedFields: ['records', 'quarantine'].filter(k => wrongShape(x[k])) };
   }
   const input = Array.isArray(x.records) ? x.records : [];
   const ids = new Set();
