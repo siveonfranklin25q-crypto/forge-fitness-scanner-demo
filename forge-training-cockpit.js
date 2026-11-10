@@ -299,9 +299,10 @@ function initCockpit() {
     if (persist({ ...store, active: state })) { active = state; feedback = ''; render(); }
   }
   function runAction(name) {
+    // Backups remain available even while writes are blocked by corrupt or over-limit data.
+    if (name === 'download-training') return downloadTraining();
     if (blocked) return;
     switch (name) {
-      case 'download-training': return downloadTraining();
       case 'archive-legacy':
       case 'discard-legacy': return resolveLegacy(name);
       case 'configure': return configure();
