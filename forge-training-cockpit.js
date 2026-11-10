@@ -297,8 +297,9 @@ function initCockpit() {
     const btn = $('fc-mission').querySelector('button[data-fc-action="start"]');
     btn.hidden = Boolean(active) || Boolean(staleActive) || !mission.canStart || mission.programComplete;
     btn.disabled = blocked;
-    $('fc-progress-count').textContent = summary.sessionsDone + ' logged training sessions this week · ' +
-      summary.loggedSets + ' working sets recorded.';
+    $('fc-progress-count').textContent = summary.sessionsDone + ' logged training ' +
+      (summary.sessionsDone === 1 ? 'session' : 'sessions') + ' this week · ' +
+      summary.loggedSets + ' working ' + (summary.loggedSets === 1 ? 'set' : 'sets') + ' recorded.';
     $('fc-progress-detail').textContent = summary.setCompletionRatio === null
       ? 'No finished workout sets logged this week. Planned sets are not counted as work.'
       : Math.round(summary.setCompletionRatio * 100) + '% of planned sets in saved training sessions were logged. ' +
@@ -308,7 +309,8 @@ function initCockpit() {
       last.loggedSets + ' actual sets.' : 'No saved training sessions yet.';
     if (!active) return;
     $('fc-session-title').textContent = active.title;
-    $('fc-live-count').textContent = active.sets.length + ' actual sets logged';
+    $('fc-live-count').textContent = active.sets.length + ' actual ' +
+      (active.sets.length === 1 ? 'set' : 'sets') + ' logged';
     $('fc-stage-note').textContent = active.safety?.message ?? 'Only sets you explicitly record will count.';
     for (const stage of ['safety','warmup','exercise','rest','review']) $('fc-' + stage).hidden = active.stage !== stage;
     if (active.stage === 'exercise') {
@@ -339,7 +341,9 @@ function initCockpit() {
     }
     if (active.stage === 'rest') { updateTimer(); tick = setInterval(updateTimer, 1000); }
     if (active.stage === 'review') $('fc-review-count').textContent =
-      active.sets.length + ' working sets recorded; ' + active.skipped.length + ' planned sets skipped.';
+      active.sets.length + ' working ' + (active.sets.length === 1 ? 'set' : 'sets') +
+      ' recorded; ' + active.skipped.length + ' planned ' +
+      (active.skipped.length === 1 ? 'set' : 'sets') + ' skipped.';
   }
   render();
 }
