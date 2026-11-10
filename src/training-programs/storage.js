@@ -21,43 +21,90 @@ function validRecord(r) {
       && (Number.isInteger(s.reps) || (s.reps === null && Number.isInteger(s.seconds) && s.seconds > 0)));
 }
 
+/** Why a store may not be written. null = writable. */
+export function capacityError(store) {
+  if (store.readOnly) return store.readOnly;
+  if ((store.records?.length ?? 0) > MAX_RECORDS) return 'records-overflow';
+  if ((store.quarantine?.length ?? 0) > MAX_QUARANTINE) return 'quarantine-overflow';
+  return null;
+}
+
+const KNOWN_KEYS = new Set(['version', 'programId', 'config', 'records', 'active', 'quarantine', 'readOnly']);
+
 /**
- * Parse untrusted JSON. Invalid records are never "repaired" into fake data and never used for
- * schedule or progress — but they are QUARANTINED and written back on save, so a later write by
- * any UI cannot silently delete data this version doesn't understand.
+ * Parse untrusted JSON. NOTHING is ever dropped or trimmed:
+ *  - valid, unique records           -> store.records (used for schedule/progress)
+ *  - invalid or duplicate-id records -> store.quarantine (kept verbatim, never used in logic)
+ *  - an unreadable `active` session  -> store.quarantine as {kind:'unreadable-active', original}
+ *  - unknown top-level fields        -> kept and written back unchanged
+ * If the result exceeds a cap, or the data is unreadable / from an unknown version, the store is
+ * marked `readOnly` and `error` is set: serializeStore/save then REFUSE to write (fail closed),
+ * so the original browser data stays exactly as it was until the owner decides (see exportRaw).
  */
 export function parseStore(json) {
   let x;
-  try { x = JSON.parse(json); } catch { return { store: emptyStore(), dropped: 0, error: 'unreadable' }; }
-  if (!x || typeof x !== 'object' || x.version !== STORE_VERSION) return { store: emptyStore(), dropped: 0, error: x ? 'unknown-version' : 'empty' };
-  const records = Array.isArray(x.records) ? x.records : [];
-  const kept = records.filter(validRecord).slice(-MAX_RECORDS);
+  try { x = JSON.parse(json); } catch { return { store: { ...emptyStore(), readOnly: 'unreadable' }, dropped: 0, quarantined: 0, error: 'unreadable' }; }
+  if (x === null || x === undefined) return { store: emptyStore(), dropped: 0, quarantined: 0, error: 'empty' };
+  if (typeof x !== 'object' || x.version !== STORE_VERSION) {
+    return { store: { ...emptyStore(), readOnly: 'unknown-version' }, dropped: 0, quarantined: 0, error: 'unknown-version' };
+  }
+  const input = Array.isArray(x.records) ? x.records : [];
   const ids = new Set();
-  const unique = kept.filter(r => (ids.has(r.id) ? false : (ids.add(r.id), true)));
-  const invalid = records.filter(r => !validRecord(r));
+  const records = [];
+  const moved = [];
+  for (const r of input) {
+    if (validRecord(r) && !ids.has(r.id)) { ids.add(r.id); records.push(r); } else moved.push(r);
+  }
   const prior = Array.isArray(x.quarantine) ? x.quarantine : [];
-  const quarantine = [...prior, ...invalid].slice(-MAX_QUARANTINE);
-  return { store: { version: STORE_VERSION, programId: x.programId ?? null, config: x.config ?? null, records: unique,
-    active: x.active && x.active.version === 1 ? x.active : null, quarantine },
-  dropped: records.length - unique.length, quarantined: invalid.length, error: null };
+  let active = null;
+  if (x.active && typeof x.active === 'object' && x.active.version === 1) active = x.active;
+  else if (x.active !== null && x.active !== undefined) moved.push({ kind: 'unreadable-active', original: x.active });
+  const extra = {};
+  for (const k of Object.keys(x)) if (!KNOWN_KEYS.has(k)) extra[k] = x[k];
+  const store = { ...extra, version: STORE_VERSION, programId: x.programId ?? null, config: x.config ?? null,
+    records, active, quarantine: [...prior, ...moved] };
+  const error = capacityError(store);
+  if (error) store.readOnly = error;
+  return { store, dropped: 0, quarantined: moved.length, error,
+    counts: { records: records.length, quarantine: store.quarantine.length, maxRecords: MAX_RECORDS, maxQuarantine: MAX_QUARANTINE } };
 }
 
+/** Throws RangeError instead of trimming when a cap is exceeded or the store is read-only. */
 export function serializeStore(store) {
-  return JSON.stringify({ ...store, records: store.records.slice(-MAX_RECORDS),
-    quarantine: (store.quarantine ?? []).slice(-MAX_QUARANTINE) });
+  const error = capacityError(store);
+  if (error) throw new RangeError(`Training store is not writable: ${error}`);
+  return JSON.stringify(store);
 }
 
-/** Add a finished record (idempotent by id). Returns a new store. */
+/**
+ * Add a finished record (idempotent by id). Returns a new store. Never trims: if this pushes
+ * the store past MAX_RECORDS, save() will refuse and the UI must tell the user.
+ */
 export function addRecord(store, record) {
   if (!validRecord(record)) throw new TypeError('Invalid session record');
   const records = store.records.filter(r => r.id !== record.id).concat(record).sort((a, b) => a.date.localeCompare(b.date));
-  return { ...store, records: records.slice(-MAX_RECORDS), active: null };
+  return { ...store, records, active: null };
 }
 
 export function load(storage) {
-  try { return parseStore(storage.getItem(STORAGE_KEY) ?? 'null'); } catch { return { store: emptyStore(), dropped: 0, error: 'storage-unavailable' }; }
+  let raw;
+  try { raw = storage.getItem(STORAGE_KEY); } catch { return { store: { ...emptyStore(), readOnly: 'storage-unavailable' }, dropped: 0, quarantined: 0, error: 'storage-unavailable' }; }
+  return parseStore(raw ?? 'null');
+}
+
+/** Save with a reason on failure: {ok:true} | {ok:false, error}. Never writes a trimmed copy. */
+export function trySave(storage, store) {
+  const error = capacityError(store);
+  if (error) return { ok: false, error };
+  try { storage.setItem(STORAGE_KEY, serializeStore(store)); return { ok: true, error: null }; }
+  catch { return { ok: false, error: 'storage-write-failed' }; }
 }
 
 export function save(storage, store) {
-  try { storage.setItem(STORAGE_KEY, serializeStore(store)); return true; } catch { return false; }
+  return trySave(storage, store).ok;
+}
+
+/** The untouched original string for backup/export (or null). Read-only; safe in every state. */
+export function exportRaw(storage) {
+  try { return storage.getItem(STORAGE_KEY); } catch { return null; }
 }

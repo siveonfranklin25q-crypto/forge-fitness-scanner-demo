@@ -6,7 +6,7 @@ A browser-safe, dependency-free engine for a **classic six-day split**, built as
 - It never invents progress or penalises rest.
 - It is a module for ChatGPT's cockpit UI (Issue #8) to integrate. It **does not change** any existing FORGE screen or stored record.
 
-Status labels (per `AGENTS.md`): engine **TESTED** (31 Node tests; four deliberate-bug checks caught; real-Chromium run of a full A2 session). Source template **TESTED against the posted source tables (44/44)** and **REVIEW_REQUIRED** for owner sign-off.
+Status labels (per `AGENTS.md`): engine **TESTED** (36 Node tests; four deliberate-bug checks caught; real-Chromium run of a full A2 session). Source template **TESTED against the posted source tables (44/44)** and **REVIEW_REQUIRED** for owner sign-off.
 
 ## 1. Source and verification: **source-matched (44/44)**, owner sign-off pending
 
@@ -76,7 +76,7 @@ All imports come from `src/training-programs/index.js`:
 | Today's mission | `todayMission(program, config, today, records)` | `{kind:'training'|'rest'|'before-start', dayKey, plan, alreadyCompleted, canStart, programWeek, programComplete, headline, body, next}` |
 | Schedule / preview | `planForDate(...)`, `preview(program, config, from, days, records)` | per-day `{date, kind, dayKey, title}` |
 | Start / run session | `createSession({id, date, programId, dayPlan, now})`, `reduce(state, action)`, `currentStep(state)`, `restRemainingSec(state, now)` | session state (below) |
-| Save | `toRecord(state)`, then `addRecord(store, record)` and `save(localStorage, store)` | session record |
+| Save | `toRecord(state)`, then `addRecord(store, record)` and `save(localStorage, store)` or `trySave(...)` → `{ok, error}`; `capacityError(store)`; `exportRaw(localStorage)` | session record |
 | Progress | `weeklySummary`, `personalBests`, `sessionHighlights(record, history)`, `recommendNext(records, exerciseId, {min,max})` | log-derived facts with `basis` (session ids/dates) |
 | v0.8 history | `fromV08Sessions(v08Array, program)` (read-only), `toV08Session(record, program)` (returns an object; the UI decides whether to append) | |
 
@@ -95,7 +95,7 @@ All imports come from `src/training-programs/index.js`:
 - The day plan also carries `{sourceComplete, blocked: null | 'awaiting-source' | 'no-verified-exercises', pendingExercises:[{exerciseId,name}]}`. The UI must not offer **Start** when `blocked` is set.
 - Only targets: logging never changes them.
 
-**Session record** (stored under the **new** key `forge-training-v1`, version 1, max 500, deduplicated by `id`):
+**Session record** (stored under the **new** key `forge-training-v1`, version 1; at most 500, and writes are refused beyond that rather than trimming; unique by `id`):
 
 ```js
 { version:1, id, programId, date:'YYYY-MM-DD', dayKey, title,
@@ -119,7 +119,15 @@ All imports come from `src/training-programs/index.js`:
 
 - `forge-strength-v08-sessions` and all other FORGE keys are **never written** (tested with a fake storage).
 - Eight template exercises map to v0.8 exercise ids: incline DB press → 2, seated cable row → 4, lat pulldown → 5, side lateral raise → 7, cable triceps extension → 14, leg press → 18, leg curl → 22, standing calf raise → 26. Only those can be read from, or offered to, v0.8 history.
-- Untrusted stored JSON is validated, and invalid records are **dropped, not repaired** (no fake data).
+- Untrusted stored JSON is validated. Invalid records are **never repaired** into fake data and never used for schedule or progress.
+- **Nothing is dropped or trimmed, ever.** On load:
+  - invalid or duplicate-id records and an unreadable in-progress session move to `store.quarantine`, verbatim;
+  - unknown top-level fields are kept and written back.
+- **Caps fail closed.** Limits are `MAX_RECORDS = 500` and `MAX_QUARANTINE = 200`. If loaded or about-to-be-saved data exceeds a cap, or the stored data is unreadable or from an unknown version, the store is marked `readOnly` and:
+  - `load()` / `parseStore()` return `error`: `'records-overflow' | 'quarantine-overflow' | 'unreadable' | 'unknown-version' | 'storage-unavailable'` (`'empty'` is the only non-blocking value), plus `counts`;
+  - `save()` returns `false`, `trySave()` returns `{ok:false, error}`, and `serializeStore()` throws. The original browser bytes are left untouched.
+  - `exportRaw(storage)` returns the original string so the UI can offer a backup before any owner decision.
+- UI contract: when `load().error` is set and not `'empty'`, block writes, show a truthful message, and offer the export. Never claim a session was saved when `save()` returned `false`.
 
 ## 5. Feedback rules (enforced by tests)
 
