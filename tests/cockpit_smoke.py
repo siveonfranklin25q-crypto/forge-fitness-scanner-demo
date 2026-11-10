@@ -249,6 +249,105 @@ with server() as url, sync_playwright() as pw:
     assert data["quarantine"][-1]["originalSession"]["sets"][0]["reps"] == 10
     context.close()
 
+    # Fail-closed 201-entry archive: refuse writes, explain exact cap, export untouched bytes.
+    context = browser.new_context(viewport={"width": 390, "height": 850}, accept_downloads=True)
+    page = context.new_page()
+    page.add_init_script(FIXED_CLOCK)
+    page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+    page.goto(url, wait_until="domcontentloaded")
+    page.evaluate("""() => localStorage.setItem('forge-training-v1', JSON.stringify({
+      version:1, programId:null, config:null, records:[], active:null,
+      quarantine:Array.from({length:201},(_,i)=>({kind:'legacy',id:'q'+i,nested:{unknown:[i,null,'raw']}})),
+      privateFutureField:{preserve:'unchanged'}
+    }))""")
+    original = page.evaluate("localStorage.getItem('forge-training-v1')")
+    page.reload(wait_until="domcontentloaded")
+    page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+    assert page.locator("#fc-storage").is_visible()
+    assert "201 archived or unreadable entries" in page.locator("#fc-storage-message").inner_text()
+    assert "200" in page.locator("#fc-storage-message").inner_text()
+    assert page.locator('[data-fc-action="configure"]').is_disabled()
+    with page.expect_download() as capture:
+        page.locator('[data-fc-action="download-training"]').click()
+    download = capture.value
+    assert download.suggested_filename.endswith(".json")
+    assert Path(download.path()).read_text(encoding="utf-8") == original
+    assert page.evaluate("localStorage.getItem('forge-training-v1')") == original
+    context.close()
+
+    # Damaged or unfamiliar JSON also remains untouched and can be downloaded.
+    for original in ("{not valid json", '{"version":999,"unknown":{"private":"keep me"}}'):
+        context = browser.new_context(viewport={"width": 390, "height": 850}, accept_downloads=True)
+        page = context.new_page()
+        page.add_init_script(FIXED_CLOCK)
+        page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+        page.goto(url, wait_until="domcontentloaded")
+        page.evaluate("(raw) => localStorage.setItem('forge-training-v1', raw)", original)
+        page.reload(wait_until="domcontentloaded")
+        page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+        message = page.locator("#fc-storage-message").inner_text().lower()
+        assert ("unreadable" in message) if original.startswith("{not") else ("unfamiliar" in message)
+        assert page.locator('[data-fc-action="configure"]').is_disabled()
+        with page.expect_download() as capture:
+            page.locator('[data-fc-action="download-training"]').click()
+        download = capture.value
+        assert download.suggested_filename.endswith(".txt" if original.startswith("{not") else ".json")
+        assert Path(download.path()).read_text(encoding="utf-8") == original
+        assert page.evaluate("localStorage.getItem('forge-training-v1')") == original
+        context.close()
+
+    # At the 500-record limit, no new workout can start and raw backup is available.
+    context = browser.new_context(viewport={"width": 390, "height": 850}, accept_downloads=True)
+    page = context.new_page()
+    page.add_init_script(FIXED_CLOCK)
+    page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+    page.goto(url, wait_until="domcontentloaded")
+    page.evaluate("""() => localStorage.setItem('forge-training-v1', JSON.stringify({
+      version:1, programId:'classic-six-day-v2',
+      config:{startDate:'2026-11-09',mode:'rolling',restWeekdays:[0],rotation:['A1','B1','C1','A2','B2','C2'],
+        volume:'reduced',restSec:null,allowPendingSource:false},
+      active:null, quarantine:[],
+      records:Array.from({length:500},(_,i)=>({id:'s'+i, date:'2026-11-01', status:'skipped',
+        sets:[],dayKey:'A1',plannedSets:0,loggedSets:0}))
+    }))""")
+    original = page.evaluate("localStorage.getItem('forge-training-v1')")
+    page.reload(wait_until="domcontentloaded")
+    page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+    assert page.locator("#fc-storage").is_visible()
+    assert "500 saved workouts" in page.locator("#fc-storage-message").inner_text()
+    assert page.locator('[data-fc-action="start"]').is_hidden()
+    with page.expect_download() as capture:
+        page.locator('[data-fc-action="download-training"]').click()
+    assert Path(capture.value.path()).read_text(encoding="utf-8") == original
+    assert page.evaluate("localStorage.getItem('forge-training-v1')") == original
+    context.close()
+
+    # Exactly 200 archived items are permitted, but archiving another stale active
+    # session must refuse without dropping it or losing the original snapshot.
+    context = browser.new_context(viewport={"width": 390, "height": 850}, accept_downloads=True)
+    page = context.new_page()
+    page.add_init_script(FIXED_CLOCK)
+    page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+    page.goto(url, wait_until="domcontentloaded")
+    page.evaluate("""() => localStorage.setItem('forge-training-v1', JSON.stringify({
+      version:1,programId:'classic-six-day-v1',
+      config:{startDate:'2026-11-09',mode:'rolling',restWeekdays:[0],rotation:['A','B','C']},
+      records:[], quarantine:Array.from({length:200},(_,i)=>({id:'archive'+i})),
+      active:{version:1, programId:'classic-six-day-v1',id:'old-active',date:'2026-11-09',
+        dayKey:'A', stage:'exercise',sets:[{exerciseId:'bench',reps:8}],skipped:[]}
+    }))""")
+    original = page.evaluate("localStorage.getItem('forge-training-v1')")
+    page.reload(wait_until="domcontentloaded")
+    page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+    assert page.locator("#fc-legacy").is_visible()
+    page.locator('[data-fc-action="archive-legacy"]').click()
+    assert "cannot be archived" in page.locator("#fc-storage-message").inner_text()
+    assert page.evaluate("localStorage.getItem('forge-training-v1')") == original
+    with page.expect_download() as capture:
+        page.locator('[data-fc-action="download-training"]').click()
+    assert Path(capture.value.path()).read_text(encoding="utf-8") == original
+    context.close()
+
     # Safety stop produces its own status without attributing sets or rewards.
     context = browser.new_context(viewport={"width": 390, "height": 850})
     page = context.new_page()
