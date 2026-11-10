@@ -488,6 +488,36 @@ test('unreadable, unknown-version and unavailable storage are read-only: a later
   assert.deepEqual(T.trySave({ setItem() { throw new Error('quota'); } }, T.emptyStore()), { ok: false, error: 'storage-write-failed' });
 });
 
+test('malformed store: present non-list records/quarantine is read-only, never treated as empty', () => {
+  const cases = [
+    ['{"version":1,"records":{"unrecognized":"keep"},"quarantine":[]}', ['records']],
+    ['{"version":1,"records":[],"quarantine":{"private":"keep"}}', ['quarantine']],
+    ['{"version":1,"records":"damaged","quarantine":7}', ['records', 'quarantine']],
+    ['{"version":1,"records":0}', ['records']],
+    ['{"version":1,"quarantine":false}', ['quarantine']],
+  ];
+  for (const [raw, fields] of cases) {
+    const st = fakeStorage();
+    st.setItem(T.STORAGE_KEY, raw);
+    const res = T.load(st);
+    assert.equal(res.error, 'malformed-store', raw);
+    assert.deepEqual(res.malformedFields, fields, raw);
+    const attempt = T.addRecord({ ...res.store, config: { startDate: START } }, rec(1));
+    assert.deepEqual(T.trySave(st, attempt), { ok: false, error: 'malformed-store' }, raw);
+    assert.equal(T.save(st, attempt), false, raw);
+    assert.equal(st.getItem(T.STORAGE_KEY), raw, raw + ': bytes untouched');
+    assert.equal(T.exportRaw(st), raw);
+  }
+  // Missing or null lists are just empty, and stay writable.
+  for (const raw of ['{"version":1}', '{"version":1,"records":null,"quarantine":null}']) {
+    const st = fakeStorage();
+    st.setItem(T.STORAGE_KEY, raw);
+    const res = T.load(st);
+    assert.equal(res.error, null, raw);
+    assert.ok(T.save(st, T.addRecord(res.store, rec(1))), raw);
+  }
+});
+
 test('nothing else is lost on a read-then-save: unreadable active session and unknown fields are kept', () => {
   const original = { version: 1, programId: 'p', config: { startDate: START }, records: [rec(1)], quarantine: [{ kind: 'old' }],
     active: { version: 7, stage: 'exercise', sets: [{ reps: 5 }] }, futureField: { keep: ['me'] } };

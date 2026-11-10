@@ -6,7 +6,7 @@ A browser-safe, dependency-free engine for a **classic six-day split**, built as
 - It never invents progress or penalises rest.
 - It is a module for ChatGPT's cockpit UI (Issue #8) to integrate. It **does not change** any existing FORGE screen or stored record.
 
-Status labels (per `AGENTS.md`): engine **TESTED** (36 Node tests; four deliberate-bug checks caught; real-Chromium run of a full A2 session). Source template **TESTED against the posted source tables (44/44)** and **REVIEW_REQUIRED** for owner sign-off.
+Status labels (per `AGENTS.md`): engine **TESTED** (37 Node tests; four deliberate-bug checks caught; real-Chromium run of a full A2 session). Source template **TESTED against the posted source tables (44/44)** and **REVIEW_REQUIRED** for owner sign-off.
 
 ## 1. Source and verification: **source-matched (44/44)**, owner sign-off pending
 
@@ -123,8 +123,8 @@ All imports come from `src/training-programs/index.js`:
 - **Nothing is dropped or trimmed, ever.** On load:
   - invalid or duplicate-id records and an unreadable in-progress session move to `store.quarantine`, verbatim;
   - unknown top-level fields are kept and written back.
-- **Caps fail closed.** Limits are `MAX_RECORDS = 500` and `MAX_QUARANTINE = 200`. If loaded or about-to-be-saved data exceeds a cap, or the stored data is unreadable or from an unknown version, the store is marked `readOnly` and:
-  - `load()` / `parseStore()` return `error`: `'records-overflow' | 'quarantine-overflow' | 'unreadable' | 'unknown-version' | 'storage-unavailable'` (`'empty'` is the only non-blocking value), plus `counts`;
+- **Caps fail closed.** Limits are `MAX_RECORDS = 500` and `MAX_QUARANTINE = 200`. If loaded or about-to-be-saved data exceeds a cap, or the stored data is unreadable, from an unknown version, or has a `records`/`quarantine` field that is present but not a list (`'malformed-store'`, with `malformedFields`), the store is marked `readOnly` and:
+  - `load()` / `parseStore()` return `error`: `'records-overflow' | 'quarantine-overflow' | 'malformed-store' | 'unreadable' | 'unknown-version' | 'storage-unavailable'` (`'empty'` is the only non-blocking value), plus `counts`;
   - `save()` returns `false`, `trySave()` returns `{ok:false, error}`, and `serializeStore()` throws. The original browser bytes are left untouched.
   - `exportRaw(storage)` returns the original string so the UI can offer a backup before any owner decision.
 - UI contract: when `load().error` is set and not `'empty'`, block writes, show a truthful message, and offer the export. Never claim a session was saved when `save()` returned `false`.
