@@ -296,6 +296,42 @@ with server() as url, sync_playwright() as pw:
         assert page.evaluate("localStorage.getItem('forge-training-v1')") == original
         context.close()
 
+    # Regression: version-1 data with present *non-list* records or quarantine must
+    # never be rewritten as empty arrays. Download remains available when read-only.
+    malformed_shapes = [
+        ('{"version":1,"records":{"unrecognized":"keep"},"quarantine":[]}', "records"),
+        ('{"version":1,"records":[],"quarantine":{"private":"keep"}}', "quarantine"),
+        ('{"version":1,"records":"unexpected","quarantine":42}', "records and quarantine"),
+    ]
+    for original, fields in malformed_shapes:
+        context = browser.new_context(viewport={"width": 320, "height": 800},
+                                      accept_downloads=True, reduced_motion="reduce")
+        page = context.new_page()
+        page.add_init_script(FIXED_CLOCK)
+        page.route("**/*", lambda route: route.continue_() if route.request.url.startswith("http://127.0.0.1:") else route.abort())
+        errors = []
+        page.on("pageerror", lambda err: errors.append(str(err)))
+        page.goto(url, wait_until="domcontentloaded")
+        page.evaluate("(raw) => { localStorage.setItem('forge-training-v1',raw); localStorage.setItem('forge-strength-v08-sessions','[]'); }", original)
+        page.reload(wait_until="domcontentloaded")
+        page.locator('[data-tab="training"]').first.evaluate("(node)=>node.click()")
+        assert page.locator("#fc-storage").is_visible()
+        message = page.locator("#fc-storage-message").inner_text()
+        assert "unexpected format" in message and fields in message, message
+        assert page.locator('[data-fc-action="configure"]').is_disabled()
+        assert page.locator("#fc-session").is_hidden()
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), "Storage panel overflows 320px"
+        with page.expect_download() as capture:
+            page.locator('[data-fc-action="download-training"]').focus()
+            page.keyboard.press("Enter")
+        download = capture.value
+        assert download.suggested_filename.endswith(".json")
+        assert Path(download.path()).read_text(encoding="utf-8") == original
+        assert page.evaluate("localStorage.getItem('forge-training-v1')") == original
+        assert page.evaluate("localStorage.getItem('forge-strength-v08-sessions')") == "[]"
+        assert not errors, errors
+        context.close()
+
     # At the 500-record limit, no new workout can start and raw backup is available.
     context = browser.new_context(viewport={"width": 390, "height": 850}, accept_downloads=True)
     page = context.new_page()
@@ -367,4 +403,4 @@ with server() as url, sync_playwright() as pw:
     assert "safety" in page.locator("#fc-latest").inner_text()
     context.close()
     browser.close()
-print("FORGE cockpit: Chromium real-input validation, duplicate prevention, quarantine, old-session archive, timed holds, safety, mobile layout PASS")
+print("FORGE cockpit: Chromium storage malformed-shape protection and raw backup, real-input validation, duplicate prevention, archive, timed holds, safety and mobile layout PASS")
