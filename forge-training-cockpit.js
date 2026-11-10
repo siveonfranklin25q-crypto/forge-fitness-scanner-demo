@@ -31,6 +31,39 @@ function initCockpit() {
     store = { ...store, config: c };
   }
   let blocked = Boolean(loaded.error && loaded.error !== 'empty');
+  let storageError = blocked ? loaded.error : null;
+  const storageCounts = () => ({
+    records: store.records?.length ?? 0,
+    quarantine: store.quarantine?.length ?? 0,
+    maxRecords: T.MAX_RECORDS,
+    maxQuarantine: T.MAX_QUARANTINE,
+  });
+  function storageExplanation(error, counts = storageCounts()) {
+    switch (error) {
+      case 'records-overflow':
+        return 'Your browser holds ' + counts.records + ' workout records; FORGE safely supports ' +
+          counts.maxRecords + '. Saving is blocked to prevent deleting older workouts.';
+      case 'quarantine-overflow':
+        return 'Your browser holds ' + counts.quarantine + ' archived or unreadable entries; FORGE safely supports ' +
+          counts.maxQuarantine + '. Saving is blocked instead of discarding any entry.';
+      case 'records-full':
+        return 'You have reached ' + counts.maxRecords + ' saved workouts. A new completed workout cannot be saved yet.';
+      case 'quarantine-full':
+        return 'The private archive already has ' + counts.quarantine +
+          ' entries. The old workout cannot be archived without exceeding the ' + counts.maxQuarantine + '-entry limit.';
+      case 'unreadable':
+        return 'Your saved training data is unreadable. FORGE will not overwrite it. Download the original data for recovery.';
+      case 'unknown-version':
+        return 'This browser contains training data from an unfamiliar format. FORGE will not overwrite it.';
+      case 'storage-unavailable':
+        return 'Browser storage cannot be read. Training saves are disabled; a backup cannot be downloaded unless the data becomes accessible.';
+      case 'storage-write-failed':
+        return 'The browser refused the training-data save. No completed workout was claimed. Check available storage space and permissions.';
+      default:
+        return 'Training data cannot safely be saved right now. Your existing browser data has not been overwritten.';
+    }
+  }
+  let writeError = null;
   // Never resume an old-version or unverified plan as if its targets were current.
   // Preserve it until the owner explicitly archives or discards it.
   const prior = store.active;
@@ -56,6 +89,13 @@ function initCockpit() {
       <p class="fc-help">The six distinct workout tables now match the cited Muscle &amp; Strength article. Reduced-volume training is a FORGE default, not the author's full prescription.
         This demanding intermediate routine is awaiting owner review and isn't personalized medical clearance. Logs remain in this browser.</p>
       <p id="fc-feedback" class="fc-feedback" role="status" aria-live="polite"></p>
+      <div id="fc-storage" class="fc-card" hidden>
+        <h4 id="fc-storage-title">Your training data is protected</h4>
+        <p class="fc-help" id="fc-storage-message" role="status" aria-live="polite"></p>
+        <button type="button" class="secondary-btn" data-fc-action="download-training">Download my training data</button>
+        <p class="fc-help">This exports the exact original data saved in this browser, including older or unreadable entries.
+          Keep the downloaded file private. No file is uploaded to a server. FORGE never deletes old entries automatically.</p>
+      </div>
       <div id="fc-legacy" class="fc-card" hidden>
         <h4>Previous workout needs review</h4>
         <p class="fc-help">Your device has an unfinished workout from an earlier or unverified template.
@@ -135,12 +175,54 @@ function initCockpit() {
   $('fc-start-date').value = today();
 
   function notify(msg) { feedback = msg; $('fc-feedback').textContent = msg; }
+  function renderStoragePanel() {
+    const error = storageError || writeError;
+    const atRecordCap = (store.records?.length ?? 0) >= T.MAX_RECORDS;
+    $('fc-storage').hidden = !error && !atRecordCap;
+    if (error || atRecordCap) {
+      $('fc-storage-title').textContent = error ? 'Saving paused — training data protected' : 'Training record limit reached';
+      $('fc-storage-message').textContent = storageExplanation(error || 'records-full', storageCounts());
+    }
+    const available = storage && T.exportRaw(storage) !== null;
+    const button = root.querySelector('[data-fc-action="download-training"]');
+    button.disabled = !available;
+    button.title = available ? 'Download original local training records' : 'No accessible local training data to download';
+  }
+  function downloadTraining() {
+    if (!storage) return notify(storageExplanation('storage-unavailable'));
+    const original = T.exportRaw(storage);
+    if (original === null) return notify('There is no readable training data in this browser to download.');
+    try {
+      const isPlainText = storageError === 'unreadable';
+      const blob = new Blob([original], { type: isPlainText ? 'text/plain;charset=utf-8' : 'application/json;charset=utf-8' });
+      const objectUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = 'forge-training-original-' + today() + (isPlainText ? '.txt' : '.json');
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+      notify('Original browser training data offered for download. Keep the backup private; verify your device saved the file.');
+    } catch (error) {
+      notify('The backup could not be prepared. The original stored data has not been changed: ' + error.message);
+    }
+  }
 
   function persist(next) {
-    if (!storage || !T.save(storage, next)) {
-      notify('Unable to save on this device. No completed session is claimed. Check browser storage permissions.');
+    const outcome = storage ? T.trySave(storage, next) : { ok: false, error: 'storage-unavailable' };
+    if (!outcome.ok) {
+      writeError = outcome.error;
+      notify(storageExplanation(outcome.error, {
+        records: next.records?.length ?? 0,
+        quarantine: next.quarantine?.length ?? 0,
+        maxRecords: T.MAX_RECORDS,
+        maxQuarantine: T.MAX_QUARANTINE,
+      }) + ' No existing records were overwritten. Download a backup before making changes.');
+      renderStoragePanel();
       return false;
     }
+    writeError = null;
     store = next;
     return true;
   }
@@ -167,8 +249,10 @@ function initCockpit() {
     if (blocked || !staleActive) return;
     if (action === 'discard-legacy' &&
         !window.confirm('Discard this unfinished workout? Its original entries will not be recoverable.')) return;
-    if (action === 'archive-legacy' && (store.quarantine?.length ?? 0) >= 200) {
-      notify('The private archive is full. No data was changed. Save a separate backup before clearing old records.');
+    if (action === 'archive-legacy' && (store.quarantine?.length ?? 0) >= T.MAX_QUARANTINE) {
+      writeError = 'quarantine-full';
+      notify(storageExplanation(writeError) + ' No data was changed; download a backup before deciding anything.');
+      renderStoragePanel();
       return;
     }
     const next = { ...store, active: null };
@@ -200,6 +284,12 @@ function initCockpit() {
   }
   function start() {
     if (blocked || active || staleActive || !store.config) return;
+    if (store.records.length >= T.MAX_RECORDS) {
+      writeError = 'records-full';
+      notify(storageExplanation(writeError) + ' Download a backup; no new workout has been started.');
+      renderStoragePanel();
+      return;
+    }
     const mission = T.todayMission(program, store.config, today(), store.records);
     if (!mission.canStart || mission.programComplete) return;
     const id = 'session-' + (globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36) + '-' + Math.random().toString(36).slice(2));
@@ -211,6 +301,7 @@ function initCockpit() {
   function runAction(name) {
     if (blocked) return;
     switch (name) {
+      case 'download-training': return downloadTraining();
       case 'archive-legacy':
       case 'discard-legacy': return resolveLegacy(name);
       case 'configure': return configure();
@@ -253,6 +344,13 @@ function initCockpit() {
       case 'pain-stop': return call({ type: 'PAIN_STOP', severity: 'sharp' });
       case 'finish': {
         if (!$('fc-symptoms').value) return notify('Choose how you felt before saving.');
+        if (store.records.length >= T.MAX_RECORDS &&
+            !store.records.some(x => x.id === active?.id)) {
+          writeError = 'records-full';
+          notify(storageExplanation(writeError) + ' Your unfinished session is preserved; no completed record was claimed.');
+          renderStoragePanel();
+          return;
+        }
         return call({ type: 'FINISH', symptoms: $('fc-symptoms').value });
       }
       default: return;
@@ -269,7 +367,8 @@ function initCockpit() {
     $('fc-rest-count').textContent = remaining ? 'Suggested rest: ' + remaining + ' seconds remaining' : 'Rest interval finished';
   }
   function render() {
-    $('fc-feedback').textContent = feedback || (blocked ? 'Training storage could not be read safely. This cockpit will not overwrite it.' : '');
+    $('fc-feedback').textContent = feedback || (blocked ? storageExplanation(storageError) : '');
+    renderStoragePanel();
     $('fc-legacy').hidden = !staleActive;
     if (staleActive) {
       $('fc-legacy-detail').textContent = 'Saved on ' + (staleActive.date || 'unknown date') + ' · ' +
@@ -295,8 +394,9 @@ function initCockpit() {
     $('fc-mission-meta').textContent = (mission.programComplete ? '12-week window reached · review before extending. ' : '') +
       (mission.next ? 'Next planned session: ' + mission.next.date + ' · ' + mission.next.title : 'No upcoming training session in the next seven days.');
     const btn = $('fc-mission').querySelector('button[data-fc-action="start"]');
-    btn.hidden = Boolean(active) || Boolean(staleActive) || !mission.canStart || mission.programComplete;
-    btn.disabled = blocked;
+    btn.hidden = Boolean(active) || Boolean(staleActive) || !mission.canStart ||
+      mission.programComplete || store.records.length >= T.MAX_RECORDS;
+    btn.disabled = blocked || store.records.length >= T.MAX_RECORDS;
     $('fc-progress-count').textContent = summary.sessionsDone + ' logged training ' +
       (summary.sessionsDone === 1 ? 'session' : 'sessions') + ' this week · ' +
       summary.loggedSets + ' working ' + (summary.loggedSets === 1 ? 'set' : 'sets') + ' recorded.';
