@@ -72,6 +72,7 @@ with server() as url, sync_playwright() as pw:
         page.locator("#fc-load").fill("40")
         page.locator('[data-fc-action="log"]').click()
         assert page.locator("#fc-rest").is_visible()
+        assert page.locator("#fc-live-count").inner_text() == "1 actual set logged"
         saved = page.evaluate("JSON.parse(localStorage.getItem('forge-training-v1'))")
         assert saved["active"]["sets"][0]["reps"] == 10
         assert saved["records"] == []
@@ -94,6 +95,7 @@ with server() as url, sync_playwright() as pw:
         assert page.evaluate("localStorage.getItem('forge-strength-v08-sessions')") == "[]"
         assert page.locator('[data-fc-action="start"]').is_hidden()
         assert "partial" in page.locator("#fc-latest").inner_text()
+        assert "1 logged training session this week · 1 working set recorded." in page.locator("#fc-progress-count").inner_text()
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"Overflow at {width}px"
         assert not errors, errors
         context.close()
