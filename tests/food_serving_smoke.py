@@ -60,13 +60,12 @@ with site() as url,sync_playwright() as pw:
         page.locator("#lookup-mode").select_option("barcode")
         page.locator("#live-query").fill(barcode)
         page.locator("#live-search").click()
-        page.locator("#live-product-meta strong").wait_for(timeout=10000)
+        page.locator("#live-product-meta strong").first.wait_for(timeout=10000)
         val=page.locator("#live-quantity").input_value()
         if wanted is None:
             assert val=="", (barcode,serving,val)
             assert page.locator("#log-live").is_disabled()
             assert "No unambiguous gram serving" in page.locator("#live-serving-warning").inner_text()
-            assert "quantity" not in page.locator("#live-breakdown").inner_text().lower() or True
             page.locator("#live-quantity").fill("25")
             page.locator("#live-quantity").dispatch_event("input")
             assert page.locator("#log-live").is_enabled()
