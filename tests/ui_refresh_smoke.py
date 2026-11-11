@@ -242,6 +242,11 @@ with local_site() as url,sync_playwright() as playwright:
         page.locator('.forge-mission-tile[data-forge-go="strength-lab"]').click()
         assert page.locator("#strength-lab").is_visible()
         assert page.evaluate("location.hash")=="#strength-lab"
+        assert "general exercise library" in page.locator("#strength-lab .notice").inner_text().lower()
+        page.locator('#strength-lab [data-forge-go="training"]').click()
+        assert page.locator("#training").is_visible()
+        assert "1970s bodybuilding training plan" in page.locator("#training-title").inner_text().lower()
+        assert "muscleandstrength.com/workouts/old-school-series-1970s-bodybuilding-routine" in page.locator('#training .notice a').get_attribute('href')
         if width<781:
             page.locator('#forge-mobile-dock [data-forge-go="nutrition"]').click()
         else:
