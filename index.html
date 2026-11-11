@@ -334,7 +334,8 @@
           <div id="live-results" hidden>
             <label>Matched product<select id="live-product-select"></select></label>
             <div id="live-product-meta"></div>
-            <label>Amount eaten (grams or mL; check product label)<input id="live-quantity" type="number" min="1" max="5000" step="1" value="100"/></label>
+            <label>Amount actually eaten (g or mL; match the unit on your package)<input id="live-quantity" type="number" min="0.1" max="5000" step="0.1" placeholder="Enter label serving or weighed amount" required/></label>
+            <p class="fine" id="live-serving-warning" role="status">Confirm the actual serving and package nutrition before logging.</p>
             <div id="live-breakdown"></div>
             <button type="button" id="edit-live-label" class="secondary-btn">Correct nutrition using package label</button>
             <form id="label-correction" class="panel stack" hidden>
@@ -758,11 +759,8 @@ const read = (n,key) => numberOrNull(n?.[key]);
 const round = (n) => n === null ? null : Math.round(n * 10) / 10;
 const fields='code,product_name,product_name_en,brands,quantity,serving_size,nutriments,allergens_tags,nutrition_data_per';
 const BARCODE=/^\d{8,14}$/;
-// Photographed retail package (October 2026); values can change with reformulation.
-// No user photos or personal data are published with this demonstration.
-const LABEL_REFERENCE={
-  '4099100310030':{grams:112,servings:4,perServing:{kcal:170,protein:22,carbs:0,fat:8,saturatedFat:3,sugar:0,fiber:0,sodium:75,cholesterol:70},origin:'Package photograph checked October 2026 — confirm current label'}
-};
+// Outdated sample photographs cannot override current barcode data.
+// Only the current package-label correction explicitly saved on this device is applied.
 const LABEL_STORAGE='forge-local-package-labels-v1';
 function localLabels(){try{const x=JSON.parse(localStorage.getItem(LABEL_STORAGE)||'{}');return x&&typeof x==='object'&&!Array.isArray(x)?x:{}}catch{return {}}}
 function saveLocalLabels(x){try{localStorage.setItem(LABEL_STORAGE,JSON.stringify(x));return true}catch{return false}}
@@ -774,14 +772,21 @@ function applyLabel(product,record,origin,local=false){
 function applyAvailableLabel(product){
  const saved=localLabels()[product.code];
  if(saved)return applyLabel(product,saved,'User-entered package label (saved on this device)',true);
- const photo=LABEL_REFERENCE[product.code];
- return photo?applyLabel(product,photo,photo.origin,false):product;
+ return product;
 }
 function restoreProduct(product){
  const base={...product,per100:product.databasePer100,serving:product.databaseServing,labelGrams:null,labelServings:null,labelOrigin:null,labelLocal:false,labelPerServing:null,source:'Open Food Facts (community-submitted; verify package label)'};
  return applyAvailableLabel(base);
 }
 
+function parseServingGrams(raw) {
+  // Accept only an unambiguous gram quantity from the declared serving size.
+  // Never infer grams from oz, cups, pieces, mL, or an ambiguous double match.
+  const input=String(raw||'');
+  const found=[...input.matchAll(/(\d+(?:[.,]\d+)?)\s*g\b/gi)]
+    .map(x=>Number(x[1].replace(',','.'))).filter(x=>Number.isFinite(x)&&x>0&&x<=5000);
+  return found.length && found.every(x=>Math.abs(x-found[0])<0.01) ? found[0] : null;
+}
 function normalizeProduct(raw={}) {
   const n=raw.nutriments || {};
   const macros={
@@ -801,6 +806,7 @@ function normalizeProduct(raw={}) {
     brand:String(raw.brands || ''),
     quantity:String(raw.quantity || ''),
     serving:String(raw.serving_size || ''),
+    servingGrams:parseServingGrams(raw.serving_size),
     allergens:Array.isArray(raw.allergens_tags) ? raw.allergens_tags.map(x=>String(x).replace(/^en:/,'').replace(/-/g,' ')) : [],
     per100:macros,
     databasePer100:macros,
@@ -1022,7 +1028,14 @@ function showLiveProduct(){const i=Number($('#live-product-select').value);selec
  const detailUrl=productLink(p.code),link=detailUrl?` · <a href="${detailUrl}" target="_blank" rel="noopener noreferrer">See source record</a>`:'';
  $('#live-product-meta').innerHTML=`<strong>${escapeHTML(p.name)}</strong><p class="fine">${escapeHTML(p.brand||'Brand not listed')} · Barcode ${escapeHTML(p.code||'not available')}${link}<br>Package: ${escapeHTML(p.quantity||'not supplied')} · Stated serving: ${escapeHTML(p.serving||'not supplied')} · ${p.labelOrigin?'Nutrition calculated from the package serving.':'Community data provided per 100 g / 100 mL.'}<br>${p.allergens.length?'Reported allergen tags: '+escapeHTML(p.allergens.join(', ')):'Allergen information not supplied: read the package label.'}</p><p class="fine"><strong>Nutrition source:</strong> ${escapeHTML(p.source)}.${p.labelServings?' About '+safeNum(p.labelServings)+' servings per package.':''} ${p.labelOrigin?'Package-based numbers take priority over the community entry; check your current package for changes.':''}</p>`;
  $('#label-correction').hidden=true;
- $('#live-quantity').value=p.labelGrams||100; comparisonProduct=null; $('#comparison-results').replaceChildren(); $('#comparison-status').textContent=''; populateExampleChoices(p); renderLiveBreakdown(); renderRecipeIdeas(p);
+ const suggested=p.labelGrams||p.servingGrams||null;
+ $('#live-quantity').value=suggested??'';
+ $('#live-serving-warning').textContent=p.labelOrigin
+   ? 'Using your saved package-label serving ('+safeNum(p.labelGrams)+' g). Confirm the actual amount eaten.'
+   : p.servingGrams
+      ? 'Community record declares '+safeNum(p.servingGrams)+' g per serving. Confirm against the current package label.'
+      : 'No unambiguous gram serving was supplied. Enter your actual amount and verify the printed label; this is not a 100g serving.';
+ comparisonProduct=null; $('#comparison-results').replaceChildren(); $('#comparison-status').textContent=''; populateExampleChoices(p); renderLiveBreakdown(); renderRecipeIdeas(p);
 }
 function renderLiveBreakdown(){const p=selectedLive;if(!p)return;const amount=Number($('#live-quantity').value);
  let m;try{m=scaleProduct(p,amount)}catch(err){$('#live-breakdown').innerHTML=`<div class="warning">${escapeHTML(err.message)}</div>`;$('#log-live').disabled=true;return;}
